@@ -9,7 +9,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <WindowsFormsHost Initialized="WindowsFormsHost_Initialized" SizeChanged="SizeChanged" Grid.Column="0">
+        <WindowsFormsHost Initialized="WindowsFormsHost_Initialized" SizeChanged="Resized" Grid.Column="0">
         </WindowsFormsHost>
         <Slider Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" Value="1" Minimum="0" Maximum="1" Name="Red" ValueChanged="Slider_ValueChanged"/>
         <Slider Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Green" ValueChanged="Slider_ValueChanged"/>

@@ -38,7 +38,7 @@ namespace GameEngine
 
             glControl = new GLControl(new GraphicsMode(32, 24), 2, 0, flags);
             glControl.MakeCurrent();
-            glControl.Paint += GLControl_Paint;
+            glControl.Paint += Paint;
             glControl.Dock = DockStyle.Fill;
             (sender as WindowsFormsHost).Child = glControl;
             SetupViewport();
@@ -60,7 +60,7 @@ namespace GameEngine
             GL.LoadMatrix(ref perspectiveMatrix);
         }
 
-        private void GLControl_Paint(object sender, PaintEventArgs e)
+        private void Paint(object sender, PaintEventArgs e)
         {
             GL.ClearColor(
                 (float)Red.Value,
@@ -88,7 +88,7 @@ namespace GameEngine
             glControl.SwapBuffers();
         }
 
-        public void SizeChanged(object sender, RoutedEventArgs e)
+        private void Resized(object sender, RoutedEventArgs e)
         {
             SetupViewport();
         }
