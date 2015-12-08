@@ -88,6 +88,11 @@ namespace GameEngine
             glControl.SwapBuffers();
         }
 
+        public void SizeChanged(object sender, RoutedEventArgs e)
+        {
+            SetupViewport();
+        }
+
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             glControl.Invalidate();
