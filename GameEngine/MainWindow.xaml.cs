@@ -48,16 +48,16 @@ namespace GameEngine
         {
             GL.Viewport(0, 0, glControl.Width, glControl.Height);
 
-            double aspect_ratio = glControl.Width / (double)glControl.Height;
+            double aspectRatio = glControl.Width / (double)glControl.Height;
             float fov = 1.0f;
-            float near_distance = 1.0f;
-            float far_distance = 1000.0f;
+            float near = 1.0f;
+            float far = 1000.0f;
 
-            OpenTK.Matrix4 perspective_matrix =
-               OpenTK.Matrix4.CreatePerspectiveFieldOfView(fov, (float)aspect_ratio, near_distance, far_distance);
+            Matrix4 perspectiveMatrix =
+               Matrix4.CreatePerspectiveFieldOfView(fov, (float)aspectRatio, near, far);
 
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref perspective_matrix);
+            GL.LoadMatrix(ref perspectiveMatrix);
         }
 
         private void GLControl_Paint(object sender, PaintEventArgs e)
