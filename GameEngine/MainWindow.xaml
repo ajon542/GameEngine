@@ -3,10 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <WindowsFormsHost Initialized="WindowsFormsHost_Initialized" Margin="0,0,140.209,0.183">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <WindowsFormsHost Initialized="WindowsFormsHost_Initialized" Grid.Column="0">
         </WindowsFormsHost>
-        <Slider Orientation="Vertical" Value="1" Minimum="0" Maximum="1" Name="Red" Margin="385,0,-385.791,0.183" ValueChanged="Slider_ValueChanged"/>
-        <Slider Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Green" Margin="429,0,-428.791,0.183" ValueChanged="Slider_ValueChanged"/>
-        <Slider Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Blue" Margin="476,0,-475.791,0.183" ValueChanged="Slider_ValueChanged"/>
+        <Slider Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" Value="1" Minimum="0" Maximum="1" Name="Red" ValueChanged="Slider_ValueChanged"/>
+        <Slider Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Green" ValueChanged="Slider_ValueChanged"/>
+        <Slider Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Blue" ValueChanged="Slider_ValueChanged"/>
     </Grid>
 </Window>
