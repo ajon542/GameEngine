@@ -78,7 +78,7 @@ namespace GameEngine.View
             GL.Translate(0, 0, -5);
             GL.Color3(Color.Yellow);
 
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.Vertex2(1, 1);
             GL.Vertex2(-1, 1);
             GL.Vertex2(-1, -1);
