@@ -5,6 +5,9 @@
         xmlns:view="clr-namespace:GameEngine.View"
         Title="MainWindow" Height="350" Width="525">
 
+    <!-- A common reason to set multiple data templates based on view-model
+    is to allow the  main view-model to switch the view based on the view-model.
+    If DataContext = new SceneViewModel, then the SceneView will be shown.-->
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:SceneViewModel}">
             <view:SceneView/>
