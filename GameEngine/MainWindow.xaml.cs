@@ -33,6 +33,8 @@ namespace GameEngine
         {
             InitializeComponent();
             // TODO: If we created a SceneViewModel here, the SceneView would be shown instead
+            // TODO: Create all the require view models and switch them based on some variable.
+            // TODO: Show multiple view models on the main window at the same time
             DataContext = new GameViewModel();
         }
 
