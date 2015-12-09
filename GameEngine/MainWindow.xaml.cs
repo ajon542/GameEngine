@@ -18,6 +18,8 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using GameEngine.ViewModel;
+
 namespace GameEngine
 {
     /// <summary>
@@ -30,9 +32,10 @@ namespace GameEngine
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new GameViewModel();
         }
 
-        private void WindowsFormsHost_Initialized(object sender, EventArgs e)
+        /*private void WindowsFormsHost_Initialized(object sender, EventArgs e)
         {
             var flags = GraphicsContextFlags.Default;
 
@@ -95,7 +98,7 @@ namespace GameEngine
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            glControl.Invalidate();
-        }
+            //glControl.Invalidate();
+        }*/
     }
 }

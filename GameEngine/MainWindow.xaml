@@ -9,9 +9,14 @@
         <DataTemplate DataType="{x:Type viewModel:SceneViewModel}">
             <view:SceneView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:GameViewModel}">
+            <view:GameView/>
+        </DataTemplate>
     </Window.Resources>
 
-    <Grid>
+    <ContentPresenter Content="{Binding}"/>
+    <!--<Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="*" />
@@ -23,5 +28,5 @@
         <Slider Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" Value="1" Minimum="0" Maximum="1" Name="Red" ValueChanged="Slider_ValueChanged"/>
         <Slider Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Green" ValueChanged="Slider_ValueChanged"/>
         <Slider Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Blue" ValueChanged="Slider_ValueChanged"/>
-    </Grid>
+    </Grid>-->
 </Window>
