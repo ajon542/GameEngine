@@ -15,8 +15,8 @@
         </Grid.ColumnDefinitions>
         <WindowsFormsHost Grid.Column="0" Initialized="WindowsFormsHost_Initialized" SizeChanged="Resized">
         </WindowsFormsHost>
-        <Slider Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" Value="1" Minimum="0" Maximum="1" Name="Red" ValueChanged="Slider_ValueChanged"/>
-        <Slider Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Green" ValueChanged="Slider_ValueChanged"/>
-        <Slider Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Blue" ValueChanged="Slider_ValueChanged"/>
+        <Slider Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" Value="{Binding RValue}" Minimum="0" Maximum="1" Name="Red" ValueChanged="Slider_ValueChanged"/>
+        <Slider Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Value="{Binding GValue}" Minimum="0" Maximum="1" Name="Green" ValueChanged="Slider_ValueChanged"/>
+        <Slider Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" Value="{Binding BValue}" Minimum="0" Maximum="1" Name="Blue" ValueChanged="Slider_ValueChanged"/>
     </Grid>
 </UserControl>
