@@ -8,7 +8,8 @@
     <!--
     This demonstrates a way to switch between views dynamically.
     By setting the DataContext property of the MainWindow class,
-    the appropriate view for that view-model will be shown.    
+    the appropriate view for that view-model will be shown.
+    See: http://stackoverflow.com/questions/23128378/wpf-design-multiple-views-in-one-window
     -->
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:SceneViewModel}">
@@ -19,19 +20,4 @@
         </DataTemplate>
     </Window.Resources>
     <ContentPresenter Content="{Binding}"/>
-    
-    <!--<Grid>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <WindowsFormsHost Initialized="WindowsFormsHost_Initialized" SizeChanged="Resized" Grid.Column="0">
-        </WindowsFormsHost>
-        <Slider Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" Value="1" Minimum="0" Maximum="1" Name="Red" ValueChanged="Slider_ValueChanged"/>
-        <Slider Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Green" ValueChanged="Slider_ValueChanged"/>
-        <Slider Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" Value="0" Minimum="0" Maximum="1" Name="Blue" ValueChanged="Slider_ValueChanged"/>
-    </Grid>-->
 </Window>
