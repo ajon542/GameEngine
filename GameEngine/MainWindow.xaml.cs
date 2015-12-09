@@ -32,9 +32,11 @@ namespace GameEngine
         public MainWindow()
         {
             InitializeComponent();
+            // TODO: If we created a SceneViewModel here, the SceneView would be shown instead
             DataContext = new GameViewModel();
         }
 
+        // TODO: Move all this code into a View?
         /*private void WindowsFormsHost_Initialized(object sender, EventArgs e)
         {
             var flags = GraphicsContextFlags.Default;
