@@ -16,8 +16,8 @@ namespace GameEngine.View
     /// </summary>
     public partial class SceneView : System.Windows.Controls.UserControl
     {
+        int vbo;
         private int frames;
-        private int rotation;
 
         private GLControl glControl;
 
@@ -33,6 +33,17 @@ namespace GameEngine.View
             timer.Start();
         }
 
+        private void CreateVertexBuffer()
+        {
+            Vector3[] vertices = new Vector3[1];
+            vertices[0] = new Vector3(0, 0, -1);
+            GL.GenBuffers(1, out vbo);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
+                                   new IntPtr(vertices.Length * Vector3.SizeInBytes),
+                                   vertices, BufferUsageHint.StaticDraw);
+        }
+
         private void WindowsFormsHost_Initialized(object sender, EventArgs e)
         {
             var flags = GraphicsContextFlags.Default;
@@ -43,6 +54,8 @@ namespace GameEngine.View
             glControl.Dock = DockStyle.Fill;
             (sender as WindowsFormsHost).Child = glControl;
             SetupViewport();
+
+            CreateVertexBuffer();
         }
 
         private void SetupViewport()
@@ -65,30 +78,23 @@ namespace GameEngine.View
         {
             frames++;
 
-            rotation++;
             GL.ClearColor(
                 (float)Red.Value,
                 (float)Green.Value,
                 (float)Blue.Value,
                 1);
-
             GL.Clear(
                 ClearBufferMask.ColorBufferBit |
                 ClearBufferMask.DepthBufferBit |
                 ClearBufferMask.StencilBufferBit);
 
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            GL.Translate(0, 0, -5);
-            GL.Rotate(rotation, new Vector3d(0, 0, 1));
             GL.Color3(Color.Yellow);
-
-            GL.Begin(PrimitiveType.Quads);
-            GL.Vertex2(1, 1);
-            GL.Vertex2(-1, 1);
-            GL.Vertex2(-1, -1);
-            GL.Vertex2(1, -1);
-            GL.End();
+            GL.PointSize(5);
+            GL.EnableVertexAttribArray(0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.DrawArrays(PrimitiveType.Points, 0, 1);
+            GL.DisableVertexAttribArray(0);
 
             glControl.SwapBuffers();
         }
