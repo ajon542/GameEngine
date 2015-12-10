@@ -13,10 +13,7 @@ namespace GameEngine
             InitializeComponent();
 
             // Example of switching between views based on the view-model.
-            // Show the SceneViewModel.
-            DataContext = new SceneViewModel();
-            // Show the GameViewModel.
-            //DataContext = new SceneViewModel();
+            DataContext = new MainViewModel();
         }
     }
 }

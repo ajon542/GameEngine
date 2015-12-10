@@ -12,6 +12,9 @@
     See: http://stackoverflow.com/questions/23128378/wpf-design-multiple-views-in-one-window
     -->
     <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
+            <view:MainView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:SceneViewModel}">
             <view:SceneView/>
         </DataTemplate>
@@ -19,5 +22,6 @@
             <view:GameView/>
         </DataTemplate>
     </Window.Resources>
+
     <ContentPresenter Content="{Binding}"/>
 </Window>
