@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
-using System.Windows.Input;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 using OpenTK;
 using OpenTK.Graphics;
@@ -25,11 +16,21 @@ namespace GameEngine.View
     /// </summary>
     public partial class SceneView : System.Windows.Controls.UserControl
     {
-        GLControl glControl;
+        private int frames;
+        private int rotation;
+
+        private GLControl glControl;
+
+        private DateTime lastMeasureTime;
 
         public SceneView()
         {
             InitializeComponent();
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1);
+            timer.Tick += TimerOnTick;
+            timer.Start();
         }
 
         private void WindowsFormsHost_Initialized(object sender, EventArgs e)
@@ -62,6 +63,9 @@ namespace GameEngine.View
 
         private void Paint(object sender, PaintEventArgs e)
         {
+            frames++;
+
+            rotation++;
             GL.ClearColor(
                 (float)Red.Value,
                 (float)Green.Value,
@@ -76,6 +80,7 @@ namespace GameEngine.View
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             GL.Translate(0, 0, -5);
+            GL.Rotate(rotation, new Vector3d(0, 0, 1));
             GL.Color3(Color.Yellow);
 
             GL.Begin(PrimitiveType.Quads);
@@ -95,6 +100,17 @@ namespace GameEngine.View
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            glControl.Invalidate();
+        }
+
+        private void TimerOnTick(object sender, EventArgs e)
+        {
+            if (DateTime.Now.Subtract(this.lastMeasureTime) > TimeSpan.FromSeconds(1))
+            {
+                FpsCounter.Content = frames.ToString();
+                frames = 0;
+                lastMeasureTime = DateTime.Now;
+            }
             glControl.Invalidate();
         }
     }
