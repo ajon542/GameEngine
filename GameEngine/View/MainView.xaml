@@ -15,6 +15,7 @@
         We are binding this listbox to the observable collection named "Settings"
         inside the MainViewModel. Each item in this collection is a view-model.
         When an item in this listbox is selected, it will show the corresponding view.
+        It achieves this through the "ContentControl" below.
         -->
         <Grid Grid.Column="0">
             <ListBox x:Name="ListBoxMenu"                    
@@ -22,7 +23,6 @@
                  ItemsSource="{Binding Settings}"
                  SelectedIndex="0">
                 <ListBox.ItemTemplate>
-
                     <DataTemplate>
                         <TextBlock Text="Blah" Padding="10"/>
                     </DataTemplate>

@@ -23,5 +23,9 @@
         </DataTemplate>
     </Window.Resources>
 
+    <!--
+    Without setting the content presenter, the MainView does not get shown.
+    DataContext = new MainViewModel();
+    -->
     <ContentPresenter Content="{Binding}"/>
 </Window>
