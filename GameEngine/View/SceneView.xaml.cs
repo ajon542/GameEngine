@@ -35,8 +35,14 @@ namespace GameEngine.View
 
         private void CreateVertexBuffer()
         {
-            Vector3[] vertices = new Vector3[1];
-            vertices[0] = new Vector3(0, 0, -1);
+            Vector3[] vertices = new Vector3[3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                float xpos = i / 5f;
+                vertices[i] = new Vector3(xpos, 0, -1);
+            }
+
             GL.GenBuffers(1, out vbo);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
@@ -93,7 +99,7 @@ namespace GameEngine.View
             GL.EnableVertexAttribArray(0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
-            GL.DrawArrays(PrimitiveType.Points, 0, 1);
+            GL.DrawArrays(PrimitiveType.Points, 0, 3);
             GL.DisableVertexAttribArray(0);
 
             glControl.SwapBuffers();
