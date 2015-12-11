@@ -32,7 +32,7 @@ namespace GameEngine.Core
         /// <summary>
         /// Gets or sets the average frames per second.
         /// </summary>
-        public float FPS { get; private set; }
+        public float Fps { get; private set; }
 
         /// <summary>
         /// Initialize the timer.
@@ -42,7 +42,7 @@ namespace GameEngine.Core
             FrameNumber = 0;
             LastFrameDuration = 0;
             AverageFrameDuration = 0;
-            FPS = 0;
+            Fps = 0;
             LastFrameTime = CurrentTicksToMilliseconds();
 
             IsPaused = false;
@@ -75,7 +75,7 @@ namespace GameEngine.Core
                 {
                     AverageFrameDuration *= 0.99;
                     AverageFrameDuration += 0.01 * LastFrameDuration;
-                    FPS = (float)(1000.0 / AverageFrameDuration);
+                    Fps = (float)(1000.0 / AverageFrameDuration);
                 }
             }
         }

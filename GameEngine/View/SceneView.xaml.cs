@@ -17,7 +17,6 @@ namespace GameEngine.View
     public partial class SceneView : System.Windows.Controls.UserControl
     {
         int vbo;
-        private int frames;
 
         private GLControl glControl;
 
@@ -31,6 +30,8 @@ namespace GameEngine.View
             timer.Interval = TimeSpan.FromMilliseconds(1);
             timer.Tick += TimerOnTick;
             timer.Start();
+
+            Core.Timer.Instance.Init();
         }
 
         private void CreateVertexBuffer()
@@ -82,7 +83,8 @@ namespace GameEngine.View
 
         private void Paint(object sender, PaintEventArgs e)
         {
-            frames++;
+            // Update the timer instance.
+            Core.Timer.Instance.Update();
 
             GL.ClearColor(
                 (float)Red.Value,
@@ -115,20 +117,11 @@ namespace GameEngine.View
             glControl.Invalidate();
         }
 
-        /// <summary>
-        /// This TimerOnTick gets called on the main thread and is likely not
-        /// as accurate as I would have hoped. That being said, I don't know
-        /// enough about the WindowsFormsHost to comment. There definitely needs
-        /// to be some benchmarking done against a standalone OpenTk project.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void TimerOnTick(object sender, EventArgs e)
         {
-            if (DateTime.Now.Subtract(this.lastMeasureTime) > TimeSpan.FromSeconds(1))
+            if (DateTime.Now.Subtract(lastMeasureTime) > TimeSpan.FromSeconds(1))
             {
-                FpsCounter.Content = frames.ToString();
-                frames = 0;
+                FpsCounter.Content = Core.Timer.Instance.Fps;
                 lastMeasureTime = DateTime.Now;
             }
             glControl.Invalidate();
