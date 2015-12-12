@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <view:OpenGLControl x:Name="CustomOpenGLControl" BlueText="{Binding Path=BlueText, Mode=TwoWay}"/>
+        <view:OpenGLControl x:Name="CustomOpenGLControl" BlueText="{Binding Path=BlueText, Mode=TwoWay}" SceneList="{Binding Path=SceneList, Mode=TwoWay}"/>
         <Slider Grid.Column="1" HorizontalAlignment="Center" Orientation="Vertical" Value="{Binding RValue}" Minimum="0" Maximum="1" Name="Red" ValueChanged="Slider_ValueChanged"/>
         <Slider Grid.Column="2" HorizontalAlignment="Center" Orientation="Vertical" Value="{Binding GValue}" Minimum="0" Maximum="1" Name="Green" ValueChanged="Slider_ValueChanged"/>
         <Slider Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical" Value="{Binding BValue}" Minimum="0" Maximum="1" Name="Blue" ValueChanged="Slider_ValueChanged"/>

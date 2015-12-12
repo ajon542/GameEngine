@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
@@ -37,6 +38,19 @@ namespace GameEngine.View
         {
             get { return (string)GetValue(BlueTextProperty); }
             set { SetValue(BlueTextProperty, value); }
+        }
+
+        // TODO: Determine if there is a better way to do this.
+        // This basically allows the SceneViewModel to add scenes to the scenelist and have them rendered.
+        // I am going to go ahead with this method and see what issues I run into.
+        public static readonly DependencyProperty SceneListProperty =
+            DependencyProperty.Register("SceneList", typeof(List<int>), typeof(OpenGLControl),
+            new PropertyMetadata(new List<int>(), null));
+
+        public List<int> SceneList
+        {
+            get { return (List<int>)GetValue(SceneListProperty); }
+            set { SetValue(SceneListProperty, value); }
         }
 
         public OpenGLControl()
@@ -113,7 +127,10 @@ namespace GameEngine.View
 
         private void Paint(object sender, PaintEventArgs e)
         {
-            string tmp = BlueText;
+            // Render the imaginary scenelist...
+            foreach (int i in SceneList)
+            {
+            }
 
             // Update the timer instance.
             Core.Timer.Instance.Update();

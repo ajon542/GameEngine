@@ -8,6 +8,8 @@ namespace GameEngine.ViewModel
 {
     public class SceneViewModel : ViewModelBase
     {
+        private List<int> sceneList;
+
         private string blueText;
 
         private double rValue;
@@ -17,6 +19,20 @@ namespace GameEngine.ViewModel
         public SceneViewModel()
         {
             BlueText = "hello, view!";
+            SceneList = new List<int> { 1, 2, 3, 4, 5 };
+        }
+
+        public List<int> SceneList
+        {
+            get
+            {
+                return sceneList;
+            }
+            set
+            {
+                sceneList = value;
+                OnPropertyChanged("SceneList");
+            }
         }
 
         public string BlueText
