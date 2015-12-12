@@ -16,7 +16,7 @@
             <view:MainView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:SceneViewModel}">
-            <view:SceneView DrawFPS="False" IntProp="222" DoubleProp="2.3456"/>
+            <view:SceneView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:GameViewModel}">
             <view:GameView/>

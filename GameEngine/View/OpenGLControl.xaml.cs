@@ -24,7 +24,14 @@ namespace GameEngine.View
         private DateTime lastMeasureTime;
 
         public static readonly DependencyProperty BlueTextProperty =
-        DependencyProperty.Register("BlueText", typeof(string), typeof(OpenGLControl));
+        DependencyProperty.Register("BlueText", typeof(string), typeof(OpenGLControl),
+            new PropertyMetadata(string.Empty, new PropertyChangedCallback(OnBlueTextChanged)));
+
+        private static void OnBlueTextChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
+        {
+            //OpenGLControl me = o as OpenGLControl;
+            // This is an example of dependency property changed notification.
+        }
 
         public string BlueText
         {
