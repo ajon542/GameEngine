@@ -8,9 +8,29 @@ namespace GameEngine.ViewModel
 {
     public class SceneViewModel : ViewModelBase
     {
+        private string blueText;
+
         private double rValue;
         private double gValue;
         private double bValue;
+
+        public SceneViewModel()
+        {
+            BlueText = "hello, view!";
+        }
+
+        public string BlueText
+        {
+            get
+            {
+                return blueText;
+            }
+            set
+            {
+                blueText = value;
+                OnPropertyChanged("BlueText");
+            }
+        }
 
         public double RValue
         {

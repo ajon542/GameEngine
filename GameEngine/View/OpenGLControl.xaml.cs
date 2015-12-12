@@ -23,6 +23,15 @@ namespace GameEngine.View
 
         private DateTime lastMeasureTime;
 
+        public static readonly DependencyProperty BlueTextProperty =
+        DependencyProperty.Register("BlueText", typeof(string), typeof(OpenGLControl));
+
+        public string BlueText
+        {
+            get { return (string)GetValue(BlueTextProperty); }
+            set { SetValue(BlueTextProperty, value); }
+        }
+
         public OpenGLControl()
         {
             InitializeComponent();
@@ -97,6 +106,8 @@ namespace GameEngine.View
 
         private void Paint(object sender, PaintEventArgs e)
         {
+            string tmp = BlueText;
+
             // Update the timer instance.
             Core.Timer.Instance.Update();
 
