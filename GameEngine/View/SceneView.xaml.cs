@@ -84,6 +84,10 @@ namespace GameEngine.View
 
         private void Paint(object sender, PaintEventArgs e)
         {
+            if (DrawFPS)
+            {
+            }
+
             // Update the timer instance.
             Core.Timer.Instance.Update();
 
@@ -126,6 +130,26 @@ namespace GameEngine.View
                 lastMeasureTime = DateTime.Now;
             }
             glControl.Invalidate();
+        }
+
+        // This is an example of a DependencyProperty. In the MainWindow.xaml when we
+        // setup the <view:SceneView DrawFPS="False"/>
+        // We can now use this property within the SceneView.xaml.cs code.
+        // TODO: Can we use this in other ways?
+        private static readonly DependencyProperty DrawFPSProperty =
+          DependencyProperty.Register("DrawFPS", typeof(bool), typeof(SceneView),
+          new PropertyMetadata(false, null));
+
+        public bool DrawFPS
+        {
+            get
+            {
+                return (bool)GetValue(DrawFPSProperty);
+            }
+            set
+            {
+                SetValue(DrawFPSProperty, value);
+            }
         }
     }
 }
