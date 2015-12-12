@@ -11,6 +11,8 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using GameEngine.Core;
+
 namespace GameEngine.View
 {
     /// <summary>
@@ -18,38 +20,25 @@ namespace GameEngine.View
     /// </summary>
     public partial class OpenGLControl : System.Windows.Controls.UserControl
     {
-        int vbo;
-
         private GLControl glControl;
 
         private DateTime lastMeasureTime;
-
-        public static readonly DependencyProperty BlueTextProperty =
-        DependencyProperty.Register("BlueText", typeof(string), typeof(OpenGLControl),
-            new PropertyMetadata(string.Empty, new PropertyChangedCallback(OnBlueTextChanged)));
-
-        private static void OnBlueTextChanged(DependencyObject o, DependencyPropertyChangedEventArgs args)
-        {
-            //OpenGLControl me = o as OpenGLControl;
-            // This is an example of dependency property changed notification.
-        }
-
-        public string BlueText
-        {
-            get { return (string)GetValue(BlueTextProperty); }
-            set { SetValue(BlueTextProperty, value); }
-        }
 
         // TODO: Determine if there is a better way to do this.
         // This basically allows the SceneViewModel to add scenes to the scenelist and have them rendered.
         // I am going to go ahead with this method and see what issues I run into.
         public static readonly DependencyProperty SceneListProperty =
-            DependencyProperty.Register("SceneList", typeof(List<int>), typeof(OpenGLControl),
-            new PropertyMetadata(new List<int>(), null));
+            DependencyProperty.Register("SceneList", typeof(List<Scene>), typeof(OpenGLControl),
+            new PropertyMetadata(new List<Scene>(), new PropertyChangedCallback(OnSceneListUpdated)));
 
-        public List<int> SceneList
+        private static void OnSceneListUpdated(DependencyObject o, DependencyPropertyChangedEventArgs args)
         {
-            get { return (List<int>)GetValue(SceneListProperty); }
+            // This is an example of dependency property changed notification.
+        }
+
+        public List<Scene> SceneList
+        {
+            get { return (List<Scene>)GetValue(SceneListProperty); }
             set { SetValue(SceneListProperty, value); }
         }
 
@@ -73,23 +62,6 @@ namespace GameEngine.View
             Core.Timer.Instance.Init();
         }
 
-        private void CreateVertexBuffer()
-        {
-            Vector3[] vertices = new Vector3[3];
-
-            for (int i = 0; i < 3; i++)
-            {
-                float xpos = i / 5f;
-                vertices[i] = new Vector3(xpos, 0, -1);
-            }
-
-            GL.GenBuffers(1, out vbo);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.BufferData<Vector3>(BufferTarget.ArrayBuffer,
-                                   new IntPtr(vertices.Length * Vector3.SizeInBytes),
-                                   vertices, BufferUsageHint.StaticDraw);
-        }
-
         private void WindowsFormsHost_Initialized(object sender, EventArgs e)
         {
             if (DesignerProperties.GetIsInDesignMode(this))
@@ -105,8 +77,6 @@ namespace GameEngine.View
             glControl.Dock = DockStyle.Fill;
             (sender as WindowsFormsHost).Child = glControl;
             SetupViewport();
-
-            CreateVertexBuffer();
         }
 
         private void SetupViewport()
@@ -125,11 +95,22 @@ namespace GameEngine.View
             GL.LoadMatrix(ref perspectiveMatrix);
         }
 
+        bool init = true;
+
         private void Paint(object sender, PaintEventArgs e)
         {
-            // Render the imaginary scenelist...
-            foreach (int i in SceneList)
+            if(init)
             {
+                // TODO: Remove this hack.
+                // The scene has to be initialized after the WindowsFormsHost_Initialized call.
+                // The problem is at the time of the call to WindowsFormsHost_Initialized, we
+                // have not received the active SceneList. We need to put in some framework to
+                // to notify the rest of the application that OpenGL has been initialized.
+                foreach (Scene scene in SceneList)
+                {
+                    scene.Initialize();
+                }
+                init = false;
             }
 
             // Update the timer instance.
@@ -141,13 +122,11 @@ namespace GameEngine.View
                 ClearBufferMask.DepthBufferBit |
                 ClearBufferMask.StencilBufferBit);
 
-            GL.Color3(Color.Yellow);
-            GL.PointSize(5);
-            GL.EnableVertexAttribArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
-            GL.DrawArrays(PrimitiveType.Points, 0, 3);
-            GL.DisableVertexAttribArray(0);
+            // Render the scene list.
+            foreach (Scene scene in SceneList)
+            {
+                scene.Render();
+            }
 
             glControl.SwapBuffers();
         }

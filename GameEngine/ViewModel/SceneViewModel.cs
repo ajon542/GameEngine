@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using GameEngine.Core;
+
 namespace GameEngine.ViewModel
 {
     public class SceneViewModel : ViewModelBase
     {
-        private List<int> sceneList;
+        private List<Scene> sceneList;
 
         private string blueText;
 
@@ -19,10 +21,10 @@ namespace GameEngine.ViewModel
         public SceneViewModel()
         {
             BlueText = "hello, view!";
-            SceneList = new List<int> { 1, 2, 3, 4, 5 };
+            SceneList = new List<Scene> { new SceneA() };
         }
 
-        public List<int> SceneList
+        public List<Scene> SceneList
         {
             get
             {
