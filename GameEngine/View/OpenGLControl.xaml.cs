@@ -27,6 +27,8 @@ namespace GameEngine.View
         {
             InitializeComponent();
 
+            // In design view, there is an error due to memory access permissions.
+            // Prevent any GL calls during this time.
             if(DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
