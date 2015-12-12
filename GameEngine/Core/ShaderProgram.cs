@@ -34,9 +34,9 @@ namespace GameEngine.Core
             public ActiveUniformType type;
         }
 
-        public int ProgramID { get; private set; }
-        private int vShaderID = -1;
-        private int fShaderID = -1;
+        public int ProgramId { get; private set; }
+        private int vShaderId = -1;
+        private int fShaderId = -1;
         private int attributeCount;
         private int uniformCount;
 
@@ -53,7 +53,7 @@ namespace GameEngine.Core
         public ShaderProgram(string vshader, string fshader, bool fromFile = false)
         {
             // Create the shader program.
-            ProgramID = GL.CreateProgram();
+            ProgramId = GL.CreateProgram();
 
             if (fromFile)
             {
@@ -86,7 +86,7 @@ namespace GameEngine.Core
             address = GL.CreateShader(type);
             GL.ShaderSource(address, code);
             GL.CompileShader(address);
-            GL.AttachShader(ProgramID, address);
+            GL.AttachShader(ProgramId, address);
             Console.WriteLine(GL.GetShaderInfoLog(address));
         }
 
@@ -99,11 +99,11 @@ namespace GameEngine.Core
         {
             if (type == ShaderType.VertexShader)
             {
-                LoadShader(code, type, out vShaderID);
+                LoadShader(code, type, out vShaderId);
             }
             else if (type == ShaderType.FragmentShader)
             {
-                LoadShader(code, type, out fShaderID);
+                LoadShader(code, type, out fShaderId);
             }
         }
 
@@ -118,11 +118,11 @@ namespace GameEngine.Core
             {
                 if (type == ShaderType.VertexShader)
                 {
-                    LoadShader(sr.ReadToEnd(), type, out vShaderID);
+                    LoadShader(sr.ReadToEnd(), type, out vShaderId);
                 }
                 else if (type == ShaderType.FragmentShader)
                 {
-                    LoadShader(sr.ReadToEnd(), type, out fShaderID);
+                    LoadShader(sr.ReadToEnd(), type, out fShaderId);
                 }
             }
         }
@@ -133,12 +133,12 @@ namespace GameEngine.Core
         public void Link()
         {
             // Link the shader program object.
-            GL.LinkProgram(ProgramID);
-            Console.WriteLine(GL.GetProgramInfoLog(ProgramID));
+            GL.LinkProgram(ProgramId);
+            Console.WriteLine(GL.GetProgramInfoLog(ProgramId));
 
             // Get attribute and uniform count from the program object.
-            GL.GetProgram(ProgramID, GetProgramParameterName.ActiveAttributes, out attributeCount);
-            GL.GetProgram(ProgramID, GetProgramParameterName.ActiveUniforms, out uniformCount);
+            GL.GetProgram(ProgramId, GetProgramParameterName.ActiveAttributes, out attributeCount);
+            GL.GetProgram(ProgramId, GetProgramParameterName.ActiveUniforms, out uniformCount);
 
             // Get information about the active attributes.
             for (int i = 0; i < attributeCount; i++)
@@ -148,10 +148,10 @@ namespace GameEngine.Core
 
                 StringBuilder name = new StringBuilder();
 
-                GL.GetActiveAttrib(ProgramID, i, 256, out length, out info.size, out info.type, name);
+                GL.GetActiveAttrib(ProgramId, i, 256, out length, out info.size, out info.type, name);
 
                 info.name = name.ToString();
-                info.address = GL.GetAttribLocation(ProgramID, info.name);
+                info.address = GL.GetAttribLocation(ProgramId, info.name);
                 attributes.Add(name.ToString(), info);
             }
 
@@ -163,11 +163,11 @@ namespace GameEngine.Core
 
                 StringBuilder name = new StringBuilder();
 
-                GL.GetActiveUniform(ProgramID, i, 256, out length, out info.size, out info.type, name);
+                GL.GetActiveUniform(ProgramId, i, 256, out length, out info.size, out info.type, name);
 
                 info.name = name.ToString();
                 uniforms.Add(name.ToString(), info);
-                info.address = GL.GetUniformLocation(ProgramID, info.name);
+                info.address = GL.GetUniformLocation(ProgramId, info.name);
             }
         }
 

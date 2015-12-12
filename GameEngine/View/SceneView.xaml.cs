@@ -26,6 +26,7 @@ namespace GameEngine.View
         {
             InitializeComponent();
 
+            // Start a timer for every millisecond.
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1);
             timer.Tick += TimerOnTick;
