@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 using OpenTK;
@@ -42,6 +43,25 @@ namespace GameEngine.View
             set { SetValue(SceneListProperty, value); }
         }
 
+        #region
+        // This is an example of command execution. We can hook a command up in the xaml and have
+        // it execute in the view-model. Command="{Binding InitializedCommand}"
+        public ICommand Command
+        {
+            get 
+            {
+                return (ICommand)GetValue(CommandProperty); 
+            }
+            set
+            {
+                SetValue(CommandProperty, value); 
+            }
+        }
+
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(OpenGLControl), new UIPropertyMetadata(null));
+        #endregion
+
         public OpenGLControl()
         {
             InitializeComponent();
@@ -60,6 +80,25 @@ namespace GameEngine.View
             timer.Start();
 
             Core.Timer.Instance.Init();
+            this.Loaded += OnLoaded;
+        }
+
+        bool loaded = false;
+        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (loaded)
+            {
+                return;
+            }
+
+            // This method gets called each time the view is displayed.
+            // TODO: Make sure we want to call initialize multiple times.
+            foreach (Scene scene in SceneList)
+            {
+                scene.Initialize();
+            }
+
+            loaded = true;
         }
 
         private void WindowsFormsHost_Initialized(object sender, EventArgs e)
@@ -95,24 +134,8 @@ namespace GameEngine.View
             GL.LoadMatrix(ref perspectiveMatrix);
         }
 
-        bool init = true;
-
         private void Paint(object sender, PaintEventArgs e)
         {
-            if(init)
-            {
-                // TODO: Remove this hack.
-                // The scene has to be initialized after the WindowsFormsHost_Initialized call.
-                // The problem is at the time of the call to WindowsFormsHost_Initialized, we
-                // have not received the active SceneList. We need to put in some framework to
-                // to notify the rest of the application that OpenGL has been initialized.
-                foreach (Scene scene in SceneList)
-                {
-                    scene.Initialize();
-                }
-                init = false;
-            }
-
             // Update the timer instance.
             Core.Timer.Instance.Update();
 

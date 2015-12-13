@@ -88,6 +88,7 @@ namespace GameEngine.ViewModel
         public void Execute(object parameter)
         {
             // TODO: Optionally pass parameter if we use Action<object> instead of just Action.
+            // See: http://stackoverflow.com/questions/3502127/in-wpf-how-do-i-implement-icommandsource-to-give-my-custom-control-ability-to-us
             execute();
         }
 

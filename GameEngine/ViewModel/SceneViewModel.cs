@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +34,24 @@ namespace GameEngine.ViewModel
                 sceneList = value;
                 OnPropertyChanged("SceneList");
             }
+        }
+
+        DelegateCommand initializedCommand = null;
+        public ICommand InitializedCommand
+        {
+            get
+            {
+                if (initializedCommand == null)
+                {
+                    initializedCommand = new DelegateCommand(() => OnInitialized());
+                }
+
+                return initializedCommand;
+            }
+        }
+
+        private void OnInitialized()
+        {
         }
     }
 }
