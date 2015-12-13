@@ -10,7 +10,7 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding InitializedCommand}" />
+            <i:InvokeCommandAction Command="{Binding SceneLoadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

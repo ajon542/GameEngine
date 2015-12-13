@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
-using System.Text;
-using System.Threading.Tasks;
 
 using GameEngine.Core;
 
 namespace GameEngine.ViewModel
 {
+    /// <summary>
+    /// ViewModel for the Scene.
+    /// </summary>
     public class SceneViewModel : ViewModelBase
     {
+        /// <summary>
+        /// List of scenes.
+        /// </summary>
         private List<Scene> sceneList;
 
-        public SceneViewModel()
-        {
-            // Setting up the scene here is too early and OpenGL hasn't initialized yet.
-            // We shouldn't have terms like "too early" because that makes the system fragile.
-            // We should get a notification from the OpenGLControl specifying exactly when
-            // we can do our initialization. That being said, scene initialization isn't just
-            // going to happen at a single point. It will happen whenever a new scene is added.
-            SceneList = new List<Scene> { new SceneA() };
-        }
-
+        /// <summary>
+        /// Gets or sets the list of scenes.
+        /// </summary>
         public List<Scene> SceneList
         {
             get
@@ -36,22 +31,34 @@ namespace GameEngine.ViewModel
             }
         }
 
-        DelegateCommand initializedCommand = null;
-        public ICommand InitializedCommand
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SceneViewModel"/> class.
+        /// </summary>
+        public SceneViewModel()
+        {
+            SceneList = new List<Scene> { new SceneA() };
+        }
+
+        #region Scene Loaded Command
+
+        private DelegateCommand sceneLoadedCommand;
+        public ICommand SceneLoadedCommand
         {
             get
             {
-                if (initializedCommand == null)
+                if (sceneLoadedCommand == null)
                 {
-                    initializedCommand = new DelegateCommand(() => OnInitialized());
+                    sceneLoadedCommand = new DelegateCommand(SceneLoaded);
                 }
 
-                return initializedCommand;
+                return sceneLoadedCommand;
             }
         }
 
-        private void OnInitialized()
+        private void SceneLoaded()
         {
         }
+
+        #endregion
     }
 }
