@@ -133,11 +133,6 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            // Initialize all the scenes.
-            foreach (Scene scene in SceneList)
-            {
-                scene.Initialize();
-            }
         }
 
         /// <summary>
