@@ -12,15 +12,13 @@ namespace GameEngine.ViewModel
     {
         private List<Scene> sceneList;
 
-        private string blueText;
-
-        private double rValue;
-        private double gValue;
-        private double bValue;
-
         public SceneViewModel()
         {
-            BlueText = "hello, view!";
+            // Setting up the scene here is too early and OpenGL hasn't initialized yet.
+            // We shouldn't have terms like "too early" because that makes the system fragile.
+            // We should get a notification from the OpenGLControl specifying exactly when
+            // we can do our initialization. That being said, scene initialization isn't just
+            // going to happen at a single point. It will happen whenever a new scene is added.
             SceneList = new List<Scene> { new SceneA() };
         }
 
@@ -34,58 +32,6 @@ namespace GameEngine.ViewModel
             {
                 sceneList = value;
                 OnPropertyChanged("SceneList");
-            }
-        }
-
-        public string BlueText
-        {
-            get
-            {
-                return blueText;
-            }
-            set
-            {
-                blueText = value;
-                OnPropertyChanged("BlueText");
-            }
-        }
-
-        public double RValue
-        {
-            get 
-            {
-                return rValue; 
-            }
-            set
-            {
-                rValue = value;
-                OnPropertyChanged("RValue");
-            }
-        }
-
-        public double GValue
-        {
-            get
-            {
-                return gValue;
-            }
-            set
-            {
-                gValue = value;
-                OnPropertyChanged("GValue");
-            }
-        }
-
-        public double BValue
-        {
-            get
-            {
-                return bValue;
-            }
-            set
-            {
-                bValue = value;
-                OnPropertyChanged("BValue");
             }
         }
     }

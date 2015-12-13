@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace GameEngine.Core
 
         public override void Render()
         {
-            GL.Color3(0, 0, 0);
+            GL.Color3(Color.Yellow);
             GL.PointSize(5);
             GL.EnableVertexAttribArray(0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
