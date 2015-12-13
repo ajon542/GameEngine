@@ -21,10 +21,17 @@ namespace GameEngine.View
     /// </summary>
     public partial class OpenGLControl : System.Windows.Controls.UserControl
     {
+        /// <summary>
+        /// Reference to the OpenGL control.
+        /// </summary>
         private GLControl glControl;
 
+        /// <summary>
+        /// Used for frame rate calculation.
+        /// </summary>
         private DateTime lastMeasureTime;
 
+        #region DependencyProperty Examples
         // TODO: Determine if there is a better way to do this.
         // This basically allows the SceneViewModel to add scenes to the scenelist and have them rendered.
         // I am going to go ahead with this method and see what issues I run into.
@@ -42,8 +49,9 @@ namespace GameEngine.View
             get { return (List<Scene>)GetValue(SceneListProperty); }
             set { SetValue(SceneListProperty, value); }
         }
+        #endregion
 
-        #region
+        #region ICommand Examples
         // This is an example of command execution. We can hook a command up in the xaml and have
         // it execute in the view-model. Command="{Binding InitializedCommand}"
         public ICommand Command
@@ -62,6 +70,9 @@ namespace GameEngine.View
             DependencyProperty.Register("Command", typeof(ICommand), typeof(OpenGLControl), new UIPropertyMetadata(null));
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenGLControl"/> class.
+        /// </summary>
         public OpenGLControl()
         {
             InitializeComponent();
@@ -73,55 +84,33 @@ namespace GameEngine.View
                 return;
             }
 
-            // Start a timer for every millisecond.
+            SetupTimer();
+
+            Loaded += OnLoaded;
+        }
+
+        /// <summary>
+        /// Set the timer for invalidating the GLControl.
+        /// </summary>
+        private void SetupTimer()
+        {
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1);
-            timer.Tick += TimerOnTick;
+            timer.Tick += OnTimerOnTick;
             timer.Start();
 
             Core.Timer.Instance.Init();
-            this.Loaded += OnLoaded;
         }
 
-        bool loaded = false;
-        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (loaded)
-            {
-                return;
-            }
-
-            // This method gets called each time the view is displayed.
-            // TODO: Make sure we want to call initialize multiple times.
-            foreach (Scene scene in SceneList)
-            {
-                scene.Initialize();
-            }
-
-            loaded = true;
-        }
-
-        private void WindowsFormsHost_Initialized(object sender, EventArgs e)
-        {
-            if (DesignerProperties.GetIsInDesignMode(this))
-            {
-                return;
-            }
-
-            var flags = GraphicsContextFlags.Default;
-
-            glControl = new GLControl(new GraphicsMode(32, 24), 2, 0, flags);
-            glControl.MakeCurrent();
-            glControl.Paint += Paint;
-            glControl.Dock = DockStyle.Fill;
-            (sender as WindowsFormsHost).Child = glControl;
-            SetupViewport();
-        }
-
+        /// <summary>
+        /// Set the viewport.
+        /// </summary>
         private void SetupViewport()
         {
+            // Set the view port.
             GL.Viewport(0, 0, glControl.Width, glControl.Height);
 
+            // Create the perspective field of view matrix.
             double aspectRatio = glControl.Width / (double)glControl.Height;
             float fov = 1.0f;
             float near = 1.0f;
@@ -130,16 +119,66 @@ namespace GameEngine.View
             Matrix4 perspectiveMatrix =
                Matrix4.CreatePerspectiveFieldOfView(fov, (float)aspectRatio, near, far);
 
+            // Set the matrix mode and load the matrix.
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref perspectiveMatrix);
         }
 
-        private void Paint(object sender, PaintEventArgs e)
+        #region Event Handlers
+
+        /// <summary>
+        /// Control loaded event handler.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            // Initialize all the scenes.
+            foreach (Scene scene in SceneList)
+            {
+                scene.Initialize();
+            }
+        }
+
+        /// <summary>
+        /// Windows forms host initialized event handler.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnHostInitialized(object sender, EventArgs e)
+        {
+            // In design view, there is an error due to memory access permissions.
+            // Prevent any GL calls during this time.
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
+            // Initialize the GL control.
+            var flags = GraphicsContextFlags.Default;
+
+            glControl = new GLControl(new GraphicsMode(32, 24), 2, 0, flags);
+            glControl.MakeCurrent();
+            glControl.Paint += OnPaint;
+            glControl.Dock = DockStyle.Fill;
+            (sender as WindowsFormsHost).Child = glControl;
+
+            // Set the view port.
+            SetupViewport();
+        }
+
+        /// <summary>
+        /// Paint event handler.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnPaint(object sender, PaintEventArgs e)
         {
             // Update the timer instance.
             Core.Timer.Instance.Update();
 
-            GL.ClearColor(Color.Red);
+            // Clear.
+            GL.ClearColor(Color.Black);
             GL.Clear(
                 ClearBufferMask.ColorBufferBit |
                 ClearBufferMask.DepthBufferBit |
@@ -151,22 +190,38 @@ namespace GameEngine.View
                 scene.Render();
             }
 
+            // Swap the buffers.
             glControl.SwapBuffers();
         }
 
-        private void Resized(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Resized event handler.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnResized(object sender, RoutedEventArgs e)
         {
             SetupViewport();
         }
 
-        private void TimerOnTick(object sender, EventArgs e)
+        /// <summary>
+        /// Timer event handler.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnTimerOnTick(object sender, EventArgs e)
         {
+            // Update the fps counter every second.
             if (DateTime.Now.Subtract(lastMeasureTime) > TimeSpan.FromSeconds(1))
             {
                 FpsCounter.Content = Core.Timer.Instance.Fps;
                 lastMeasureTime = DateTime.Now;
             }
+
+            // Force the GL control to paint.
             glControl.Invalidate();
         }
+
+        #endregion
     }
 }

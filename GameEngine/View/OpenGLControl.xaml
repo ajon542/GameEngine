@@ -11,7 +11,7 @@
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <WindowsFormsHost Grid.Row="0" Initialized="WindowsFormsHost_Initialized" SizeChanged="Resized">
+        <WindowsFormsHost Grid.Row="0" Initialized="OnHostInitialized" SizeChanged="OnResized">
         </WindowsFormsHost>
         <Label Grid.Row="1" Name="FpsCounter"></Label>
     </Grid>
