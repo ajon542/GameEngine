@@ -8,6 +8,11 @@ namespace GameEngine.ViewModel
     /// <summary>
     /// ViewModel for the Scene.
     /// </summary>
+    /// <remarks>
+    /// Ideally, the ViewModel should have a description of the scene.
+    /// Scripts should be attached to the game objects in order to update.
+    /// The View should then render the scene based on the description.
+    /// </remarks>
     public class SceneViewModel : ViewModelBase
     {
         /// <summary>
