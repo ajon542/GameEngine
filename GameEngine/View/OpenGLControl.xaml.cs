@@ -156,6 +156,7 @@ namespace GameEngine.View
             glControl.MakeCurrent();
             glControl.Paint += OnPaint;
             glControl.Dock = DockStyle.Fill;
+            //glControl.VSync = false; This call only gains about 5 fps, wonder what happens on my work machine?
             (sender as WindowsFormsHost).Child = glControl;
 
             // Set the view port.
