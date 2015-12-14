@@ -7,6 +7,13 @@ The HierarchyViewModel to communicate with the SceneViewModel to notify of an ad
 The SceneViewModel to notify the SceneView that a GameObject has been added.
 The SceneView to render the newly added object.
 
+I have basically achieved this goal of being able to have the SceneViewModel notifying
+of an added GameObject. The SceneView now has a notification of the scene list and can
+render the scene list. Now I have to think about the design of the view model and view
+interaction a little more. I'm thinking the view model needs to keep a description of
+the scene and the view needs to render the scene based on this description. The next
+task is to come up with a simple scene description so the view can render it.
+
 ## TODO
 (not in any particular order)
 - Create dockable windows for SceneView, GameView, HierarchyView, ConsoleOutputView etc
