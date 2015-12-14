@@ -65,6 +65,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\GameObject.cs" />
+    <Compile Include="Core\ObjectBehaviour.cs" />
     <Compile Include="Core\Scene.cs" />
     <Compile Include="Core\ShaderProgram.cs" />
     <Compile Include="Core\Timer.cs" />

@@ -17,5 +17,12 @@ namespace GameEngine.Core
         // GameObject. The purpose of this game engine is to render the scene. It is
         // the game developers responsibility to provide the behaviour through scripts
         // attached to GameObjects.
+        // A GameObject can be attached to other GameObjects and be influenced by the
+        // behaviour of their parent.
+
+        // Use case:
+        // Add an empty GameObject to the hierarchy.
+        // Add different components to the GameObjects.
+        // GameObject is rendered in scene and game view.
     }
 }
