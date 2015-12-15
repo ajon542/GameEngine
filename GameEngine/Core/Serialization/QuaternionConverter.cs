@@ -7,6 +7,9 @@ using OpenTK;
 
 namespace GameEngine.Core.Serialization
 {
+    /// <summary>
+    /// Json converter for Quaternion objects.
+    /// </summary>
     public class QuaternionConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)

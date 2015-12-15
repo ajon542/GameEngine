@@ -7,6 +7,9 @@ using OpenTK;
 
 namespace GameEngine.Core.Serialization
 {
+    /// <summary>
+    /// Json converter for Vector objects.
+    /// </summary>
     public class VectorConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
