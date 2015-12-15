@@ -57,6 +57,9 @@ namespace GameEngine.Core
         [JsonProperty]
         private List<GameObject> children;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameObject"/> class.
+        /// </summary>
         public GameObject()
         {
             Name = "GameObject";
@@ -87,6 +90,15 @@ namespace GameEngine.Core
 
             children.Add(child);
             child.SetParent(this);
+        }
+
+        /// <summary>
+        /// Gets the list of child game objects.
+        /// </summary>
+        /// <returns>The list of child game objects.</returns>
+        public List<GameObject> GetChildren()
+        {
+            return children;
         }
 
         /// <summary>
