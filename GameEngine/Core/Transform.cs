@@ -28,5 +28,68 @@ namespace GameEngine.Core
             Scale = new Vector3();
             Rotation = new Quaternion();
         }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
+        public override bool Equals(System.Object obj)
+        {
+            // If parameter is null return false.
+            if (obj == null)
+            {
+                return false;
+            }
+
+            // If parameter cannot be cast to Transform return false.
+            Transform p = obj as Transform;
+            if (p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match.
+            return Match(p);
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="p">The object to compare with the current object.</param>
+        /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
+        public bool Equals(Transform p)
+        {
+            // If parameter is null return false:
+            if (p == null)
+            {
+                return false;
+            }
+
+            // Return true if the fields match.
+            return Match(p);
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            return Position.GetHashCode() * Scale.GetHashCode() * Rotation.GetHashCode() * 17;
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="p">The object to compare with the current object.</param>
+        /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
+        private bool Match(Transform p)
+        {
+            bool positionMatch = p.Position == Position;
+            bool scaleMatch = p.Scale == Scale;
+            bool rotationMatch = p.Rotation == Rotation;
+            return positionMatch & scaleMatch & rotationMatch;
+        }
     }
 }

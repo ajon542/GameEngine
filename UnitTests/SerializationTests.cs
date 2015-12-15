@@ -28,21 +28,8 @@ namespace UnitTests
 
             List<GameObject> children = loadedRoot.GetChildren();
             
-            // TODO: Probably need a Transform comparer.
             Assert.AreEqual(children.Count, 1);
-
-            Assert.AreEqual(1, children[0].Transform.Position.X);
-            Assert.AreEqual(2, children[0].Transform.Position.Y);
-            Assert.AreEqual(3, children[0].Transform.Position.Z);
-
-            Assert.AreEqual(4, children[0].Transform.Scale.X);
-            Assert.AreEqual(5, children[0].Transform.Scale.Y);
-            Assert.AreEqual(6, children[0].Transform.Scale.Z);
-
-            Assert.AreEqual(7, children[0].Transform.Rotation.X);
-            Assert.AreEqual(8, children[0].Transform.Rotation.Y);
-            Assert.AreEqual(9, children[0].Transform.Rotation.Z);
-            Assert.AreEqual(10, children[0].Transform.Rotation.W);
+            Assert.AreEqual(c1.Transform, children[0].Transform);
         }
     }
 }
