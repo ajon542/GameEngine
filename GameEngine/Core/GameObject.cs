@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using OpenTK;
 
 namespace GameEngine.Core
 {
@@ -33,5 +30,36 @@ namespace GameEngine.Core
         // Add an empty GameObject to the hierarchy.
         // Add different components to the GameObjects.
         // GameObject is rendered in scene and game view.
+
+        /// <summary>
+        /// Gets or sets the name of the game object.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the position of the game object.
+        /// </summary>
+        public Vector3 Position { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scale of the game object.
+        /// </summary>
+        public Vector3 Scale { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rotation of the game object.
+        /// </summary>
+        public Quaternion Rotation { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameObject"/> class.
+        /// </summary>
+        public GameObject()
+        {
+            Name = "GameObject";
+            Position = new Vector3();
+            Scale = new Vector3();
+            Rotation = new Quaternion();
+        }
     }
 }
