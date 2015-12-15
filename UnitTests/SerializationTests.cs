@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using GameEngine.Core;
 using Newtonsoft.Json;
+using OpenTK;
 
 namespace UnitTests
 {
@@ -17,19 +20,32 @@ namespace UnitTests
 
             root.AddChild(c1);
 
+            // TODO: This needs to be cleaned up and put in its own class.
+
+            // Create the serializer settings.
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             };
 
-            string output = JsonConvert.SerializeObject(root, Formatting.Indented, settings);
+            StringBuilder sb = new StringBuilder();
+            StringWriter sw = new StringWriter(sb);
+
+            // Add the converters.
+            JsonSerializer serializer = JsonSerializer.Create(settings);
+            serializer.Converters.Add(new VectorConverter());
+            serializer.Formatting = Formatting.Indented;
+
+            // Serialize the object.
+            serializer.Serialize(sw, root);
+
+            string output = sw.ToString();
+
+            JsonTextReader reader = new JsonTextReader(new StringReader(output));
+            GameObject loadedRoot = serializer.Deserialize<GameObject>(reader);
 
             Console.WriteLine(output);
-
-            // This almost deserializes correctly. We would just need to traverse the tree
-            // and set all the "parent" references.
-            GameObject loadedRoot = JsonConvert.DeserializeObject<GameObject>(output, settings);
         }
     }
 }
