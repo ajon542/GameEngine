@@ -43,7 +43,6 @@ namespace GameEngine.Core
         /// <summary>
         /// Gets or sets the transform of the game object.
         /// </summary>
-        [JsonProperty]
         public Transform Transform { get; set; }
 
         /// <summary>
