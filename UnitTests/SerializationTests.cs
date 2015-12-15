@@ -4,8 +4,8 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using GameEngine.Core;
+using GameEngine.Core.Serialization;
 using Newtonsoft.Json;
-using OpenTK;
 
 namespace UnitTests
 {
@@ -21,6 +21,7 @@ namespace UnitTests
             root.AddChild(c1);
 
             // TODO: This needs to be cleaned up and put in its own class.
+            // TODO: Need to test derived classes.
 
             // Create the serializer settings.
             JsonSerializerSettings settings = new JsonSerializerSettings
@@ -29,23 +30,30 @@ namespace UnitTests
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             };
 
-            StringBuilder sb = new StringBuilder();
-            StringWriter sw = new StringWriter(sb);
-
             // Add the converters.
             JsonSerializer serializer = JsonSerializer.Create(settings);
+
             serializer.Converters.Add(new VectorConverter());
+            serializer.Converters.Add(new QuaternionConverter());
             serializer.Formatting = Formatting.Indented;
 
-            // Serialize the object.
-            serializer.Serialize(sw, root);
+            string output;
+            StringBuilder sb = new StringBuilder();
+            using (StringWriter sw = new StringWriter(sb))
+            {
+                // Serialize the object.
+                serializer.Serialize(sw, root);
+                output = sw.ToString();
+            }
 
-            string output = sw.ToString();
-
-            JsonTextReader reader = new JsonTextReader(new StringReader(output));
-            GameObject loadedRoot = serializer.Deserialize<GameObject>(reader);
-
-            Console.WriteLine(output);
+            using (StringReader sr = new StringReader(output))
+            {
+                using (JsonTextReader reader = new JsonTextReader(sr))
+                {
+                    GameObject loadedRoot = serializer.Deserialize<GameObject>(reader);
+                    Console.WriteLine(output);
+                }
+            }
         }
     }
 }

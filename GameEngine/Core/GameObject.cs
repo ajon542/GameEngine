@@ -44,7 +44,7 @@ namespace GameEngine.Core
         /// Gets or sets the transform of the game object.
         /// </summary>
         [JsonProperty]
-        public Vector3 Transform { get; set; }
+        public Transform Transform { get; set; }
 
         /// <summary>
         /// The parent game object.
@@ -72,7 +72,7 @@ namespace GameEngine.Core
             Name = name;
             children = new List<GameObject>();
 
-            Transform = new Vector3(1, 2, 3);
+            Transform = new Transform();
         }
 
         /// <summary>
