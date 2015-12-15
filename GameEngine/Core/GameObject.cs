@@ -1,4 +1,8 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
 using OpenTK;
 
 namespace GameEngine.Core
@@ -37,19 +41,24 @@ namespace GameEngine.Core
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the position of the game object.
+        /// Gets or sets the Guid of the game object.
         /// </summary>
-        public Vector3 Position { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the scale of the game object.
+        /// Gets or sets the transform of the game object.
         /// </summary>
-        public Vector3 Scale { get; set; }
+        public Transform Transform { get; set; }
 
         /// <summary>
-        /// Gets or sets the rotation of the game object.
+        /// The parent game object.
         /// </summary>
-        public Quaternion Rotation { get; set; }
+        private GameObject parent;
+
+        /// <summary>
+        /// The list of children game objects.
+        /// </summary>
+        private List<GameObject> children;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class.
@@ -57,9 +66,11 @@ namespace GameEngine.Core
         public GameObject()
         {
             Name = "GameObject";
-            Position = new Vector3();
-            Scale = new Vector3();
-            Rotation = new Quaternion();
+            Id = Guid.NewGuid();
+            Transform = new Transform();
+
+            parent = new GameObject();
+            children = new List<GameObject>();
         }
     }
 }

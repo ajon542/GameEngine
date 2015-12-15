@@ -69,6 +69,7 @@
     <Compile Include="Core\Scene.cs" />
     <Compile Include="Core\ShaderProgram.cs" />
     <Compile Include="Core\Timer.cs" />
+    <Compile Include="Core\Transform.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
