@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
-using OpenTK;
+using Newtonsoft.Json;
 
 namespace GameEngine.Core
 {
@@ -53,24 +51,54 @@ namespace GameEngine.Core
         /// <summary>
         /// The parent game object.
         /// </summary>
+        [JsonProperty]
         private GameObject parent;
 
         /// <summary>
         /// The list of children game objects.
         /// </summary>
+        [JsonProperty]
         private List<GameObject> children;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class.
         /// </summary>
-        public GameObject()
+        public GameObject(string name = "GameObject")
         {
-            Name = "GameObject";
+            Name = name;
             Id = Guid.NewGuid();
             Transform = new Transform();
 
-            parent = new GameObject();
             children = new List<GameObject>();
+        }
+
+        /// <summary>
+        /// Add a child game object.
+        /// </summary>
+        /// <param name="child">The child game object to add.</param>
+        public void AddChild(GameObject child)
+        {
+            if(child == null)
+            {
+                return;
+            }
+
+            children.Add(child);
+            child.SetParent(this);
+        }
+
+        /// <summary>
+        /// Set the parent of the game object.
+        /// </summary>
+        /// <param name="parent">The parent of the game object.</param>
+        public void SetParent(GameObject parent)
+        {
+            this.parent = parent;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
