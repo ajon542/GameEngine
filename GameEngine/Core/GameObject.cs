@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
+using OpenTK;
+
 namespace GameEngine.Core
 {
     public class GameObject
@@ -39,13 +41,9 @@ namespace GameEngine.Core
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the Guid of the game object.
-        /// </summary>
-        public Guid Id { get; private set; }
-
-        /// <summary>
         /// Gets or sets the transform of the game object.
         /// </summary>
+        [JsonProperty]
         public Transform Transform { get; set; }
 
         /// <summary>
@@ -60,16 +58,21 @@ namespace GameEngine.Core
         [JsonProperty]
         private List<GameObject> children;
 
+        public GameObject()
+        {
+            Name = "GameObject";
+            children = new List<GameObject>();
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class.
         /// </summary>
-        public GameObject(string name = "GameObject")
+        public GameObject(string name)
         {
             Name = name;
-            Id = Guid.NewGuid();
-            Transform = new Transform();
-
             children = new List<GameObject>();
+
+            Transform = new Transform();
         }
 
         /// <summary>
