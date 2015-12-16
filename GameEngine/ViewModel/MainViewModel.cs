@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GameEngine.ViewModel
 {
@@ -29,6 +30,44 @@ namespace GameEngine.ViewModel
 
             settings.Add(new SceneViewModel());
             settings.Add(new GameViewModel());
+        }
+
+        private DelegateCommand openCommand;
+        public ICommand OpenCommand
+        {
+            get
+            {
+                if (openCommand == null)
+                {
+                    openCommand = new DelegateCommand(Open);
+                }
+
+                return openCommand;
+            }
+        }
+
+        private void Open()
+        {
+
+        }
+
+        private DelegateCommand optionsCommand;
+        public ICommand OptionsCommand
+        {
+            get
+            {
+                if (optionsCommand == null)
+                {
+                    optionsCommand = new DelegateCommand(Options);
+                }
+
+                return optionsCommand;
+            }
+        }
+
+        private void Options()
+        {
+
         }
     }
 }

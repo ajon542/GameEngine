@@ -23,9 +23,19 @@
         </DataTemplate>
     </Window.Resources>
 
-    <!--
-    Without setting the content presenter, the MainView does not get shown.
-    DataContext = new MainViewModel();
-    -->
-    <ContentPresenter Content="{Binding}"/>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Options" Command="{Binding OptionsCommand}"/>
+            </MenuItem>
+        </Menu>
+        <!--
+        Without setting the content presenter, the MainView does not get shown.
+        DataContext = new MainViewModel();
+        -->
+        <ContentPresenter Content="{Binding}"/>
+    </DockPanel>
 </Window>
