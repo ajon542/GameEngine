@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\Component.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\ObjectBehaviour.cs" />
     <Compile Include="Core\Scene.cs" />
