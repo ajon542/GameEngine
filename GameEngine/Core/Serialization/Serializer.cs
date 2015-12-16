@@ -22,7 +22,8 @@ namespace GameEngine.Core.Serialization
             // Add the converters.
             serializer = JsonSerializer.Create(settings);
 
-            serializer.Converters.Add(new VectorConverter());
+            serializer.Converters.Add(new Vector2Converter());
+            serializer.Converters.Add(new Vector3Converter());
             serializer.Converters.Add(new QuaternionConverter());
             serializer.Formatting = Formatting.Indented;
         }
