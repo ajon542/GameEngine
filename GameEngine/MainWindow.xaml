@@ -26,10 +26,20 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
+                <MenuItem Header="New"/>
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
             </MenuItem>
-            <MenuItem Header="Settings">
-                <MenuItem Header="Options" Command="{Binding OptionsCommand}"/>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Preferences"/>
+            </MenuItem>
+            <MenuItem Header="Window">
+                <MenuItem Header="Game"/>
+                <MenuItem Header="Hierarchy"/>
+                <MenuItem Header="Profile"/>
+                <MenuItem Header="Scene"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
         <!--

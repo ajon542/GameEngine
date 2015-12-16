@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GameEngine.ViewModel
@@ -33,42 +28,23 @@ namespace GameEngine.ViewModel
             settings.Add(new GameViewModel());
         }
 
-        private DelegateCommand openCommand;
-        public ICommand OpenCommand
+        private DelegateCommand exitCommand;
+        public ICommand ExitCommand
         {
             get
             {
-                if (openCommand == null)
+                if (exitCommand == null)
                 {
-                    openCommand = new DelegateCommand(Open);
+                    exitCommand = new DelegateCommand(ExitApplication);
                 }
 
-                return openCommand;
+                return exitCommand;
             }
         }
 
-        private void Open()
+        private void ExitApplication()
         {
-            Trace.WriteLine("Open");
-        }
-
-        private DelegateCommand optionsCommand;
-        public ICommand OptionsCommand
-        {
-            get
-            {
-                if (optionsCommand == null)
-                {
-                    optionsCommand = new DelegateCommand(Options);
-                }
-
-                return optionsCommand;
-            }
-        }
-
-        private void Options()
-        {
-            Trace.WriteLine("Options");
+            Application.Current.Shutdown();
         }
     }
 }
