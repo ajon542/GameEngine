@@ -1,9 +1,9 @@
 ﻿
 namespace GameEngine.Core.Serialization
 {
-    public interface ISerializer
+    public interface ISerializer<T>
     {
-        string Serialize(GameObject gameObject);
-        GameObject Deserialize(string data);
+        string Serialize(T gameObject);
+        T Deserialize<T>(string data);
     }
 }

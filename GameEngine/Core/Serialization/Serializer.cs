@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace GameEngine.Core.Serialization
 {
-    public class Serializer : ISerializer
+    public class Serializer<T> : ISerializer<T>
     {
         private JsonSerializer serializer;
 
@@ -26,7 +26,7 @@ namespace GameEngine.Core.Serialization
             serializer.Formatting = Formatting.Indented;
         }
 
-        public string Serialize(GameObject gameObject)
+        public string Serialize(T gameObject)
         {
             string output;
             StringBuilder sb = new StringBuilder();
@@ -40,13 +40,13 @@ namespace GameEngine.Core.Serialization
             return output;
         }
 
-        public GameObject Deserialize(string data)
+        public T Deserialize<T>(string data)
         {
             using (StringReader sr = new StringReader(data))
             {
                 using (JsonTextReader reader = new JsonTextReader(sr))
                 {
-                    return serializer.Deserialize<GameObject>(reader);
+                    return serializer.Deserialize<T>(reader);
                 }
             }
         }
