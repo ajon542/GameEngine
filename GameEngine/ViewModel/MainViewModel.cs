@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace GameEngine.ViewModel
 
         private void Open()
         {
-
+            Trace.WriteLine("Open");
         }
 
         private DelegateCommand optionsCommand;
@@ -67,7 +68,7 @@ namespace GameEngine.ViewModel
 
         private void Options()
         {
-
+            Trace.WriteLine("Options");
         }
     }
 }
