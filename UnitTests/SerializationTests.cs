@@ -7,6 +7,16 @@ using OpenTK;
 
 namespace UnitTests
 {
+    class Base
+    {
+        public int Value { get; set; }
+    }
+
+    class Derived : Base
+    {
+        public string Name { get; set; }
+    }
+
     [TestClass]
     public class SerializationTests
     {
@@ -18,7 +28,7 @@ namespace UnitTests
             Vector3 vec = new Vector3(1, 2, 3);
             ISerializer<Vector3> serializer = new Serializer<Vector3>();
             string output = serializer.Serialize(vec);
-            Vector3 res = serializer.Deserialize<Vector3>(output);
+            Vector3 res = serializer.Deserialize(output);
             Assert.AreEqual(vec, res);
         }
 
@@ -28,8 +38,17 @@ namespace UnitTests
             Quaternion qt = new Quaternion(1, 2, 3, 4);
             ISerializer<Quaternion> serializer = new Serializer<Quaternion>();
             string output = serializer.Serialize(qt);
-            Quaternion res = serializer.Deserialize<Quaternion>(output);
+            Quaternion res = serializer.Deserialize(output);
             Assert.AreEqual(qt, res);
+        }
+
+        [TestMethod]
+        public void TestDerivedSerialization()
+        {
+            Base b = new Derived { Value = 1234, Name = "Derived" };
+            ISerializer<Base> serializer = new Serializer<Base>();
+            string output = serializer.Serialize(b);
+            Base res = serializer.Deserialize(output);
         }
 
         [TestMethod]
@@ -46,7 +65,7 @@ namespace UnitTests
             ISerializer<GameObject> serializer = new Serializer<GameObject>();
 
             string output = serializer.Serialize(root);
-            GameObject loadedRoot = serializer.Deserialize<GameObject>(output);
+            GameObject loadedRoot = serializer.Deserialize(output);
 
             List<GameObject> children = loadedRoot.GetChildren();
             

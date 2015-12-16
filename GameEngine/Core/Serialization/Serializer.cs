@@ -16,6 +16,7 @@ namespace GameEngine.Core.Serialization
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                TypeNameHandling = TypeNameHandling.All
             };
 
             // Add the converters.
@@ -40,7 +41,7 @@ namespace GameEngine.Core.Serialization
             return output;
         }
 
-        public T Deserialize<T>(string data)
+        public T Deserialize(string data)
         {
             using (StringReader sr = new StringReader(data))
             {
