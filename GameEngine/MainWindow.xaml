@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModel="clr-namespace:GameEngine.ViewModel"
         xmlns:view="clr-namespace:GameEngine.View"
+        xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
         Title="MainWindow" Height="800" Width="1400">
 
     <!--
@@ -11,7 +12,7 @@
     the appropriate view for that view-model will be shown.
     See: http://stackoverflow.com/questions/23128378/wpf-design-multiple-views-in-one-window
     -->
-    <Window.Resources>
+    <!--<Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
             <view:MainView/>
         </DataTemplate>
@@ -21,9 +22,9 @@
         <DataTemplate DataType="{x:Type viewModel:GameViewModel}">
             <view:GameView/>
         </DataTemplate>
-    </Window.Resources>
+    </Window.Resources>-->
 
-    <DockPanel>
+    <!--<DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New"/>
@@ -41,11 +42,43 @@
             <MenuItem Header="Help">
                 <MenuItem Header="About"/>
             </MenuItem>
-        </Menu>
+        </Menu>-->
         <!--
         Without setting the content presenter, the MainView does not get shown.
         DataContext = new MainViewModel();
         -->
-        <ContentPresenter Content="{Binding}"/>
-    </DockPanel>
+    <!--    <ContentPresenter Content="{Binding}"/>
+    </DockPanel>-->
+
+    <!-- This is an example of avalon doc. No idea how to incorporate just yet. -->
+    <ad:DockingManager x:Name="dockManager">
+        <ad:LayoutRoot>
+            <ad:LayoutPanel Orientation="Horizontal">
+                <ad:LayoutPanel Orientation="Vertical">
+                    <ad:LayoutPanel Orientation="Horizontal">
+                        <ad:LayoutDocumentPaneGroup x:Name="leftDocumentGroup">
+                            <ad:LayoutDocumentPane>
+                                <ad:LayoutDocument Title="Left Doc"></ad:LayoutDocument>
+                            </ad:LayoutDocumentPane>
+                        </ad:LayoutDocumentPaneGroup>
+                        <ad:LayoutDocumentPaneGroup x:Name="rightDocumentGroup">
+                            <ad:LayoutDocumentPane>
+                                <ad:LayoutDocument Title="Right Doc"></ad:LayoutDocument>
+                            </ad:LayoutDocumentPane>
+                        </ad:LayoutDocumentPaneGroup>
+                    </ad:LayoutPanel>
+                    <ad:LayoutAnchorablePaneGroup x:Name="bottomAnchorableGroup">
+                        <ad:LayoutAnchorablePane>
+                            <ad:LayoutAnchorable Title="Bottom Anch"></ad:LayoutAnchorable>
+                        </ad:LayoutAnchorablePane>
+                    </ad:LayoutAnchorablePaneGroup>
+                </ad:LayoutPanel>
+                <ad:LayoutAnchorablePaneGroup x:Name="rightAnchorableGroup">
+                    <ad:LayoutAnchorablePane>
+                        <ad:LayoutAnchorable Title="Right Anch"></ad:LayoutAnchorable>
+                    </ad:LayoutAnchorablePane>
+                </ad:LayoutAnchorablePaneGroup>
+            </ad:LayoutPanel>
+        </ad:LayoutRoot>
+    </ad:DockingManager>
 </Window>
