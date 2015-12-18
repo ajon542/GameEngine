@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using GameEngine.ViewModel;
 
 namespace GameEngine
@@ -14,6 +15,19 @@ namespace GameEngine
 
             // Example of switching between views based on the view-model.
             DataContext = new MainViewModel();
+        }
+
+        /// <summary>
+        /// Exit the application.
+        /// </summary>
+        private void Exit_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ApplicationShutdown();
+        }
+
+        private void ApplicationShutdown()
+        {
+            Application.Current.Shutdown();
         }
     }
 }

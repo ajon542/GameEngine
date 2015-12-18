@@ -22,13 +22,26 @@
         <DataTemplate DataType="{x:Type viewModel:GameViewModel}">
             <view:GameView/>
         </DataTemplate>
+
+        <RoutedUICommand x:Key="Commands.Exit" />
+        
     </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding 
+            Command="{StaticResource Commands.Exit}"
+            Executed="Exit_Executed"
+            />
+    </Window.CommandBindings>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New"/>
-                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+                <MenuItem
+                    Header="E_xit"
+                    Command="{StaticResource Commands.Exit}"
+                    />
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Preferences"/>

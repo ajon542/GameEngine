@@ -28,7 +28,7 @@ namespace GameEngine.ViewModel
             settings.Add(new GameViewModel());
         }
 
-        private DelegateCommand exitCommand;
+        /*private DelegateCommand exitCommand;
         public ICommand ExitCommand
         {
             get
@@ -40,11 +40,6 @@ namespace GameEngine.ViewModel
 
                 return exitCommand;
             }
-        }
-
-        private void ExitApplication()
-        {
-            Application.Current.Shutdown();
-        }
+        }*/
     }
 }
