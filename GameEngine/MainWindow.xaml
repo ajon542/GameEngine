@@ -34,6 +34,14 @@
             />
     </Window.CommandBindings>
 
+    <Window.InputBindings>
+        <KeyBinding
+			Key="q"
+            Modifiers="Control"
+			Command="{StaticResource Commands.Exit}"
+			/>
+    </Window.InputBindings>
+
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
