@@ -84,7 +84,7 @@ namespace UnitTests
             GameObject loadedRoot = serializer.Deserialize(output);
 
             List<GameObject> children = loadedRoot.GetChildren();
-            
+
             Assert.AreEqual(children.Count, 1);
             Assert.AreEqual(c1.Transform, children[0].Transform);
         }
