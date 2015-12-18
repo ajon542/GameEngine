@@ -1,5 +1,6 @@
 # GameEngine
-Experimenting with OpenTK inside WPF
+The purpose of this project is to create a game engine in C# utilizing some of the technologies
+found on the open source websites. Some of the technologies include WPF, OpenTK and AvalonDock.
 
 ## Current Goal
 Integrate AvalonDock to the project and make dockable windows based on the Window menu item.
