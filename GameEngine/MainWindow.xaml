@@ -101,4 +101,8 @@
             </ad:LayoutPanel>
         </ad:LayoutRoot>
     </ad:DockingManager>-->
+
+    <!--<view:AvalonDockHost>
+
+    </view:AvalonDockHost>-->
 </Window>

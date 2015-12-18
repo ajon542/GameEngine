@@ -24,5 +24,25 @@ namespace GameEngine.View
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Event raised when Avalondock has loaded.
+        /// </summary>
+        public event EventHandler<EventArgs> AvalonDockLoaded;
+
+        /// <summary>
+        /// Event raised when Avalondock has loaded.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void AvalonDock_Loaded(object sender, RoutedEventArgs e)
+        {
+            EventHandler<EventArgs> handler = AvalonDockLoaded;
+
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
     }
 }
