@@ -112,7 +112,7 @@ namespace GameEngine.View
 
             // Create the perspective field of view matrix.
             double aspectRatio = glControl.Width / (double)glControl.Height;
-            float fov = 1.0f;
+            float fov = 1f;
             float near = 1.0f;
             float far = 1000.0f;
 
