@@ -2,6 +2,21 @@
 Experimenting with OpenTK inside WPF
 
 ## Current Goal
+Integrate AvalonDock to the project and make dockable windows based on the Window menu item.
+
+## TODO
+(not in any particular order)
+- Create dockable windows for SceneView, GameView, HierarchyView, ConsoleOutputView etc
+- Move around the scene
+- Place objects in the scene
+- Scene hierarchy
+- Add scripts to game objects
+- Enter "play mode"
+- Use the wiki to keep track of goals and acheivements
+
+## Previous Goals
+
+-------------------------------------------------------------------------------------------
 One HierarchyView to be able to add a GameObject, update the HierarchyViewModel.
 The HierarchyViewModel to communicate with the SceneViewModel to notify of an added GameObject.
 The SceneViewModel to notify the SceneView that a GameObject has been added.
@@ -14,11 +29,4 @@ interaction a little more. I'm thinking the view model needs to keep a descripti
 the scene and the view needs to render the scene based on this description. The next
 task is to come up with a simple scene description so the view can render it.
 
-## TODO
-(not in any particular order)
-- Create dockable windows for SceneView, GameView, HierarchyView, ConsoleOutputView etc
-- Move around the scene
-- Place objects in the scene
-- Scene hierarchy
-- Add scripts to game objects
-- Enter "play mode"
+-------------------------------------------------------------------------------------------
