@@ -2,6 +2,10 @@
 The purpose of this project is to create a game engine in C# utilizing some of the technologies
 found on the open source websites. Some of the technologies include WPF, OpenTK and AvalonDock.
 
+The game engine should provide a clear user interface to manipulate game objects in a scene
+hierarchy. It should be possible to save and load the scene. However, employing the latest and
+greatest rendering techniques may not be one of the highest priorities of this project.
+
 ## Current Goal
 Integrate AvalonDock to the project and make dockable windows based on the Window menu item.
 
