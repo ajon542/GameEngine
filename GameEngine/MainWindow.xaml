@@ -12,7 +12,7 @@
     the appropriate view for that view-model will be shown.
     See: http://stackoverflow.com/questions/23128378/wpf-design-multiple-views-in-one-window
     -->
-    <!--<Window.Resources>
+    <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
             <view:MainView/>
         </DataTemplate>
@@ -22,9 +22,9 @@
         <DataTemplate DataType="{x:Type viewModel:GameViewModel}">
             <view:GameView/>
         </DataTemplate>
-    </Window.Resources>-->
+    </Window.Resources>
 
-    <!--<DockPanel>
+    <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New"/>
@@ -42,16 +42,16 @@
             <MenuItem Header="Help">
                 <MenuItem Header="About"/>
             </MenuItem>
-        </Menu>-->
+        </Menu>
         <!--
         Without setting the content presenter, the MainView does not get shown.
         DataContext = new MainViewModel();
         -->
-    <!--    <ContentPresenter Content="{Binding}"/>
-    </DockPanel>-->
+        <ContentPresenter Content="{Binding}"/>
+    </DockPanel>
 
     <!-- This is an example of avalon doc. No idea how to incorporate just yet. -->
-    <ad:DockingManager x:Name="dockManager">
+    <!--<ad:DockingManager x:Name="dockManager">
         <ad:LayoutRoot>
             <ad:LayoutPanel Orientation="Horizontal">
                 <ad:LayoutPanel Orientation="Vertical">
@@ -80,5 +80,5 @@
                 </ad:LayoutAnchorablePaneGroup>
             </ad:LayoutPanel>
         </ad:LayoutRoot>
-    </ad:DockingManager>
+    </ad:DockingManager>-->
 </Window>
