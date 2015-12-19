@@ -19,6 +19,9 @@ namespace GameEngine.ViewModel
             get { return settings; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// </summary>
         public MainViewModel()
         {
             // Create the view-models.
@@ -27,19 +30,5 @@ namespace GameEngine.ViewModel
             settings.Add(new SceneViewModel());
             settings.Add(new GameViewModel());
         }
-
-        /*private DelegateCommand exitCommand;
-        public ICommand ExitCommand
-        {
-            get
-            {
-                if (exitCommand == null)
-                {
-                    exitCommand = new DelegateCommand(ExitApplication);
-                }
-
-                return exitCommand;
-            }
-        }*/
     }
 }

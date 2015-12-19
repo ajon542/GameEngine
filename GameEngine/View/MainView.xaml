@@ -24,7 +24,7 @@
                  SelectedIndex="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="Blah" Padding="10"/>
+                        <TextBlock Text="Views" Padding="10"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
