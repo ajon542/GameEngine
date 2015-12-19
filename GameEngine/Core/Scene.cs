@@ -36,28 +36,16 @@ namespace GameEngine.Core
 
         public override void Render()
         {
-            GL.Color3(Color.Yellow);
-            //GL.PointSize(5);
-            //GL.EnableVertexAttribArray(0);
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            //GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
-            //GL.DrawArrays(PrimitiveType.Points, 0, 3);
-            //GL.DisableVertexAttribArray(0);
-
             GL.PushMatrix();
 
-            GL.Translate(0, 0, -5);
-            GL.Begin(PrimitiveType.Lines);
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(0, 1, 0);
-
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(1, 0, 0);
-
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(1, 1, 1);
-            GL.End();
-
+            GL.Color3(Color.Yellow);
+            GL.PointSize(5);
+            GL.EnableVertexAttribArray(0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.DrawArrays(PrimitiveType.Points, 0, 3);
+            GL.DisableVertexAttribArray(0);
+            
             GL.PopMatrix();
         }
 
@@ -83,7 +71,23 @@ namespace GameEngine.Core
     {
         public override void Render()
         {
+            GL.PushMatrix();
 
+            GL.Color3(Color.Blue);
+
+            GL.Translate(0, 0, -5);
+            GL.Begin(PrimitiveType.Lines);
+            GL.Vertex3(0, 0, 0);
+            GL.Vertex3(0, 1, 0);
+
+            GL.Vertex3(0, 0, 0);
+            GL.Vertex3(1, 0, 0);
+
+            GL.Vertex3(0, 0, 0);
+            GL.Vertex3(1, 1, 1);
+            GL.End();
+
+            GL.PopMatrix();
         }
     }
 }
