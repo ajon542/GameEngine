@@ -3,7 +3,6 @@ using System.Windows.Input;
 
 using GameEngine.Core;
 
-
 namespace GameEngine.ViewModel
 {
     /// <summary>
@@ -47,7 +46,23 @@ namespace GameEngine.ViewModel
 
         #region Scene Loaded Command
 
+        /// <summary>
+        /// Keeps track of whether the view has been loaded previously.
+        /// </summary>
+        /// <remarks>
+        /// Each time we switch from GameView to SceneView, the SceneView is loaded again.
+        /// We don't want to be initializing each scene every time. Only do this once.
+        /// </remarks>
+        private bool loaded;
+
+        /// <summary>
+        /// The command to execute when the scene is loaded.
+        /// </summary>
         private DelegateCommand sceneLoadedCommand;
+
+        /// <summary>
+        /// Gets the command to execute when the scene is loaded.
+        /// </summary>
         public ICommand SceneLoadedCommand
         {
             get
@@ -61,8 +76,9 @@ namespace GameEngine.ViewModel
             }
         }
 
-        private bool loaded;
-
+        /// <summary>
+        /// The method to execute when the scene is loaded.
+        /// </summary>
         private void SceneLoaded()
         {
             // Each time we switch from GameView to SceneView, the SceneView is loaded again.
