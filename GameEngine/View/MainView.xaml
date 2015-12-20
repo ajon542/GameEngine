@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
         
         <!-- 
         We are binding this listbox to the observable collection named "Settings"
@@ -17,7 +18,7 @@
         When an item in this listbox is selected, it will show the corresponding view.
         It achieves this through the "ContentControl" below.
         -->
-        <Grid Grid.Column="0">
+        <!--<Grid Grid.Column="0">
             <ListBox x:Name="ListBoxMenu"                    
                  Grid.Column="0" Margin="5"
                  ItemsSource="{Binding Settings}"
@@ -32,5 +33,10 @@
         <Border Grid.Column="1" Margin="5" BorderBrush="#FF7F9DB9" BorderThickness="1">
             <ContentControl Content="{Binding ElementName=ListBoxMenu, Path=SelectedItem}"/>
         </Border>
-    </Grid>
+    </Grid>-->
+    <DockPanel>
+        <ad:DockingManager x:Name="dockManager" DocumentsSource="{Binding Settings}">
+
+        </ad:DockingManager>
+    </DockPanel>
 </UserControl>

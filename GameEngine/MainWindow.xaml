@@ -24,7 +24,7 @@
         </DataTemplate>
 
         <RoutedUICommand x:Key="Commands.Exit" />
-        
+
     </Window.Resources>
 
     <Window.CommandBindings>
