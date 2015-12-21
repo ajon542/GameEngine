@@ -58,12 +58,19 @@ namespace GameEngine.Core
         private List<GameObject> children;
 
         /// <summary>
+        /// The list of components attached to the game object.
+        /// </summary>
+        [JsonProperty]
+        private List<Component> components;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GameObject"/> class.
         /// </summary>
         public GameObject()
         {
             Name = "GameObject";
             children = new List<GameObject>();
+            components = new List<Component>();
         }
 
         /// <summary>
@@ -108,6 +115,39 @@ namespace GameEngine.Core
         public void SetParent(GameObject parent)
         {
             this.parent = parent;
+        }
+
+        /// <summary>
+        /// Adds a component to the game object.
+        /// </summary>
+        /// <typeparam name="T">The type of component to add.</typeparam>
+        /// <param name="component">The component to add.</param>
+        public void AddComponent<T>(Component component)
+        {
+            if (GetComponent<T>() == null)
+            {
+                components.Add(component);
+            }
+        }
+
+        /// <summary>
+        /// Gets a component of type T.
+        /// </summary>
+        /// <typeparam name="T">The type of component to get.</typeparam>
+        /// <returns>The component or null if not found.</returns>
+        public Component GetComponent<T>()
+        {
+            // Search for a component of type T.
+            foreach (Component component in components)
+            {
+                if (component.GetType() == typeof (T))
+                {
+                    return component;
+                }
+            }
+
+            // Could not find component of type T.
+            return null;
         }
 
         public override string ToString()

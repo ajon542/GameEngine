@@ -83,6 +83,7 @@
     <Compile Include="Core\Component.cs" />
     <Compile Include="Core\Debugging\Log.cs" />
     <Compile Include="Core\GameObject.cs" />
+    <Compile Include="Core\Mesh.cs" />
     <Compile Include="Core\ObjectBehaviour.cs" />
     <Compile Include="Core\Scene.cs" />
     <Compile Include="Core\Serialization\ISerializer.cs" />

@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace GameEngine.Core
 {
-    class Mesh : Component
+    public class Mesh : Component
     {
         /// <summary>
         /// Gets or sets the list of vertices.

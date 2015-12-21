@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Core
 {
-    class Component
+    public class Component
     {
         // Renderer component
         // ObjectBehavior component
