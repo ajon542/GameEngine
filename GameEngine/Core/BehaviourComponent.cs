@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace GameEngine.Core
 {
     /// <summary>
@@ -19,7 +14,6 @@ namespace GameEngine.Core
         /// </summary>
         public virtual void Initialize()
         {
-            
         }
 
         /// <summary>
@@ -27,7 +21,6 @@ namespace GameEngine.Core
         /// </summary>
         public virtual void Start()
         {
-
         }
 
         /// <summary>
@@ -35,7 +28,6 @@ namespace GameEngine.Core
         /// </summary>
         public virtual void Update()
         {
-
         }
 
         /// <summary>
@@ -43,7 +35,6 @@ namespace GameEngine.Core
         /// </summary>
         public virtual void Reset()
         {
-
         }
     }
 }

@@ -11,6 +11,9 @@ namespace GameEngine.Core
         public Vector3 Position { get; set; }
         public Vector3 Orientation { get; set; }
 
+        /// <summary>
+        /// Initialize a new instance of the <see cref="Camera"/> class.
+        /// </summary>
         public Camera()
         {
             Position = Vector3.Zero;
