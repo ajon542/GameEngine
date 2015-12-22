@@ -185,9 +185,11 @@ namespace GameEngine.View
                 ClearBufferMask.DepthBufferBit |
                 ClearBufferMask.StencilBufferBit);
 
-            // Render the scene list.
+            // Update and Render the scene list.
+            // TODO: Normally, there is only a single scene being rendered. We should consider this.
             foreach (Scene scene in SceneList)
             {
+                scene.Update();
                 scene.Render();
             }
 

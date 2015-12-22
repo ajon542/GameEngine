@@ -18,6 +18,11 @@ namespace GameEngine.Core
 
         }
 
+        public virtual void Update()
+        {
+            
+        }
+
         public virtual void Render()
         {
 
@@ -164,13 +169,11 @@ namespace GameEngine.Core
             gameObject.Transform.Rotation = new Quaternion(1, 1, 1, 0.5f);
         }
 
-        public override void Render()
+        public override void Update()
         {
-            // TODO: Decouple the update and render.
             // Update...
-            // TODO: This matrix stuff must come out of here...
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() * 
+            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() *
                 Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
 
@@ -200,7 +203,10 @@ namespace GameEngine.Core
 
             GL.UseProgram(shaders[activeShader].ProgramId);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+        }
 
+        public override void Render()
+        {
             // Render...
             shaders[activeShader].EnableVertexAttribArrays();
 
