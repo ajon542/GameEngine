@@ -41,7 +41,7 @@ namespace GameEngine.ViewModel
         /// </summary>
         public SceneViewModel()
         {
-            SceneList = new List<Scene> { new SceneA(), new SceneB() };
+            SceneList = new List<Scene> { new SceneA(), new SceneB(), new SceneC() };
         }
 
         #region Scene Loaded Command

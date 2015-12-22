@@ -90,4 +90,24 @@ namespace GameEngine.Core
             GL.PopMatrix();
         }
     }
+
+    public class SceneC : Scene
+    {
+        private GameObject gameObject = new GameObject();
+        private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
+        private string activeShader = "default";
+        private int ibo_elements;
+
+        public override void Initialize()
+        {
+            GL.GenBuffers(1, out ibo_elements);
+
+            shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
+        }
+
+        public override void Render()
+        {
+
+        }
+    }
 }
