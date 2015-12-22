@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using GameEngine.Core.GameSpecific;
 using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.Core
 {
+    /// <summary>
+    /// The scene class contains all the associated game objects.
+    /// </summary>
+    /// <remarks>
+    /// The scene will contain all the game objects.
+    /// The scene will control all the game objects through their behaviour.
+    /// The scene will render all game objects in the scene.
+    /// </remarks>
     public class Scene
     {
         public virtual void Initialize()
@@ -102,54 +106,34 @@ namespace GameEngine.Core
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
         private string activeShader = "default";
         private int ibo_elements;
-        private Mesh mesh;
 
         private Camera cam = new Camera();
 
+        private Mesh mesh;
         private Vector3[] colorData;
 
+        /// <summary>
+        /// Initialize the scene.
+        /// </summary>
         public override void Initialize()
         {
+            // Set up depth test and face culling.
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
 
+            // Generate buffer objects.
             GL.GenBuffers(1, out ibo_elements);
 
+            // Add default shaders.
             shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
 
-            mesh = new Mesh();
-            mesh.Vertices.Add(new Vector3(-0.5f, -0.5f, -0.5f));
-            mesh.Vertices.Add(new Vector3(0.5f, -0.5f, -0.5f));
-            mesh.Vertices.Add(new Vector3(0.5f, 0.5f, -0.5f));
-            mesh.Vertices.Add(new Vector3(-0.5f, 0.5f, -0.5f));
-            mesh.Vertices.Add(new Vector3(-0.5f, -0.5f, 0.5f));
-            mesh.Vertices.Add(new Vector3(0.5f, -0.5f, 0.5f));
-            mesh.Vertices.Add(new Vector3(0.5f, 0.5f, 0.5f));
-            mesh.Vertices.Add(new Vector3(-0.5f, 0.5f, 0.5f));
+            // Add our cube behaviour.
+            BehaviourComponent cubeBehaviour = new CubeBehaviour();
+            gameObject.AddComponent<BehaviourComponent>(cubeBehaviour);
+            cubeBehaviour.Initialize();
 
-            int[] indices =
-            {
-                //left
-                0, 2, 1,
-                0, 3, 2,
-                //back
-                1, 2, 6,
-                6, 5, 1,
-                //right
-                4, 5, 6,
-                6, 7, 4,
-                //top
-                2, 3, 6,
-                6, 3, 7,
-                //front
-                0, 7, 3,
-                0, 4, 7,
-                //bottom
-                0, 1, 5,
-                0, 5, 4
-            };
-
-            colorData = new []
+            // TODO: This still doesn't belong here...
+            colorData = new[]
             {
                 new Vector3(1f, 0f, 0f),
                 new Vector3(0f, 0f, 1f),
@@ -161,16 +145,19 @@ namespace GameEngine.Core
                 new Vector3(0f, 0f, 1f)
             };
 
-            mesh.Triangles = new List<int>(indices);
-
-            gameObject.AddComponent<Mesh>(mesh);
-
-            gameObject.Transform.Position = new Vector3(0, 0, -3.0f);
-            gameObject.Transform.Rotation = new Quaternion(1, 1, 1, 0.5f);
+            mesh = gameObject.GetComponent<Mesh>() as Mesh;
         }
 
         public override void Update()
         {
+            // TODO: A little inefficient
+            BehaviourComponent component = gameObject.GetComponent<BehaviourComponent>() as BehaviourComponent;
+
+            if (component != null)
+            {
+                component.Update();
+            }
+
             // Update...
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = cam.GetViewMatrix() *

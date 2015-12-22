@@ -41,7 +41,8 @@ namespace GameEngine.ViewModel
         /// </summary>
         public SceneViewModel()
         {
-            SceneList = new List<Scene> { new SceneA(), new SceneB(), new SceneC() };
+            // TODO: We should really only have a single scene at a time.
+            SceneList = new List<Scene> { new SceneC() };
         }
 
         #region Scene Loaded Command

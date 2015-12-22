@@ -143,7 +143,7 @@ namespace GameEngine.Core
             // Search for a component of type T.
             foreach (Component component in components)
             {
-                if (component.GetType() == typeof (T))
+                if (component is T)
                 {
                     return component;
                 }
