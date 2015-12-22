@@ -156,6 +156,7 @@ namespace GameEngine.View
             glControl.MakeCurrent();
             glControl.Paint += OnPaint;
             glControl.Dock = DockStyle.Fill;
+            glControl.KeyDown += OnKeyDown;
             //glControl.VSync = false; This call only gains about 5 fps, wonder what happens on my work machine?
             (sender as WindowsFormsHost).Child = glControl;
 
@@ -192,6 +193,16 @@ namespace GameEngine.View
 
             // Swap the buffers.
             glControl.SwapBuffers();
+        }
+
+        /// <summary>
+        /// On key down event handler.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+
         }
 
         /// <summary>
