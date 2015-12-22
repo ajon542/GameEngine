@@ -159,6 +159,10 @@ namespace GameEngine.View
             //glControl.VSync = false; This call only gains about 5 fps, wonder what happens on my work machine?
             (sender as WindowsFormsHost).Child = glControl;
 
+            // TODO: Not sure for the best place for these.
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.CullFace);
+
             // Set the view port.
             SetupViewport();
         }

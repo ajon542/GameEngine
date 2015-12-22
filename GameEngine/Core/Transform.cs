@@ -25,7 +25,7 @@ namespace GameEngine.Core
         public Transform()
         {
             Position = new Vector3();
-            Scale = new Vector3();
+            Scale = new Vector3(1, 1, 1);
             Rotation = new Quaternion();
         }
 

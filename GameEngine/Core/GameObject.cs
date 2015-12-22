@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using OpenTK;
 
 namespace GameEngine.Core
 {
@@ -68,6 +69,7 @@ namespace GameEngine.Core
             Name = "GameObject";
             children = new List<GameObject>();
             components = new List<Component>();
+            Transform = new Transform();
         }
 
         /// <summary>
@@ -150,6 +152,21 @@ namespace GameEngine.Core
         public override string ToString()
         {
             return Name;
+        }
+
+        // TODO: Address these.
+        public Matrix4 ModelMatrix = Matrix4.Identity;
+        public Matrix4 ViewProjectionMatrix = Matrix4.Identity;
+        public Matrix4 ModelViewProjectionMatrix = Matrix4.Identity;
+
+        public virtual void CalculateModelMatrix()
+        {
+            ModelMatrix =
+                Matrix4.CreateScale(Transform.Scale) *
+                Matrix4.CreateRotationX(Transform.Rotation.X) *
+                Matrix4.CreateRotationY(Transform.Rotation.Y) *
+                Matrix4.CreateRotationZ(Transform.Rotation.Z) *
+                Matrix4.CreateTranslation(Transform.Position);
         }
     }
 }

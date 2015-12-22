@@ -8,12 +8,12 @@ namespace GameEngine.Core
         /// <summary>
         /// Gets or sets the list of vertices.
         /// </summary>
-        private List<Vector3> Vertices { get; set; }
+        public List<Vector3> Vertices { get; set; }
 
         /// <summary>
         /// Gets or sets the list of triangles.
         /// </summary>
-        private List<int> Triangles { get; set; }
+        public List<int> Triangles { get; set; }
 
         // TODO: UV
         // TODO: Normals
