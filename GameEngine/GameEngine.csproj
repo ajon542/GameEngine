@@ -80,6 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Component.cs" />
     <Compile Include="Core\Debugging\Log.cs" />
     <Compile Include="Core\GameObject.cs" />

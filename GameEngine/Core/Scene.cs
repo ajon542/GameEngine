@@ -99,6 +99,8 @@ namespace GameEngine.Core
         private int ibo_elements;
         private Mesh mesh;
 
+        private Camera cam = new Camera();
+
         private Vector3[] colorData;
 
         public override void Initialize()
@@ -168,8 +170,8 @@ namespace GameEngine.Core
             // Update...
             // TODO: This matrix stuff must come out of here...
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800,
-                                                                                   1.0f, 1000.0f);
+            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() * 
+                Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
 
             Vector3[] vertices = mesh.Vertices.ToArray();
