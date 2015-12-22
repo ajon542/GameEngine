@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace GameEngine.Core
 {
     public class Component
     {
-        // Renderer component
-        // ObjectBehavior component
-        // ShaderComponent for example.
+        /// <summary>
+        /// The game object containing this component.
+        /// </summary>
+        protected GameObject gameObject;
+
+        /// <summary>
+        /// Associate a game object with this component.
+        /// </summary>
+        /// <param name="go">The associated game object.</param>
+        public void AssociateGameObject(GameObject go)
+        {
+            gameObject = go;
+        }
     }
 }

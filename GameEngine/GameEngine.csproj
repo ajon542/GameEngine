@@ -85,7 +85,7 @@
     <Compile Include="Core\Debugging\Log.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\Mesh.cs" />
-    <Compile Include="Core\ObjectBehaviour.cs" />
+    <Compile Include="Core\BehaviourComponent.cs" />
     <Compile Include="Core\Scene.cs" />
     <Compile Include="Core\Serialization\ISerializer.cs" />
     <Compile Include="Core\Serialization\QuaternionConverter.cs" />

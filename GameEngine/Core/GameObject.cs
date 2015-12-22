@@ -125,6 +125,10 @@ namespace GameEngine.Core
         {
             if (GetComponent<T>() == null)
             {
+                // Associate this game object with the component.
+                component.AssociateGameObject(this);
+
+                // Add the component to the list.
                 components.Add(component);
             }
         }
@@ -154,9 +158,12 @@ namespace GameEngine.Core
             return Name;
         }
 
-        // TODO: Address these.
+        // TODO: Address these for serialization
+        [JsonIgnore]
         public Matrix4 ModelMatrix = Matrix4.Identity;
+        [JsonIgnore]
         public Matrix4 ViewProjectionMatrix = Matrix4.Identity;
+        [JsonIgnore]
         public Matrix4 ModelViewProjectionMatrix = Matrix4.Identity;
 
         public virtual void CalculateModelMatrix()
