@@ -42,7 +42,7 @@ namespace GameEngine.ViewModel
         public SceneViewModel()
         {
             // TODO: We should really only have a single scene at a time.
-            SceneList = new List<Scene> { new SceneC() };
+            SceneList = new List<Scene> { new Core.GameSpecific.GameScene() };
         }
 
         #region Scene Loaded Command
