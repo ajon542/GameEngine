@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 using GameEngine.Core;
@@ -97,6 +98,36 @@ namespace GameEngine.ViewModel
         }
 
         #endregion
+
+        /// <summary>
+        /// The key down command.
+        /// </summary>
+        private DelegateCommand keyDownCommand;
+
+        /// <summary>
+        /// Gets the command to be executed when key down occurs.
+        /// </summary>
+        public ICommand KeyDownCommand
+        {
+            get
+            {
+                if (keyDownCommand == null)
+                {
+                    keyDownCommand = new DelegateCommand(KeyDown);
+                }
+
+                return keyDownCommand;
+            }
+        }
+
+        /// <summary>
+        /// Handle key down.
+        /// </summary>
+        private void KeyDown(object sender)
+        {
+            // TODO: Handle key down
+            //var keyEvent = sender as System.Windows.Forms.KeyEventArgs;
+        }
 
         /// <summary>
         /// The render command.

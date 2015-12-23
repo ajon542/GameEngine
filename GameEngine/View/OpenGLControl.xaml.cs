@@ -97,6 +97,29 @@ namespace GameEngine.View
 
         #endregion
 
+        #region KeyDown Command
+
+        /// <summary>
+        /// Gets or sets the KeyDown Command Property.
+        /// </summary>
+        public new ICommand KeyDown
+        {
+            get { return (ICommand)GetValue(KeyDownProperty); }
+            set { SetValue(KeyDownProperty, value); }
+        }
+
+        /// <summary>
+        /// The key down dependency property.
+        /// </summary>
+        /// <remarks>
+        /// KeyDown="{Binding KeyDownCommand}"
+        /// </remarks>
+        public static readonly DependencyProperty KeyDownProperty =
+            DependencyProperty.Register("KeyDown", typeof(ICommand), typeof(OpenGLControl),
+                new UIPropertyMetadata(null));
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLControl"/> class.
         /// </summary>
@@ -223,7 +246,7 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-
+            KeyDown.Execute(e);
         }
 
         /// <summary>

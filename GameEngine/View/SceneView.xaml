@@ -12,6 +12,7 @@
         <view:OpenGLControl 
             SceneInitialized="{Binding SceneInitializedCommand}"
             Update="{Binding UpdateCommand}"
-            Render="{Binding RenderCommand}"/>
+            Render="{Binding RenderCommand}"
+            KeyDown="{Binding KeyDownCommand}"/>
     </Grid>
 </UserControl>
