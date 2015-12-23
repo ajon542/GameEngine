@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Threading;
-
+using GameEngine.Core;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -183,7 +183,8 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            SceneInitialized.Execute(null);
+            // TODO: Use the width and height.
+            SceneInitialized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
         }
 
         /// <summary>
