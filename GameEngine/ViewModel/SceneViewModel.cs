@@ -125,8 +125,11 @@ namespace GameEngine.ViewModel
         /// </summary>
         private void KeyDown(object sender)
         {
-            // TODO: Handle key down
-            //var keyEvent = sender as System.Windows.Forms.KeyEventArgs;
+            var keyEvent = sender as System.Windows.Forms.KeyEventArgs;
+            foreach (Scene scene in SceneList)
+            {
+                scene.KeyDown(keyEvent);
+            }
         }
 
         /// <summary>

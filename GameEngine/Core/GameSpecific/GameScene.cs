@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -96,6 +97,11 @@ namespace GameEngine.Core.GameSpecific
 
             GL.UseProgram(shaders[activeShader].ProgramId);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+        }
+
+        public override void KeyDown(KeyEventArgs key)
+        {
+            
         }
 
         public override void Render()
