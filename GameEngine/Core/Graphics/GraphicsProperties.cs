@@ -1,5 +1,5 @@
 ﻿
-namespace GameEngine.Core
+namespace GameEngine.Core.Graphics
 {
     /// <summary>
     /// Container for properties related to graphics.

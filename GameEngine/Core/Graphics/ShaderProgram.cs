@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using OpenTK.Graphics.OpenGL;
 
-namespace GameEngine.Core
+namespace GameEngine.Core.Graphics
 {
     /// <summary>
     /// Class encapsulating common functionality for a shader program.
