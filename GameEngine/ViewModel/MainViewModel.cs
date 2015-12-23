@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows;
 
 namespace GameEngine.ViewModel
 {
@@ -34,7 +33,7 @@ namespace GameEngine.ViewModel
         /// <param name="e">The event arguments.</param>
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            // TODO: Log exception
+            // TODO: Log exception.
         }
     }
 }
