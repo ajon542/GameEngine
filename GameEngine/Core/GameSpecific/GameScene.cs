@@ -101,7 +101,12 @@ namespace GameEngine.Core.GameSpecific
 
         public override void KeyDown(KeyEventArgs key)
         {
-            
+            BehaviourComponent component = gameObject.GetComponent<BehaviourComponent>() as BehaviourComponent;
+
+            if (component != null)
+            {
+                component.KeyDown(key);
+            }
         }
 
         public override void Render()

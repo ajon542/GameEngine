@@ -31,6 +31,10 @@ namespace GameEngine.Core
         {
         }
 
+        /// <summary>
+        /// Handle the key press events.
+        /// </summary>
+        /// <param name="key">The key pressed event args.</param>
         public virtual void KeyDown(KeyEventArgs key)
         {
             

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
 using OpenTK;
 
 namespace GameEngine.Core.GameSpecific
@@ -49,8 +50,12 @@ namespace GameEngine.Core.GameSpecific
             gameObject.Transform.Rotation = new Quaternion(1, 1, 1, 0.5f);
         }
 
-        private float x;
         public override void Update()
+        {
+        }
+
+        private float x;
+        public override void KeyDown(KeyEventArgs key)
         {
             x += 0.01f;
             gameObject.Transform.Position = new Vector3(x, 0, -3.0f);
