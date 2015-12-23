@@ -3,21 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d"
              xmlns:view="clr-namespace:GameEngine.View"
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding SceneLoadedCommand}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
     <Grid>
         <!-- TODO: Make Update and Render optional, or provide some error notification. -->
-        <view:OpenGLControl SceneList="{Binding Path=SceneList, Mode=TwoWay}"
-                            Update="{Binding UpdateCommand}"
-                            Render="{Binding RenderCommand}"/>
+        <view:OpenGLControl 
+            SceneInitialized="{Binding SceneInitializedCommand}"
+            Update="{Binding UpdateCommand}"
+            Render="{Binding RenderCommand}"/>
     </Grid>
 </UserControl>

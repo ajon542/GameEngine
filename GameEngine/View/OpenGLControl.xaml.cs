@@ -31,24 +31,27 @@ namespace GameEngine.View
         /// </summary>
         private DateTime lastMeasureTime;
 
-        #region DependencyProperty Examples
-        // TODO: Determine if there is a better way to do this.
-        // This basically allows the SceneViewModel to add scenes to the scenelist and have them rendered.
-        // I am going to go ahead with this method and see what issues I run into.
-        public static readonly DependencyProperty SceneListProperty =
-            DependencyProperty.Register("SceneList", typeof(List<Scene>), typeof(OpenGLControl),
-            new PropertyMetadata(new List<Scene>(), new PropertyChangedCallback(OnSceneListUpdated)));
+        #region Initialized Command
 
-        private static void OnSceneListUpdated(DependencyObject o, DependencyPropertyChangedEventArgs args)
+        /// <summary>
+        /// Gets or sets the SceneInitialized Command Property.
+        /// </summary>
+        public ICommand SceneInitialized
         {
-            // This is an example of dependency property changed notification.
+            get { return (ICommand)GetValue(SceneInitializedProperty); }
+            set { SetValue(SceneInitializedProperty, value); }
         }
 
-        public List<Scene> SceneList
-        {
-            get { return (List<Scene>)GetValue(SceneListProperty); }
-            set { SetValue(SceneListProperty, value); }
-        }
+        /// <summary>
+        /// The initialized dependency property.
+        /// </summary>
+        /// <remarks>
+        /// SceneInitialized="{Binding SceneInitializedCommand}"
+        /// </remarks>
+        public static readonly DependencyProperty SceneInitializedProperty =
+            DependencyProperty.Register("SceneInitialized", typeof(ICommand), typeof(OpenGLControl),
+                new UIPropertyMetadata(null));
+
         #endregion
 
         #region Update Command
@@ -160,6 +163,7 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            SceneInitialized.Execute(null);
         }
 
         /// <summary>

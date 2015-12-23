@@ -45,7 +45,7 @@ namespace GameEngine.ViewModel
             SceneList = new List<Scene> { new Core.GameSpecific.GameScene() };
         }
 
-        #region Scene Loaded Command
+        #region Initialized Command
 
         /// <summary>
         /// Keeps track of whether the view has been loaded previously.
@@ -57,30 +57,30 @@ namespace GameEngine.ViewModel
         private bool loaded;
 
         /// <summary>
-        /// The command to execute when the scene is loaded.
+        /// The opengl initialized command.
         /// </summary>
-        private DelegateCommand sceneLoadedCommand;
+        private DelegateCommand initializedCommand;
 
         /// <summary>
-        /// Gets the command to execute when the scene is loaded.
+        /// Gets the command to be executed when opengl is initialized.
         /// </summary>
-        public ICommand SceneLoadedCommand
+        public ICommand SceneInitializedCommand
         {
             get
             {
-                if (sceneLoadedCommand == null)
+                if (initializedCommand == null)
                 {
-                    sceneLoadedCommand = new DelegateCommand(SceneLoaded);
+                    initializedCommand = new DelegateCommand(Initialized);
                 }
 
-                return sceneLoadedCommand;
+                return initializedCommand;
             }
         }
 
         /// <summary>
-        /// The method to execute when the scene is loaded.
+        /// Initialize the scene.
         /// </summary>
-        private void SceneLoaded()
+        private void Initialized()
         {
             // Each time we switch from GameView to SceneView, the SceneView is loaded again.
             // We don't want to be initializing each scene every time. Only do this once.
