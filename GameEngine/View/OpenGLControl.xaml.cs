@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
@@ -11,8 +10,6 @@ using System.Windows.Threading;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-
-using GameEngine.Core;
 
 namespace GameEngine.View
 {
@@ -190,10 +187,6 @@ namespace GameEngine.View
             glControl.KeyDown += OnKeyDown;
             //glControl.VSync = false; This call only gains about 5 fps, wonder what happens on my work machine?
             (sender as WindowsFormsHost).Child = glControl;
-
-            // TODO: Not sure for the best place for these.
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
 
             // Set the view port.
             SetupViewport();
