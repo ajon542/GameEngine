@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Core.Debugging
 {
-    class Log
+    public class Log
     {
         // TODO: Log items to output window Visual Studio using Trace.WriteLine.
         // TODO: Log items to a log file.

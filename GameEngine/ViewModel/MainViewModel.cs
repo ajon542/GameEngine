@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace GameEngine.ViewModel
 {
@@ -15,10 +17,24 @@ namespace GameEngine.ViewModel
         public MainViewModel()
         {
             // Create the view-models.
-            Settings = new ObservableCollection<ViewModelBase>();
+            Settings = new ObservableCollection<ViewModelBase>
+            {
+                new SceneViewModel(),
+                new GameViewModel()
+            };
 
-            Settings.Add(new SceneViewModel());
-            Settings.Add(new GameViewModel());
+            // Setup method to handle the unhandled exceptions.
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+        }
+
+        /// <summary>
+        /// Log any unhandled exceptions.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            // TODO: Log exception
         }
     }
 }
