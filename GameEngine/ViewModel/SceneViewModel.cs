@@ -99,5 +99,69 @@ namespace GameEngine.ViewModel
         }
 
         #endregion
+
+        /// <summary>
+        /// The render command.
+        /// </summary>
+        private DelegateCommand renderCommand;
+
+        /// <summary>
+        /// Gets the command to be executed when rendering is to occur.
+        /// </summary>
+        public ICommand RenderCommand
+        {
+            get
+            {
+                if (renderCommand == null)
+                {
+                    renderCommand = new DelegateCommand(Render);
+                }
+
+                return renderCommand;
+            }
+        }
+
+        /// <summary>
+        /// Render the scene.
+        /// </summary>
+        private void Render()
+        {
+            foreach (Scene scene in SceneList)
+            {
+                scene.Render();
+            }
+        }
+
+        /// <summary>
+        /// The update command.
+        /// </summary>
+        private DelegateCommand updateCommand;
+
+        /// <summary>
+        /// Gets the command to be executed when update is to occur.
+        /// </summary>
+        public ICommand UpdateCommand
+        {
+            get
+            {
+                if (updateCommand == null)
+                {
+                    updateCommand = new DelegateCommand(Update);
+                }
+
+                return updateCommand;
+            }
+        }
+
+        /// <summary>
+        /// Update the scene.
+        /// </summary>
+        private void Update()
+        {
+            foreach (Scene scene in SceneList)
+            {
+                scene.Update();
+            }
+        }
     }
 }

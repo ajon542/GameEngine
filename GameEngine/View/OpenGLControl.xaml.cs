@@ -51,23 +51,50 @@ namespace GameEngine.View
         }
         #endregion
 
-        #region ICommand Examples
-        // This is an example of command execution. We can hook a command up in the xaml and have
-        // it execute in the view-model. Command="{Binding InitializedCommand}"
-        public ICommand Command
+        #region Update Command
+
+        /// <summary>
+        /// Gets or sets the Update Command Property.
+        /// </summary>
+        public ICommand Update
         {
-            get 
-            {
-                return (ICommand)GetValue(CommandProperty); 
-            }
-            set
-            {
-                SetValue(CommandProperty, value); 
-            }
+            get { return (ICommand)GetValue(UpdateProperty); }
+            set { SetValue(UpdateProperty, value); }
         }
 
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(OpenGLControl), new UIPropertyMetadata(null));
+        /// <summary>
+        /// The update dependency property.
+        /// </summary>
+        /// <remarks>
+        /// Update="{Binding UpdateCommand}"
+        /// </remarks>
+        public static readonly DependencyProperty UpdateProperty =
+            DependencyProperty.Register("Update", typeof (ICommand), typeof (OpenGLControl),
+                new UIPropertyMetadata(null));
+
+        #endregion
+
+        #region Render Command
+
+        /// <summary>
+        /// Gets or sets the Render Command Property.
+        /// </summary>
+        public ICommand Render
+        {
+            get { return (ICommand)GetValue(RenderProperty); }
+            set { SetValue(RenderProperty, value); }
+        }
+
+        /// <summary>
+        /// The render dependency property.
+        /// </summary>
+        /// <remarks>
+        /// Render="{Binding RenderCommand}"
+        /// </remarks>
+        public static readonly DependencyProperty RenderProperty =
+            DependencyProperty.Register("Render", typeof(ICommand), typeof(OpenGLControl),
+                new UIPropertyMetadata(null));
+
         #endregion
 
         /// <summary>
@@ -185,13 +212,8 @@ namespace GameEngine.View
                 ClearBufferMask.DepthBufferBit |
                 ClearBufferMask.StencilBufferBit);
 
-            // Update and Render the scene list.
-            // TODO: Normally, there is only a single scene being rendered. We should consider this.
-            foreach (Scene scene in SceneList)
-            {
-                scene.Update();
-                scene.Render();
-            }
+            // Execute the render command.
+            Render.Execute(null);
 
             // Swap the buffers.
             glControl.SwapBuffers();
@@ -230,6 +252,9 @@ namespace GameEngine.View
                 FpsCounter.Content = Core.Timer.Instance.Fps;
                 lastMeasureTime = DateTime.Now;
             }
+
+            // Execute the update command.
+            Update.Execute(null);
 
             // Force the GL control to paint.
             glControl.Invalidate();
