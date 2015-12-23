@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 using GameEngine.Core;
@@ -80,7 +81,7 @@ namespace GameEngine.ViewModel
         /// <summary>
         /// Initialize the scene.
         /// </summary>
-        private void Initialized()
+        private void Initialized(object sender)
         {
             // Each time we switch from GameView to SceneView, the SceneView is loaded again.
             // We don't want to be initializing each scene every time. Only do this once.
@@ -121,7 +122,7 @@ namespace GameEngine.ViewModel
         /// <summary>
         /// Render the scene.
         /// </summary>
-        private void Render()
+        private void Render(object sender)
         {
             foreach (Scene scene in SceneList)
             {
@@ -153,7 +154,7 @@ namespace GameEngine.ViewModel
         /// <summary>
         /// Update the scene.
         /// </summary>
-        private void Update()
+        private void Update(object sender)
         {
             foreach (Scene scene in SceneList)
             {

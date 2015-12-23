@@ -11,7 +11,7 @@ namespace GameEngine.ViewModel
         /// <summary>
         /// The action to execute.
         /// </summary>
-        private Action execute;
+        private Action<object> execute;
 
         /// <summary>
         /// The predicate for determining whether to execute the command.
@@ -45,7 +45,7 @@ namespace GameEngine.ViewModel
         /// Initializes a new instance of the <see cref="DelegateCommand"/> class.
         /// </summary>
         /// <param name="execute">The action to execute.</param>
-        public DelegateCommand(Action execute)
+        public DelegateCommand(Action<object> execute)
             : this(execute, DefaultCanExecute)
         {
         }
@@ -55,7 +55,7 @@ namespace GameEngine.ViewModel
         /// </summary>
         /// <param name="execute">The action to execute.</param>
         /// <param name="canExecute">The predicate for determining whether to execute the command.</param>
-        public DelegateCommand(Action execute, Predicate<object> canExecute)
+        public DelegateCommand(Action<object> execute, Predicate<object> canExecute)
         {
             if (execute == null)
             {
@@ -87,9 +87,8 @@ namespace GameEngine.ViewModel
         /// <param name="parameter">The parameter to pass.</param>
         public void Execute(object parameter)
         {
-            // TODO: Optionally pass parameter if we use Action<object> instead of just Action.
             // See: http://stackoverflow.com/questions/3502127/in-wpf-how-do-i-implement-icommandsource-to-give-my-custom-control-ability-to-us
-            execute();
+            execute(parameter);
         }
 
         /// <summary>
