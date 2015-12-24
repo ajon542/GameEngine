@@ -7,6 +7,9 @@ using GameEngine.Core.Graphics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using NLog;
+using NLog.Targets;
+
 namespace GameEngine.Core.GameSpecific
 {
     /// <summary>
@@ -24,11 +27,20 @@ namespace GameEngine.Core.GameSpecific
         private Mesh mesh;
         private Vector3[] colorData;
 
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Initialize the scene.
         /// </summary>
         public override void Initialize()
         {
+            logger.Trace("Sample trace message");
+            logger.Debug("Sample debug message");
+            logger.Info("Sample informational message");
+            logger.Warn("Sample warning message");
+            logger.Error("Sample error message");
+            logger.Fatal("Sample fatal error message");
+
             // Set up depth test and face culling.
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
