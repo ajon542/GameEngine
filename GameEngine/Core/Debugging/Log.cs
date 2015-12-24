@@ -18,9 +18,11 @@ namespace GameEngine.Core.Debugging
             Fail
         }
 
+        // TODO: Investigate Log4Net.
         // TODO: Log items to a log file.
         // TODO: Log items to debug window in the game engine.
         // TODO: Log items to a debug HUD in the game engine.
+        // TODO: Enable log items in a particular area of code only.
 
         private static void LogMessage(LogLevel level, string message)
         {
