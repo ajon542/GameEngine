@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using GameEngine.Core.Debugging;
 using GameEngine.Core.Graphics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.Core.GameSpecific
 {
+    /// <summary>
+    /// Example of creating a game specific scene.
+    /// </summary>
     class GameScene : Scene
     {
         private GameObject gameObject = new GameObject();
