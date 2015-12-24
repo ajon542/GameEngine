@@ -28,6 +28,16 @@ namespace GameEngine.View
         /// </summary>
         private DateTime lastMeasureTime;
 
+        /// <summary>
+        /// Whether the first call to update has occurred.
+        /// </summary>
+        /// <remarks>
+        /// The update mechanism is called on a timer event. If this event does not
+        /// fire before the first call to Render, bad things can happen. Ensure the
+        /// the update occurs first.
+        /// </remarks>
+        private bool initialUpdate;
+
         #region Initialized Command
 
         /// <summary>
@@ -223,6 +233,11 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnPaint(object sender, PaintEventArgs e)
         {
+            if (initialUpdate == false)
+            {
+                return;
+            }
+
             // Update the timer instance.
             Core.Timer.Instance.Update();
 
@@ -276,6 +291,7 @@ namespace GameEngine.View
 
             // Execute the update command.
             Update.Execute(null);
+            initialUpdate = true;
 
             // Force the GL control to paint.
             glControl.Invalidate();
