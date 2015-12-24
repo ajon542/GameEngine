@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using NLog;
 
 namespace GameEngine.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
+        /// <summary>
+        /// The logger instance.
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Gets the collection of view-models to display in the view.
         /// </summary>
@@ -33,7 +39,7 @@ namespace GameEngine.ViewModel
         /// <param name="e">The event arguments.</param>
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            // TODO: Log exception.
+            logger.LogException(LogLevel.Fatal, e.ExceptionObject.ToString(), e.ExceptionObject as Exception);
         }
     }
 }
