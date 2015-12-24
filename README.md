@@ -7,7 +7,8 @@ hierarchy. It should be possible to save and load the scene. However, employing 
 greatest rendering techniques may not be one of the highest priorities of this project.
 
 ## Current Goal
-Integrate AvalonDock to the project and make dockable windows based on the Window menu item.
+Make adding game objects to the scene more intuitive. This will most likely involve improving
+the batching of objects to be rendered and the use of the scene camera.
 
 ## TODO
 (not in any particular order)
@@ -22,6 +23,12 @@ Integrate AvalonDock to the project and make dockable windows based on the Windo
 ## Previous Goals
 
 -------------------------------------------------------------------------------------------
+Goal 2
+Integrate AvalonDock to the project and make dockable windows based on the Window menu item.
+This is still a slow work in progress as I have become side-tracked in creating a better scene
+manager and overall game engine architecture.
+
+Goal 1
 One HierarchyView to be able to add a GameObject, update the HierarchyViewModel.
 The HierarchyViewModel to communicate with the SceneViewModel to notify of an added GameObject.
 The SceneViewModel to notify the SceneView that a GameObject has been added.
