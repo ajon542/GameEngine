@@ -92,6 +92,8 @@ namespace GameEngine.Core.GameSpecific
             int[] triangles = mesh.Triangles.ToArray();
 
             // Bind the buffers.
+
+            // Bind vertices from the mesh.
             GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vPosition"));
 
             GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(mesh.Vertices.Count * Vector3.SizeInBytes), vertices,
@@ -99,6 +101,8 @@ namespace GameEngine.Core.GameSpecific
             GL.VertexAttribPointer(shaders[activeShader].GetAttribute("vPosition"), 3, VertexAttribPointerType.Float,
                 false, 0, 0);
 
+            // Bind the color.
+            // TODO: This shader stuff needs a little work. GetAttribute throws an exception, not -1.
             if (shaders[activeShader].GetAttribute("vColor") != -1)
             {
                 GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vColor"));
@@ -108,6 +112,7 @@ namespace GameEngine.Core.GameSpecific
                     true, 0, 0);
             }
 
+            // Bind the indices.
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements);
             GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(mesh.Triangles.Count * sizeof(int)), triangles,
                 BufferUsageHint.StaticDraw);
