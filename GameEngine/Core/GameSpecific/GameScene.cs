@@ -91,31 +91,24 @@ namespace GameEngine.Core.GameSpecific
             Vector3[] vertices = mesh.Vertices.ToArray();
             int[] triangles = mesh.Triangles.ToArray();
 
-            // Bind the buffers.
-
-            // Bind vertices from the mesh.
+            // Bind vertices.
+            IntPtr vertexBufferSize = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
             GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vPosition"));
-
-            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(mesh.Vertices.Count * Vector3.SizeInBytes), vertices,
-                BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertices, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(shaders[activeShader].GetAttribute("vPosition"), 3, VertexAttribPointerType.Float,
                 false, 0, 0);
 
             // Bind the color.
-            // TODO: This shader stuff needs a little work. GetAttribute throws an exception, not -1.
-            if (shaders[activeShader].GetAttribute("vColor") != -1)
-            {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vColor"));
-                GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(colorData.Length * Vector3.SizeInBytes), colorData,
-                    BufferUsageHint.StaticDraw);
-                GL.VertexAttribPointer(shaders[activeShader].GetAttribute("vColor"), 3, VertexAttribPointerType.Float,
-                    true, 0, 0);
-            }
+            IntPtr colorBufferSize = (IntPtr)(colorData.Length * Vector3.SizeInBytes);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vColor"));
+            GL.BufferData(BufferTarget.ArrayBuffer, colorBufferSize, colorData, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(shaders[activeShader].GetAttribute("vColor"), 3, VertexAttribPointerType.Float,
+                true, 0, 0);
 
             // Bind the indices.
+            IntPtr trianglesBufferSize = (IntPtr)(triangles.Length * sizeof(int));
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(mesh.Triangles.Count * sizeof(int)), triangles,
-                BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, trianglesBufferSize, triangles, BufferUsageHint.StaticDraw);
 
             GL.UseProgram(shaders[activeShader].ProgramId);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
