@@ -39,7 +39,7 @@ namespace GameEngine.ViewModel
         /// <param name="e">The event arguments.</param>
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            logger.LogException(LogLevel.Fatal, e.ExceptionObject.ToString(), e.ExceptionObject as Exception);
+            logger.Log(LogLevel.Fatal, e.ExceptionObject as Exception, e.ExceptionObject.ToString());
         }
     }
 }

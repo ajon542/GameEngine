@@ -70,23 +70,6 @@ namespace GameEngine.Core.GameSpecific
             };
 
             mesh = gameObject.GetComponent<Mesh>() as Mesh;
-        }
-
-        public override void Update()
-        {
-            // TODO: A little inefficient
-            BehaviourComponent component = gameObject.GetComponent<BehaviourComponent>() as BehaviourComponent;
-
-            if (component != null)
-            {
-                component.Update();
-            }
-
-            // Update...
-            gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() *
-                Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
 
             Vector3[] vertices = mesh.Vertices.ToArray();
             int[] triangles = mesh.Triangles.ToArray();
@@ -114,14 +97,21 @@ namespace GameEngine.Core.GameSpecific
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
-        public override void KeyDown(KeyEventArgs key)
+        public override void Update()
         {
+            // TODO: A little inefficient
             BehaviourComponent component = gameObject.GetComponent<BehaviourComponent>() as BehaviourComponent;
 
             if (component != null)
             {
-                component.KeyDown(key);
+                component.Update();
             }
+
+            // Update...
+            gameObject.CalculateModelMatrix();
+            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() *
+                Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
+            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()
@@ -138,6 +128,16 @@ namespace GameEngine.Core.GameSpecific
             shaders[activeShader].DisableVertexAttribArrays();
 
             GL.Flush();
+        }
+
+        public override void KeyDown(KeyEventArgs key)
+        {
+            BehaviourComponent component = gameObject.GetComponent<BehaviourComponent>() as BehaviourComponent;
+
+            if (component != null)
+            {
+                component.KeyDown(key);
+            }
         }
     }
 
