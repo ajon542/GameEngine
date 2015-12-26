@@ -18,14 +18,18 @@ namespace GameEngine.Core.GameSpecific
     class GameScene : Scene
     {
         private GameObject gameObject = new GameObject();
+        private GameObject gameObject2 = new GameObject();
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
         private string activeShader = "default";
         private int ibo_elements;
+        private int ibo_elements2;
 
         private Camera cam = new Camera();
 
         private Mesh mesh;
+        private Mesh mesh2;
         private Vector3[] colorData;
+        private Vector3[] colorData2;
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -47,14 +51,20 @@ namespace GameEngine.Core.GameSpecific
 
             // Generate buffer objects.
             GL.GenBuffers(1, out ibo_elements);
+            GL.GenBuffers(1, out ibo_elements2);
 
             // Add default shaders.
             shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
+            shaders.Add("gameobject2", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
 
             // Add our cube behaviour.
             BehaviourComponent cubeBehaviour = new CubeBehaviour();
             gameObject.AddComponent<BehaviourComponent>(cubeBehaviour);
             cubeBehaviour.Initialize();
+
+            BehaviourComponent cubeBehaviour2 = new CubeBehaviour();
+            gameObject2.AddComponent<BehaviourComponent>(cubeBehaviour2);
+            cubeBehaviour2.Initialize();
 
             // TODO: This still doesn't belong here...
             colorData = new[]
@@ -69,10 +79,19 @@ namespace GameEngine.Core.GameSpecific
                 new Vector3(0f, 0f, 1f)
             };
 
+            colorData2 = new[]
+            {
+                new Vector3(1f, 0f, 0f),
+            };
+
             mesh = gameObject.GetComponent<Mesh>() as Mesh;
+            mesh2 = gameObject2.GetComponent<Mesh>() as Mesh;
 
             Vector3[] vertices = mesh.Vertices.ToArray();
             int[] triangles = mesh.Triangles.ToArray();
+
+            Vector3[] vertices2 = mesh2.Vertices.ToArray();
+            int[] triangles2 = mesh2.Triangles.ToArray();
 
             // Bind vertices.
             IntPtr vertexBufferSize = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
@@ -93,6 +112,31 @@ namespace GameEngine.Core.GameSpecific
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements);
             GL.BufferData(BufferTarget.ElementArrayBuffer, trianglesBufferSize, triangles, BufferUsageHint.StaticDraw);
 
+            // gameobject 2
+
+            // Bind vertices.
+            // When we bind the buffer, the shader program gives it a different buffer id.
+            // However, the attribute id is the same for both shaders. The question becomes
+            // how do we utilize a different shader for each game object?
+            // shaders["gameobject2"].GetAttribute("vPosition") is going to be the same for same shader.
+            IntPtr vertexBufferSize2 = (IntPtr)(vertices2.Length * Vector3.SizeInBytes);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shaders["gameobject2"].GetBuffer("vPosition"));
+            GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize2, vertices2, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(shaders["gameobject2"].GetAttribute("vPosition"), 3, VertexAttribPointerType.Float,
+                false, 0, 0);
+
+            // Bind the color.
+            IntPtr colorBufferSize2 = (IntPtr)(colorData2.Length * Vector3.SizeInBytes);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shaders["gameobject2"].GetBuffer("vColor"));
+            GL.BufferData(BufferTarget.ArrayBuffer, colorBufferSize2, colorData2, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(shaders["gameobject2"].GetAttribute("vColor"), 3, VertexAttribPointerType.Float,
+                true, 0, 0);
+
+            // Bind the indices.
+            IntPtr trianglesBufferSize2 = (IntPtr)(triangles2.Length * sizeof(int));
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements2);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, trianglesBufferSize2, triangles2, BufferUsageHint.StaticDraw);
+
             GL.UseProgram(shaders[activeShader].ProgramId);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
@@ -107,25 +151,67 @@ namespace GameEngine.Core.GameSpecific
                 component.Update();
             }
 
+            component = gameObject2.GetComponent<BehaviourComponent>() as BehaviourComponent;
+
+            if (component != null)
+            {
+                component.Update();
+            }
+
             // Update...
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = cam.GetViewMatrix() *
                 Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
+
+            gameObject2.Transform.Position = new Vector3(2, 0, -3.0f);
+            gameObject2.CalculateModelMatrix();
+            gameObject2.ViewProjectionMatrix = cam.GetViewMatrix() *
+                Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
+            gameObject2.ModelViewProjectionMatrix = gameObject2.ModelMatrix * gameObject2.ViewProjectionMatrix;
         }
 
         public override void Render()
         {
             // Render...
-            shaders[activeShader].EnableVertexAttribArrays();
-
+            GL.UseProgram(shaders[activeShader].ProgramId);
             int indiceat = 0;
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vPosition"));
+            GL.VertexAttribPointer(shaders[activeShader].GetAttribute("vPosition"), 3, VertexAttribPointerType.Float,
+                false, 0, 0);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vColor"));
+            GL.VertexAttribPointer(shaders[activeShader].GetAttribute("vColor"), 3, VertexAttribPointerType.Float,
+                true, 0, 0);
+
+            shaders[activeShader].EnableVertexAttribArrays();
 
             GL.UniformMatrix4(shaders[activeShader].GetUniform("modelview"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawElements(BeginMode.Triangles, mesh.Triangles.Count, DrawElementsType.UnsignedInt,
                             indiceat * sizeof(uint));
 
             shaders[activeShader].DisableVertexAttribArrays();
+
+            // ---------------------------------
+
+            GL.UseProgram(shaders["gameobject2"].ProgramId);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shaders["gameobject2"].GetBuffer("vPosition"));
+            GL.VertexAttribPointer(shaders["gameobject2"].GetAttribute("vPosition"), 3, VertexAttribPointerType.Float,
+                false, 0, 0);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, shaders["gameobject2"].GetBuffer("vColor"));
+            GL.VertexAttribPointer(shaders["gameobject2"].GetAttribute("vColor"), 3, VertexAttribPointerType.Float,
+                true, 0, 0);
+
+            shaders["gameobject2"].EnableVertexAttribArrays();
+
+            GL.UniformMatrix4(shaders["gameobject2"].GetUniform("modelview"), false, ref gameObject2.ModelViewProjectionMatrix);
+            GL.DrawElements(BeginMode.Triangles, mesh2.Triangles.Count, DrawElementsType.UnsignedInt,
+                            indiceat * sizeof(uint));
+
+            shaders["gameobject2"].DisableVertexAttribArrays();
 
             GL.Flush();
         }
