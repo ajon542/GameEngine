@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\Behaviour.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Component.cs" />
     <Compile Include="Core\Debugging\GameEngineException.cs" />
@@ -91,7 +92,6 @@
     <Compile Include="Core\GameSpecific\GameScene.cs" />
     <Compile Include="Core\Graphics\GraphicsProperties.cs" />
     <Compile Include="Core\Mesh.cs" />
-    <Compile Include="Core\BehaviourComponent.cs" />
     <Compile Include="Core\Renderer.cs" />
     <Compile Include="Core\Scene.cs" />
     <Compile Include="Core\Serialization\ISerializer.cs" />

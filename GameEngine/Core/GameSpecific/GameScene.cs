@@ -58,12 +58,12 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("gameobject2", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
 
             // Add our cube behaviour.
-            BehaviourComponent cubeBehaviour = new CubeBehaviour();
-            gameObject.AddComponent<BehaviourComponent>(cubeBehaviour);
+            Behaviour cubeBehaviour = new CubeBehaviour();
+            gameObject.AddComponent<Behaviour>(cubeBehaviour);
             cubeBehaviour.Initialize();
 
-            BehaviourComponent cubeBehaviour2 = new CubeBehaviour();
-            gameObject2.AddComponent<BehaviourComponent>(cubeBehaviour2);
+            Behaviour cubeBehaviour2 = new CubeBehaviour();
+            gameObject2.AddComponent<Behaviour>(cubeBehaviour2);
             cubeBehaviour2.Initialize();
 
             // TODO: This still doesn't belong here...
@@ -140,14 +140,14 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             // TODO: A little inefficient
-            BehaviourComponent component = gameObject.GetComponent<BehaviourComponent>() as BehaviourComponent;
+            Behaviour component = gameObject.GetComponent<Behaviour>() as Behaviour;
 
             if (component != null)
             {
                 component.Update();
             }
 
-            component = gameObject2.GetComponent<BehaviourComponent>() as BehaviourComponent;
+            component = gameObject2.GetComponent<Behaviour>() as Behaviour;
 
             if (component != null)
             {
@@ -214,7 +214,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void KeyDown(KeyEventArgs key)
         {
-            BehaviourComponent component = gameObject.GetComponent<BehaviourComponent>() as BehaviourComponent;
+            Behaviour component = gameObject.GetComponent<Behaviour>() as Behaviour;
 
             if (component != null)
             {

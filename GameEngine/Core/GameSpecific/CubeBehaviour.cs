@@ -4,7 +4,7 @@ using OpenTK;
 
 namespace GameEngine.Core.GameSpecific
 {
-    class CubeBehaviour : BehaviourComponent
+    class CubeBehaviour : Behaviour
     {
         private Mesh mesh;
 

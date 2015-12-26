@@ -5,7 +5,7 @@ namespace GameEngine.Core
     /// <summary>
     /// The behaviour component.
     /// </summary>
-    public class BehaviourComponent : Component
+    public class Behaviour : Component
     {
         // A GameObject is going to be controlled by a BehaviourComponent.
         // This will allow actions such as initialization and updates.
