@@ -115,10 +115,6 @@ namespace GameEngine.Core.GameSpecific
             // gameobject 2
 
             // Bind vertices.
-            // When we bind the buffer, the shader program gives it a different buffer id.
-            // However, the attribute id is the same for both shaders. The question becomes
-            // how do we utilize a different shader for each game object?
-            // shaders["gameobject2"].GetAttribute("vPosition") is going to be the same for same shader.
             IntPtr vertexBufferSize2 = (IntPtr)(vertices2.Length * Vector3.SizeInBytes);
             GL.BindBuffer(BufferTarget.ArrayBuffer, shaders["gameobject2"].GetBuffer("vPosition"));
             GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize2, vertices2, BufferUsageHint.StaticDraw);
