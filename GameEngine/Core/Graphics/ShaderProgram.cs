@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GameEngine.Core.Debugging;
 using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.Core.Graphics
@@ -224,7 +225,7 @@ namespace GameEngine.Core.Graphics
         {
             if (!attributes.ContainsKey(name))
             {
-                throw new Exception("The attribute " + name + " does not exist");
+                throw new GameEngineException("The attribute " + name + " does not exist");
             }
             return attributes[name].address;
         }
@@ -238,7 +239,7 @@ namespace GameEngine.Core.Graphics
         {
             if (!uniforms.ContainsKey(name))
             {
-                throw new Exception("The uniform variable " + name + " does not exist");
+                throw new GameEngineException("The uniform variable " + name + " does not exist");
             }
             return uniforms[name].address;
         }
@@ -252,7 +253,7 @@ namespace GameEngine.Core.Graphics
         {
             if (!buffers.ContainsKey(name))
             {
-                throw new Exception("The buffer " + name + " does not exist");
+                throw new GameEngineException("The buffer " + name + " does not exist");
             }
             return buffers[name];
         }
