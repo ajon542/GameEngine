@@ -34,6 +34,7 @@ namespace GameEngine.Core.Serialization
 
             serializer.Converters.Add(new Vector2Converter());
             serializer.Converters.Add(new Vector3Converter());
+            serializer.Converters.Add(new Vector4Converter());
             serializer.Converters.Add(new QuaternionConverter());
             serializer.Converters.Add(new Matrix3Converter());
             serializer.Converters.Add(new Matrix4Converter());

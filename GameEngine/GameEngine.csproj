@@ -100,7 +100,9 @@
     <Compile Include="Core\Serialization\Matrix4Converter.cs" />
     <Compile Include="Core\Serialization\QuaternionConverter.cs" />
     <Compile Include="Core\Serialization\Serializer.cs" />
-    <Compile Include="Core\Serialization\VectorConverter.cs" />
+    <Compile Include="Core\Serialization\Vector2Converter.cs" />
+    <Compile Include="Core\Serialization\Vector3Converter.cs" />
+    <Compile Include="Core\Serialization\Vector4Converter.cs" />
     <Compile Include="Core\Graphics\ShaderProgram.cs" />
     <Compile Include="Core\Timer.cs" />
     <Compile Include="Core\Transform.cs" />

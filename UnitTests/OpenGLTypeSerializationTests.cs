@@ -31,6 +31,16 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestVector4Serialization()
+        {
+            Vector4 vec = new Vector4(1, 2, 3, 4);
+            ISerializer<Vector4> serializer = new Serializer<Vector4>();
+            string output = serializer.Serialize(vec);
+            Vector4 res = serializer.Deserialize(output);
+            Assert.AreEqual(vec, res);
+        }
+
+        [TestMethod]
         public void TestQuaternionSerialization()
         {
             Quaternion qt = new Quaternion(1, 2, 3, 4);
