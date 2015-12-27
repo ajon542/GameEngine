@@ -5,10 +5,20 @@ using Newtonsoft.Json;
 
 namespace GameEngine.Core.Serialization
 {
+    /// <summary>
+    /// Implementation of the (de)serializer.
+    /// </summary>
+    /// <typeparam name="T">The type to serialize.</typeparam>
     public class Serializer<T> : ISerializer<T>
     {
+        /// <summary>
+        /// The json serializer object.
+        /// </summary>
         private JsonSerializer serializer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Serializer"/> class.
+        /// </summary>
         public Serializer()
         {
             // Create the serializer settings.
@@ -30,6 +40,11 @@ namespace GameEngine.Core.Serialization
             serializer.Formatting = Formatting.Indented;
         }
 
+        /// <summary>
+        /// Serialize the object.
+        /// </summary>
+        /// <param name="gameObject">The object to serialize.</param>
+        /// <returns>A string representing the serialized object.</returns>
         public string Serialize(T gameObject)
         {
             string output;
@@ -44,6 +59,11 @@ namespace GameEngine.Core.Serialization
             return output;
         }
 
+        /// <summary>
+        /// Deserialized the data.
+        /// </summary>
+        /// <param name="data">A string representation of the serialized object.</param>
+        /// <returns>The deserialized object.</returns>
         public T Deserialize(string data)
         {
             using (StringReader sr = new StringReader(data))

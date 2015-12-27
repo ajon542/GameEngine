@@ -69,5 +69,15 @@ namespace UnitTests
             res = serializer.Deserialize(output);
             Assert.AreEqual(m2, res);
         }
+
+        [TestMethod]
+        public void TestBox2Serialization()
+        {
+            Box2 b = new Box2(1, 2, 3, 4);
+            ISerializer<Box2> serializer = new Serializer<Box2>();
+            string output = serializer.Serialize(b);
+            Box2 res = serializer.Deserialize(output);
+            Assert.AreEqual(b, res);
+        }
     }
 }
