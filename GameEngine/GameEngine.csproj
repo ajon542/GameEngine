@@ -96,6 +96,7 @@
     <Compile Include="Core\Renderer.cs" />
     <Compile Include="Core\Scene.cs" />
     <Compile Include="Core\Serialization\ISerializer.cs" />
+    <Compile Include="Core\Serialization\Matrix3Converter.cs" />
     <Compile Include="Core\Serialization\QuaternionConverter.cs" />
     <Compile Include="Core\Serialization\Serializer.cs" />
     <Compile Include="Core\Serialization\VectorConverter.cs" />

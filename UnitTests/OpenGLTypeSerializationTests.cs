@@ -39,5 +39,20 @@ namespace UnitTests
             Quaternion res = serializer.Deserialize(output);
             Assert.AreEqual(qt, res);
         }
+
+        [TestMethod]
+        public void TestMatrix3Serialization()
+        {
+            Matrix3 m1 = new Matrix3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            ISerializer<Matrix3> serializer = new Serializer<Matrix3>();
+            string output = serializer.Serialize(m1);
+            Matrix3 res = serializer.Deserialize(output);
+            Assert.AreEqual(m1, res);
+
+            Matrix3 m2 = new Matrix3(new Vector3(1, 4, 7), new Vector3(2, 5, 8), new Vector3(3, 6, 9));
+            output = serializer.Serialize(m2);
+            res = serializer.Deserialize(output);
+            Assert.AreEqual(m2, res);
+        }
     }
 }
