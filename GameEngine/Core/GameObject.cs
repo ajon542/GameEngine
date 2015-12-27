@@ -153,6 +153,15 @@ namespace GameEngine.Core
             return null;
         }
 
+        /// <summary>
+        /// Gets the list of components.
+        /// </summary>
+        /// <returns>The list of components.</returns>
+        public List<Component> GetComponents()
+        {
+            return components;
+        }
+
         public override string ToString()
         {
             return Name;
