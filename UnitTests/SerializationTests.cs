@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using GameEngine.Core;
@@ -68,7 +69,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestGameObjectParentChild()
         {
             GameObject root = new GameObject("Root");
             GameObject c1 = new GameObject("C1");
@@ -87,6 +88,8 @@ namespace UnitTests
 
             Assert.AreEqual(children.Count, 1);
             Assert.AreEqual(c1.Transform, children[0].Transform);
+            Assert.AreEqual(root.Guid, loadedRoot.Guid);
+            Assert.AreEqual(c1.Guid, children[0].Guid);
         }
     }
 }

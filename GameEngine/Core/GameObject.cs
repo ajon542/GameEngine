@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Newtonsoft.Json;
 using OpenTK;
@@ -32,6 +33,11 @@ namespace GameEngine.Core
         // Add an empty GameObject to the hierarchy.
         // Add different components to the GameObjects.
         // GameObject is rendered in scene and game view.
+
+        /// <summary>
+        /// Get or sets the guid associated with the game object.
+        /// </summary>
+        public Guid Guid { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the game object.
@@ -70,6 +76,7 @@ namespace GameEngine.Core
             children = new List<GameObject>();
             components = new List<Component>();
             Transform = new Transform();
+            Guid = Guid.NewGuid();
         }
 
         /// <summary>
@@ -79,8 +86,9 @@ namespace GameEngine.Core
         {
             Name = name;
             children = new List<GameObject>();
-
+            components = new List<Component>();
             Transform = new Transform();
+            Guid = Guid.NewGuid();
         }
 
         /// <summary>
