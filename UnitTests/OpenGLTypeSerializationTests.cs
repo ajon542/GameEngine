@@ -54,5 +54,20 @@ namespace UnitTests
             res = serializer.Deserialize(output);
             Assert.AreEqual(m2, res);
         }
+
+        [TestMethod]
+        public void TestMatrix4Serialization()
+        {
+            Matrix4 m1 = new Matrix4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+            ISerializer<Matrix4> serializer = new Serializer<Matrix4>();
+            string output = serializer.Serialize(m1);
+            Matrix4 res = serializer.Deserialize(output);
+            Assert.AreEqual(m1, res);
+
+            Matrix4 m2 = new Matrix4(new Vector4(1, 2, 3, 4), new Vector4(5, 6, 7, 8), new Vector4(9, 10, 11, 12), new Vector4(13, 14, 15, 16));
+            output = serializer.Serialize(m2);
+            res = serializer.Deserialize(output);
+            Assert.AreEqual(m2, res);
+        }
     }
 }
