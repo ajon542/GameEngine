@@ -17,5 +17,29 @@ namespace GameEngine.Core
     /// </remarks>
     class GameObjectManager
     {
+        /// <summary>
+        /// The root game object. A scene will always have one of these.
+        /// </summary>
+        private GameObject root = new GameObject();
+
+        public void AddChildTo(Guid guid, GameObject child)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddChildrenTo(Guid guid, List<GameObject> children)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveChildrenFrom(Guid guid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameObject FindGameObject(Guid guid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
