@@ -50,6 +50,10 @@ namespace UnitTests
 
             // Compare the resulting strings for equality.
             Assert.AreEqual(string.Compare(output, compare), 0);
+
+            // Check the deserialized values are correct.
+            Assert.AreEqual(res.Value, 1234);
+            Assert.AreEqual((res as Derived).Name, "Derived");
         }
 
         [TestMethod]
