@@ -71,12 +71,8 @@ namespace GameEngine.Core
         /// Initializes a new instance of the <see cref="GameObject"/> class.
         /// </summary>
         public GameObject()
+            : this("GameObject")
         {
-            Name = "GameObject";
-            children = new List<GameObject>();
-            components = new List<Component>();
-            Transform = new Transform();
-            Guid = Guid.NewGuid();
         }
 
         /// <summary>
