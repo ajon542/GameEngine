@@ -4,6 +4,10 @@ namespace GameEngine.Core.Serialization
     /// <summary>
     /// Interface for (de)serialization.
     /// </summary>
+    /// <remarks>
+    /// The purpose of serialization is to be able to save and load the entire
+    /// scene and associated game object hierarchy.
+    /// </remarks>
     /// <typeparam name="T">The type to serialize.</typeparam>
     public interface ISerializer<T>
     {
