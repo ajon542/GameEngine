@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using OpenTK;
 
+using GameEngine.Core.Debugging;
+
 namespace GameEngine.Core
 {
     public class GameObject
@@ -95,7 +97,7 @@ namespace GameEngine.Core
         {
             if(child == null)
             {
-                return;
+                throw new GameEngineException("child cannot be null");
             }
 
             children.Add(child);
