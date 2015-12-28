@@ -40,6 +40,9 @@ namespace UnitTests
   
             // Perform (de)serialization.
             string output = serializer.Serialize(b);
+
+            // NOTE: We can deserialize a string without knowing the derived object.
+            // Pretty cool, huh? Thanks newtonsoft json.
             Base res = serializer.Deserialize(output);
 
             // Serialize the deserialized object.
