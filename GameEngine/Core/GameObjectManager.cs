@@ -37,9 +37,32 @@ namespace GameEngine.Core
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Find the game object with the given guid.
+        /// </summary>
+        /// <param name="guid">The guid to find.</param>
+        /// <returns>The game object with the guid or null.</returns>
         public GameObject FindGameObject(Guid guid)
         {
-            throw new NotImplementedException();
+            Queue<GameObject> unvisited = new Queue<GameObject>();
+            unvisited.Enqueue(root);
+
+            while (unvisited.Count != 0)
+            {
+                GameObject current = unvisited.Dequeue();
+
+                List<GameObject> children = current.GetChildren();
+                foreach(GameObject child in children)
+                {
+                    if (child.Guid == guid)
+                    {
+                        return child;
+                    }
+
+                    unvisited.Enqueue(child);
+                }
+            }
+            return null;
         }
     }
 }
