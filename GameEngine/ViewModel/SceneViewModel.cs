@@ -4,6 +4,11 @@ using System.Windows.Forms;
 using System.Windows.Input;
 
 using GameEngine.Core;
+using GameEngine.Core.Graphics;
+
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.ViewModel
 {
@@ -88,6 +93,9 @@ namespace GameEngine.ViewModel
             // We don't want to be initializing each scene every time. Only do this once.
             if (!loaded)
             {
+                GraphicsProperties properties = sender as GraphicsProperties;
+                SetupViewport(properties.Width, properties.Height);
+
                 // Initialize all the scenes.
                 foreach (Scene scene in SceneList)
                 {
@@ -194,6 +202,58 @@ namespace GameEngine.ViewModel
             {
                 scene.Update();
             }
+        }
+
+        /// <summary>
+        /// The resized command.
+        /// </summary>
+        private DelegateCommand resizedCommand;
+
+        /// <summary>
+        /// Gets the command to be executed when rendering is to occur.
+        /// </summary>
+        public ICommand ResizedCommand
+        {
+            get
+            {
+                if (resizedCommand == null)
+                {
+                    resizedCommand = new DelegateCommand(Resized);
+                }
+
+                return resizedCommand;
+            }
+        }
+
+        /// <summary>
+        /// Resize the scene.
+        /// </summary>
+        private void Resized(object sender)
+        {
+            GraphicsProperties properties = sender as GraphicsProperties;
+            SetupViewport(properties.Width, properties.Height);
+        }
+
+        /// <summary>
+        /// Set the viewport.
+        /// </summary>
+        private void SetupViewport(int width, int height)
+        {
+            // Set the view port.
+            GL.Viewport(0, 0, width, height);
+
+            // Create the perspective field of view matrix.
+            double aspectRatio = width / (double)height;
+            float fov = 1f;
+            float near = 1.0f;
+            float far = 1000.0f;
+
+            Matrix4 perspectiveMatrix =
+               Matrix4.CreatePerspectiveFieldOfView(fov, (float)aspectRatio, near, far);
+
+            // Set the matrix mode and load the matrix.
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perspectiveMatrix);
         }
     }
 }

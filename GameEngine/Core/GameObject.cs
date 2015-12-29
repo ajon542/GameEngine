@@ -161,7 +161,7 @@ namespace GameEngine.Core
 
         public override string ToString()
         {
-            return Name;
+            return Name + " " + Guid;
         }
 
         // TODO: Address these for serialization

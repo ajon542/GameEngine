@@ -130,6 +130,29 @@ namespace GameEngine.View
 
         #endregion
 
+        #region Resized Command
+
+        /// <summary>
+        /// Gets or sets the Resized Command Property.
+        /// </summary>
+        public new ICommand Resized
+        {
+            get { return (ICommand)GetValue(ResizedProperty); }
+            set { SetValue(ResizedProperty, value); }
+        }
+
+        /// <summary>
+        /// The resized dependency property.
+        /// </summary>
+        /// <remarks>
+        /// Resized="{Binding ResizedCommand}"
+        /// </remarks>
+        public static readonly DependencyProperty ResizedProperty =
+            DependencyProperty.Register("Resized", typeof(ICommand), typeof(OpenGLControl),
+                new UIPropertyMetadata(null));
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLControl"/> class.
         /// </summary>
@@ -162,28 +185,6 @@ namespace GameEngine.View
             Core.Timer.Instance.Init();
         }
 
-        /// <summary>
-        /// Set the viewport.
-        /// </summary>
-        private void SetupViewport()
-        {
-            // Set the view port.
-            GL.Viewport(0, 0, glControl.Width, glControl.Height);
-
-            // Create the perspective field of view matrix.
-            double aspectRatio = glControl.Width / (double)glControl.Height;
-            float fov = 1f;
-            float near = 1.0f;
-            float far = 1000.0f;
-
-            Matrix4 perspectiveMatrix =
-               Matrix4.CreatePerspectiveFieldOfView(fov, (float)aspectRatio, near, far);
-
-            // Set the matrix mode and load the matrix.
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref perspectiveMatrix);
-        }
-
         #region Event Handlers
 
         /// <summary>
@@ -193,7 +194,10 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // TODO: Use the width and height.
+            if (SceneInitialized == null)
+            {
+                return;
+            }
             SceneInitialized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
         }
 
@@ -221,9 +225,6 @@ namespace GameEngine.View
             glControl.KeyDown += OnKeyDown;
             //glControl.VSync = false; This call only gains about 5 fps, wonder what happens on my work machine?
             (sender as WindowsFormsHost).Child = glControl;
-
-            // Set the view port.
-            SetupViewport();
         }
 
         /// <summary>
@@ -249,7 +250,10 @@ namespace GameEngine.View
                 ClearBufferMask.StencilBufferBit);
 
             // Execute the render command.
-            Render.Execute(null);
+            if (Render != null)
+            {
+                Render.Execute(null);
+            }
 
             // Swap the buffers.
             glControl.SwapBuffers();
@@ -262,6 +266,10 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
+            if (KeyDown == null)
+            {
+                return;
+            }
             KeyDown.Execute(e);
         }
 
@@ -272,7 +280,11 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnResized(object sender, RoutedEventArgs e)
         {
-            SetupViewport();
+            if(Resized == null)
+            {
+                return;
+            }
+            Resized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
         }
 
         /// <summary>
@@ -289,8 +301,12 @@ namespace GameEngine.View
                 lastMeasureTime = DateTime.Now;
             }
 
+            if (Update != null)
+            {
+                Update.Execute(null);
+            }
             // Execute the update command.
-            Update.Execute(null);
+            
             initialUpdate = true;
 
             // Force the GL control to paint.
