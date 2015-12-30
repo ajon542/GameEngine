@@ -109,5 +109,69 @@ namespace UnitTests
             go.RemoveChildren();
             Assert.IsNull(GameObjectManager.FindGameObject(go, c1.Guid));
         }
+
+        [TestMethod]
+        public void TestGameObjectParentNotNull()
+        {
+            GameObject go = new GameObject();
+            GameObject c1 = new GameObject();
+            go.AddChild(c1);
+
+            Assert.IsNull(go.GetParent());
+            Assert.IsNotNull(c1.GetParent());
+            Assert.AreEqual(go.Guid, c1.GetParent().Guid);
+        }
+
+        [TestMethod]
+        public void TestGameObjectLevel()
+        {
+            GameObject go = new GameObject("go");
+            GameObject c1 = new GameObject("c1");
+            GameObject cc1 = new GameObject("cc1");
+            GameObject cc2 = new GameObject("cc2");
+            c1.AddChild(cc1);
+            c1.AddChild(cc2);
+            go.AddChild(c1);
+
+            // Root object is level 0.
+            Assert.AreEqual(0, GameObjectManager.GetLevel(go));
+
+            Assert.AreEqual(1, GameObjectManager.GetLevel(c1));
+            Assert.AreEqual(2, GameObjectManager.GetLevel(cc1));
+            Assert.AreEqual(2, GameObjectManager.GetLevel(cc2));
+        }
+
+        [TestMethod]
+        public void TestClosestCommonParent()
+        {
+            GameObject go = new GameObject("go");
+            GameObject c1 = new GameObject("c1");
+            GameObject c2 = new GameObject("c2");
+            GameObject cc1 = new GameObject("cc1");
+            GameObject cc2 = new GameObject("cc2");
+            GameObject cc3 = new GameObject("cc3");
+            GameObject cc4 = new GameObject("cc4");
+            GameObject cc5 = new GameObject("cc5");
+            GameObject cc6 = new GameObject("cc6");
+
+            cc5.AddChild(cc6);
+            cc4.AddChild(cc5);
+            cc3.AddChild(cc4);
+
+            cc1.AddChild(cc3);
+            c1.AddChild(cc1);
+            c1.AddChild(cc2);
+            go.AddChild(c1);
+            go.AddChild(c2);
+
+            Assert.AreEqual("go", GameObjectManager.FindClosestCommonParent(c2, cc6).Name);
+            Assert.AreEqual("go", GameObjectManager.FindClosestCommonParent(c1, c2).Name);
+            Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc1, cc2).Name);
+            Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc3, cc2).Name);
+            Assert.AreEqual("cc3", GameObjectManager.FindClosestCommonParent(cc5, cc4).Name);
+            
+            // TODO: What should this method return if the game object is root?
+            //Assert.AreEqual("go", GameObjectManager.FindClosestCommonParent(go, go).Name);
+        }
     }
 }

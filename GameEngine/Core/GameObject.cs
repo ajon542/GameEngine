@@ -104,6 +104,15 @@ namespace GameEngine.Core
         }
 
         /// <summary>
+        /// Gets the parent of the game object.
+        /// </summary>
+        /// <returns>The parent of the game object.</returns>
+        public GameObject GetParent()
+        {
+            return parent;
+        }
+
+        /// <summary>
         /// Gets the list of child game objects.
         /// </summary>
         /// <returns>The list of child game objects.</returns>
@@ -187,7 +196,7 @@ namespace GameEngine.Core
 
         public override string ToString()
         {
-            return Name + " " + Guid;
+            return Name;
         }
 
         // TODO: Address these for serialization
