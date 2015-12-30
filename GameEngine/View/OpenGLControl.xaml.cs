@@ -135,7 +135,7 @@ namespace GameEngine.View
         /// <summary>
         /// Gets or sets the Resized Command Property.
         /// </summary>
-        public new ICommand Resized
+        public ICommand Resized
         {
             get { return (ICommand)GetValue(ResizedProperty); }
             set { SetValue(ResizedProperty, value); }
