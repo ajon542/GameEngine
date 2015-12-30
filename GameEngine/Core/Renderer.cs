@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Core
 {
-    class Renderer : Component
+    public class Renderer : Component
     {
+        public Renderer()
+        {
+        }
     }
 }

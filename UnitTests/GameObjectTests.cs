@@ -20,6 +20,44 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestComponentRemoval()
+        {
+            // Create the components and game object.
+            Component mesh = new Mesh();
+            Component renderer = new Renderer();
+            Component behaviour = new Behaviour();
+            GameObject go = new GameObject();
+
+            // Make sure the game object doesn't have the components.
+            Assert.IsNull(go.GetComponent<Mesh>());
+            Assert.IsNull(go.GetComponent<Renderer>());
+            Assert.IsNull(go.GetComponent<Behaviour>());
+
+            // Add the components to the game object.
+            go.AddComponent<Mesh>(mesh);
+            go.AddComponent<Renderer>(renderer);
+            go.AddComponent<Behaviour>(behaviour);
+
+            // Make sure components are found.
+            Assert.IsNotNull(go.GetComponent<Mesh>());
+            Assert.IsNotNull(go.GetComponent<Renderer>());
+            Assert.IsNotNull(go.GetComponent<Behaviour>());
+
+            // Make sure components correct components exist after removal.
+            go.RemoveComponent<Mesh>();
+            Assert.IsNull(go.GetComponent<Mesh>());
+            Assert.IsNotNull(go.GetComponent<Renderer>());
+            Assert.IsNotNull(go.GetComponent<Behaviour>());
+
+            go.RemoveComponent<Renderer>();
+            Assert.IsNull(go.GetComponent<Renderer>());
+            Assert.IsNotNull(go.GetComponent<Behaviour>());
+
+            go.RemoveComponent<Behaviour>();
+            Assert.IsNull(go.GetComponent<Behaviour>());
+        }
+
+        [TestMethod]
         public void TestGameObjectManagerChildAddition()
         {
             GameObject go = new GameObject();

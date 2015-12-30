@@ -139,6 +139,24 @@ namespace GameEngine.Core
         }
 
         /// <summary>
+        /// Removes a component from the game object.
+        /// </summary>
+        /// <typeparam name="T">The type of component to remove.</typeparam>
+        public void RemoveComponent<T>()
+        {
+            // Search for a component of type T.
+            for (int i = 0; i < components.Count; ++i)
+            {
+                if (components[i] is T)
+                {
+                    // Remove the component if found.
+                    components.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets a component of type T.
         /// </summary>
         /// <typeparam name="T">The type of component to get.</typeparam>
