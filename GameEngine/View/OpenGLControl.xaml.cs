@@ -266,11 +266,10 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (KeyDown == null)
+            if (KeyDown != null)
             {
-                return;
+                KeyDown.Execute(e);
             }
-            KeyDown.Execute(e);
         }
 
         /// <summary>
@@ -280,11 +279,10 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnResized(object sender, RoutedEventArgs e)
         {
-            if(Resized == null)
+            if(Resized != null)
             {
-                return;
+                Resized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
             }
-            Resized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
         }
 
         /// <summary>
@@ -301,11 +299,11 @@ namespace GameEngine.View
                 lastMeasureTime = DateTime.Now;
             }
 
+            // Execute the update command.
             if (Update != null)
             {
                 Update.Execute(null);
             }
-            // Execute the update command.
             
             initialUpdate = true;
 

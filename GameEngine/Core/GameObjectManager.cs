@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameEngine.Core
 {
@@ -14,6 +11,9 @@ namespace GameEngine.Core
     /// Scenes can consist of a complex game object hierarchy, starting with a
     /// single root game object linking to many child game objects. Being able
     /// to manage and debug this hierarchy will be important.
+    /// While it is possible to modify the game object hierarchy by following the
+    /// game object parent and child links, this class will provide some of the
+    /// common tasks needed.
     /// </remarks>
     class GameObjectManager
     {
@@ -22,19 +22,51 @@ namespace GameEngine.Core
         /// </summary>
         private GameObject root = new GameObject();
 
-        public void AddChildTo(Guid guid, GameObject child)
+        /// <summary>
+        /// Add a child to the game object with the given guid.
+        /// </summary>
+        /// <param name="guid">The guid of the parent object.</param>
+        /// <param name="child">The child object to add.</param>
+        public void AddChild(Guid guid, GameObject child)
         {
-            throw new NotImplementedException();
+            GameObject gameObject = FindGameObject(guid);
+
+            if (gameObject != null)
+            {
+                gameObject.AddChild(child);
+            }
         }
 
-        public void AddChildrenTo(Guid guid, List<GameObject> children)
+        /// <summary>
+        /// Add a list of children to the game object with the given guid.
+        /// </summary>
+        /// <param name="guid">The guid of the parent object.</param>
+        /// <param name="children">The list of child objects to add.</param>
+        public void AddChildren(Guid guid, List<GameObject> children)
         {
-            throw new NotImplementedException();
+            GameObject gameObject = FindGameObject(guid);
+
+            if (gameObject != null)
+            {
+                foreach (GameObject child in children)
+                {
+                    gameObject.AddChild(child);
+                }
+            }
         }
 
-        public void RemoveChildrenFrom(Guid guid)
+        /// <summary>
+        /// Remove all children from their parent.
+        /// </summary>
+        /// <param name="guid">The guid of the parent object.</param>
+        public void RemoveChildren(Guid guid)
         {
-            throw new NotImplementedException();
+            GameObject gameObject = FindGameObject(guid);
+
+            if (gameObject != null)
+            {
+                gameObject.RemoveChildren();
+            }
         }
 
         /// <summary>
@@ -52,7 +84,7 @@ namespace GameEngine.Core
                 GameObject current = unvisited.Dequeue();
 
                 List<GameObject> children = current.GetChildren();
-                foreach(GameObject child in children)
+                foreach (GameObject child in children)
                 {
                     if (child.Guid == guid)
                     {

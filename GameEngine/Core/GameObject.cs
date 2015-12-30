@@ -96,6 +96,14 @@ namespace GameEngine.Core
         }
 
         /// <summary>
+        /// Remove any children game objects.
+        /// </summary>
+        public void RemoveChildren()
+        {
+            children = new List<GameObject>();
+        }
+
+        /// <summary>
         /// Gets the list of child game objects.
         /// </summary>
         /// <returns>The list of child game objects.</returns>
