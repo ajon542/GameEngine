@@ -15,6 +15,11 @@ namespace GameEngine.Core
         /// </summary>
         public List<int> Triangles { get; set; }
 
+        /// <summary>
+        /// Gets or sets the list of colours.
+        /// </summary>
+        public List<Vector3> Colours { get; set; }
+
         // TODO: UV
         // TODO: Normals
 
@@ -25,6 +30,7 @@ namespace GameEngine.Core
         {
             Vertices = new List<Vector3>();
             Triangles = new List<int>();
+            Colours = new List<Vector3>();
         }
 
         /// <summary>
@@ -34,6 +40,7 @@ namespace GameEngine.Core
         {
             Vertices.Clear();
             Triangles.Clear();
+            Colours.Clear();
         }
     }
 }

@@ -6,8 +6,10 @@ namespace GameEngine.Core.GameSpecific
 {
     class CubeBehaviour : Behaviour
     {
-        private Mesh mesh;
+        public Vector3 Colour { get; set; }
 
+        private Mesh mesh;
+        
         public override void Initialize()
         {
             mesh = new Mesh();
@@ -43,6 +45,8 @@ namespace GameEngine.Core.GameSpecific
             };
 
             mesh.Triangles = new List<int>(indices);
+            mesh.Colours = new List<Vector3>();
+            mesh.Colours.Add(Colour);
 
             gameObject.AddComponent<Mesh>(mesh);
 

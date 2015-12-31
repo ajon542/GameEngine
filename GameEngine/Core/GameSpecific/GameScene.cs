@@ -28,8 +28,6 @@ namespace GameEngine.Core.GameSpecific
 
         private Mesh mesh;
         private Mesh mesh2;
-        private Vector3[] colorData;
-        private Vector3[] colorData2;
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -51,40 +49,26 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("gameobject2", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
 
             // Add our cube behaviour.
-            Behaviour cubeBehaviour = new CubeBehaviour();
+            CubeBehaviour cubeBehaviour = new CubeBehaviour();
+            cubeBehaviour.Colour = new Vector3(1, 0, 0);
             gameObject.AddComponent<Behaviour>(cubeBehaviour);
             cubeBehaviour.Initialize();
 
-            Behaviour cubeBehaviour2 = new CubeBehaviour();
+            CubeBehaviour cubeBehaviour2 = new CubeBehaviour();
+            cubeBehaviour2.Colour = new Vector3(0, 0, 1);
             gameObject2.AddComponent<Behaviour>(cubeBehaviour2);
             cubeBehaviour2.Initialize();
-
-            // TODO: This still doesn't belong here...
-            colorData = new[]
-            {
-                new Vector3(1f, 0f, 0f),
-                new Vector3(0f, 0f, 1f),
-                new Vector3(0f, 1f, 0f),
-                new Vector3(1f, 0f, 0f),
-                new Vector3(0f, 0f, 1f),
-                new Vector3(0f, 1f, 0f),
-                new Vector3(1f, 0f, 0f),
-                new Vector3(0f, 0f, 1f)
-            };
-
-            colorData2 = new[]
-            {
-                new Vector3(1f, 0f, 0f),
-            };
 
             mesh = gameObject.GetComponent<Mesh>() as Mesh;
             mesh2 = gameObject2.GetComponent<Mesh>() as Mesh;
 
             Vector3[] vertices = mesh.Vertices.ToArray();
             int[] triangles = mesh.Triangles.ToArray();
+            Vector3[] colours = mesh.Colours.ToArray();
 
             Vector3[] vertices2 = mesh2.Vertices.ToArray();
             int[] triangles2 = mesh2.Triangles.ToArray();
+            Vector3[] colours2 = mesh2.Colours.ToArray();
 
             // Bind vertices.
             IntPtr vertexBufferSize = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
@@ -94,9 +78,9 @@ namespace GameEngine.Core.GameSpecific
                 false, 0, 0);
 
             // Bind the color.
-            IntPtr colorBufferSize = (IntPtr)(colorData.Length * Vector3.SizeInBytes);
+            IntPtr colorBufferSize = (IntPtr)(colours.Length * Vector3.SizeInBytes);
             GL.BindBuffer(BufferTarget.ArrayBuffer, shaders[activeShader].GetBuffer("vColor"));
-            GL.BufferData(BufferTarget.ArrayBuffer, colorBufferSize, colorData, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, colorBufferSize, colours, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(shaders[activeShader].GetAttribute("vColor"), 3, VertexAttribPointerType.Float,
                 true, 0, 0);
 
@@ -115,9 +99,9 @@ namespace GameEngine.Core.GameSpecific
                 false, 0, 0);
 
             // Bind the color.
-            IntPtr colorBufferSize2 = (IntPtr)(colorData2.Length * Vector3.SizeInBytes);
+            IntPtr colorBufferSize2 = (IntPtr)(colours2.Length * Vector3.SizeInBytes);
             GL.BindBuffer(BufferTarget.ArrayBuffer, shaders["gameobject2"].GetBuffer("vColor"));
-            GL.BufferData(BufferTarget.ArrayBuffer, colorBufferSize2, colorData2, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, colorBufferSize2, colours2, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(shaders["gameobject2"].GetAttribute("vColor"), 3, VertexAttribPointerType.Float,
                 true, 0, 0);
 
