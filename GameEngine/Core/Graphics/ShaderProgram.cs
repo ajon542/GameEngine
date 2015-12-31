@@ -145,13 +145,19 @@ namespace GameEngine.Core.Graphics
             {
                 AttributeInfo info = new AttributeInfo();
                 int length;
+                int size;
+                ActiveAttribType type;
 
-                StringBuilder name = new StringBuilder();
+                // See: https://github.com/opentk/opentk/issues/57
+                StringBuilder name = new StringBuilder(32);
 
-                GL.GetActiveAttrib(ProgramId, i, 256, out length, out info.size, out info.type, name);
+                GL.GetActiveAttrib(ProgramId, i, 256, out length, out size, out type, name);
 
+                info.size = size;
                 info.name = name.ToString();
+                info.type = type;
                 info.address = GL.GetAttribLocation(ProgramId, info.name);
+                
                 attributes.Add(name.ToString(), info);
             }
 
@@ -160,14 +166,20 @@ namespace GameEngine.Core.Graphics
             {
                 UniformInfo info = new UniformInfo();
                 int length;
+                int size;
+                ActiveUniformType type;
 
-                StringBuilder name = new StringBuilder();
+                // See: https://github.com/opentk/opentk/issues/57
+                StringBuilder name = new StringBuilder(32);
 
-                GL.GetActiveUniform(ProgramId, i, 256, out length, out info.size, out info.type, name);
+                GL.GetActiveUniform(ProgramId, i, 256, out length, out size, out type, name);
 
+                info.size = size;
                 info.name = name.ToString();
-                uniforms.Add(name.ToString(), info);
+                info.type = type;
                 info.address = GL.GetUniformLocation(ProgramId, info.name);
+
+                uniforms.Add(name.ToString(), info);
             }
         }
 

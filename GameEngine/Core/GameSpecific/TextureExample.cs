@@ -85,7 +85,7 @@ namespace GameEngine.Core.GameSpecific
             textureId = LoadTexture(@"C:\development\C#\Textures\Nuclear-Symbol.bmp");
 
             // Generate a VAO and set it as the current one.
-            /*GL.GenVertexArrays(1, out vertexArrayId);
+            GL.GenVertexArrays(1, out vertexArrayId);
             GL.BindVertexArray(vertexArrayId);
 
             // Texture id.
@@ -115,20 +115,20 @@ namespace GameEngine.Core.GameSpecific
 
             // Give our vertices to OpenGL.
             IntPtr uvBufferSize = (IntPtr)(uvData.Length * Vector2.SizeInBytes);
-            GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uvData, BufferUsageHint.StaticDraw);*/
+            GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uvData, BufferUsageHint.StaticDraw);
         }
 
         public override void Update()
         {
-            /*gameObject.CalculateModelMatrix();
+            gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;*/
+            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
 
         public override void Render()
         {
-            /*GL.UseProgram(shaders["texture"].ProgramId);
+            GL.UseProgram(shaders["texture"].ProgramId);
 
             // Bind our texture in Texture Unit 0
             GL.ActiveTexture(TextureUnit.Texture0);
@@ -147,7 +147,7 @@ namespace GameEngine.Core.GameSpecific
             GL.UniformMatrix4(shaders["texture"].GetUniform("modelview"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-            shaders["texture"].DisableVertexAttribArrays();*/
+            shaders["texture"].DisableVertexAttribArrays();
         }
 
 
