@@ -137,7 +137,7 @@ namespace GameEngine.Core.GameSpecific
                 Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
 
-            gameObject2.Transform.Position = new Vector3(2, 0, -3.0f);
+            gameObject2.Transform.Position = new Vector3(2, 0, -5.0f);
             gameObject2.CalculateModelMatrix();
             gameObject2.ViewProjectionMatrix = cam.GetViewMatrix() *
                 Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
