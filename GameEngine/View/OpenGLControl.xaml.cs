@@ -256,6 +256,7 @@ namespace GameEngine.View
             }
 
             // Swap the buffers.
+            GL.Flush();
             glControl.SwapBuffers();
         }
 

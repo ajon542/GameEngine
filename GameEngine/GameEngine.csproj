@@ -91,6 +91,7 @@
     <Compile Include="Core\GameObjectManager.cs" />
     <Compile Include="Core\GameSpecific\CubeBehaviour.cs" />
     <Compile Include="Core\GameSpecific\GameScene.cs" />
+    <Compile Include="Core\GameSpecific\TextureExample.cs" />
     <Compile Include="Core\GameSpecific\Tutorial2.cs" />
     <Compile Include="Core\Graphics\GraphicsProperties.cs" />
     <Compile Include="Core\Mesh.cs" />

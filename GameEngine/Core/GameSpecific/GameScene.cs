@@ -185,8 +185,6 @@ namespace GameEngine.Core.GameSpecific
                             indiceat * sizeof(uint));
 
             shaders["gameobject2"].DisableVertexAttribArrays();
-
-            GL.Flush();
         }
 
         public override void KeyDown(KeyEventArgs key)
