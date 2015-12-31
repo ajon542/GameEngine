@@ -17,45 +17,8 @@ namespace GameEngine.Core.GameSpecific
             0.0f,  1.0f, -3.0f,
             };
 
-        int vertexShaderHandle,
-    fragmentShaderHandle,
-    shaderProgramHandle,
-    modelviewMatrixLocation,
-    projectionMatrixLocation,
-    positionVboHandle,
-    normalVboHandle,
-    indicesVboHandle;
-
-
-        Matrix4 projectionMatrix, modelviewMatrix;
-
-        private void QueryMatrixLocations()
-        {
-            projectionMatrixLocation = GL.GetUniformLocation(shaderProgramHandle, "projection_matrix");
-            modelviewMatrixLocation = GL.GetUniformLocation(shaderProgramHandle, "modelview_matrix");
-        }
-
-        private void SetModelviewMatrix(Matrix4 matrix)
-        {
-            modelviewMatrix = matrix;
-            GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
-        }
-
-        private void SetProjectionMatrix(Matrix4 matrix)
-        {
-            projectionMatrix = matrix;
-            GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
-        }
-
         public override void Initialize()
         {
-            float widthToHeight = 800 / (float)640;
-            SetProjectionMatrix(Matrix4.Perspective(1.3f, widthToHeight, 1, 20));
-
-            QueryMatrixLocations();
-
-            SetModelviewMatrix(Matrix4.RotateX(0.5f) * Matrix4.CreateTranslation(0, 0, -4));
-
             // Other state
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(0, 0.1f, 0.4f, 1);
@@ -87,7 +50,7 @@ namespace GameEngine.Core.GameSpecific
                 0                               // array buffer offset
                 );
             // Draw the triangle !
-            GL.DrawArrays(BeginMode.Triangles, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle 
             GL.DisableVertexAttribArray(0);
 
             GL.Flush();
