@@ -10,6 +10,8 @@ using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
+    // TODO: This texture example needs to be cleaned up.
+    // TODO: Find somewhere to put the sample assets. They are currently local to my machine... which is bad...
     class TextureExample : Scene
     {
         /// <summary>
