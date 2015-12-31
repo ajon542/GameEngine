@@ -38,7 +38,14 @@ namespace GameEngine.Core.GameSpecific
 
             mesh.Colours = new List<Vector3>
             {
-                Colour
+                Colour,
+                new Vector3(0, 0, 0),
+                Colour,
+                new Vector3(0, 0, 0),
+                Colour,
+                new Vector3(0, 0, 0),
+                Colour,
+                new Vector3(0, 0, 0),
             };
 
             gameObject.AddComponent<Mesh>(mesh);
