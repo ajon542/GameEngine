@@ -159,6 +159,31 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestClosestCommonParentWithNoCommonRoot()
+        {
+            GameObject go1 = new GameObject();
+            GameObject c1 = new GameObject();
+            go1.AddChild(c1);
+            GameObject go2 = new GameObject();
+            GameObject c2 = new GameObject();
+            go2.AddChild(c2);
+
+            // The game objects do not have same root, null expected.
+            Assert.IsNull(GameObjectManager.FindClosestCommonParent(c1, c2));
+        }
+
+        [TestMethod]
+        public void TestClosestCommonParentWithGameObjectRoot()
+        {
+            GameObject go = new GameObject();
+            GameObject c1 = new GameObject();
+            go.AddChild(c1);
+
+            // One of the game objects is already root, null expected.
+            Assert.IsNull(GameObjectManager.FindClosestCommonParent(go, c1));
+        }
+
+        [TestMethod]
         public void TestClosestCommonParent()
         {
             GameObject go = new GameObject("go");
@@ -186,9 +211,6 @@ namespace UnitTests
             Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc1, cc2).Name);
             Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc3, cc2).Name);
             Assert.AreEqual("cc3", GameObjectManager.FindClosestCommonParent(cc5, cc4).Name);
-
-            // TODO: What should this method return if the game object is root?
-            //Assert.AreEqual("go", GameObjectManager.FindClosestCommonParent(go, go).Name);
         }
     }
 }

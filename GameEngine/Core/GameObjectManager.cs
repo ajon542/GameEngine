@@ -5,6 +5,7 @@ using NLog;
 
 namespace GameEngine.Core
 {
+    // TODO: This class is not really a manager... think of a better name.
     public static class GameObjectManager
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
