@@ -14,22 +14,18 @@ namespace GameEngine.Core
     {
         public virtual void Initialize()
         {
-
         }
 
         public virtual void Update()
-        {
-            
+        {   
         }
 
         public virtual void KeyDown(KeyEventArgs key)
-        {
-            
+        {   
         }
 
         public virtual void Render()
         {
-
         }
     }
 }
