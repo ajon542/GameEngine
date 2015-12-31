@@ -86,6 +86,9 @@ namespace GameEngine.Core
         /// Find the closest common parent of two game objects.
         /// </summary>
         /// <remarks>
+        /// If the game objects do not have a common root or one of the
+        /// game objects is already root, this method returns null as it
+        /// does not make any sense.
         /// </remarks>
         /// <param name="gameObject1">The first game object.</param>
         /// <param name="gameObject2">The second game object.</param>
@@ -100,7 +103,14 @@ namespace GameEngine.Core
                 return null;
             }
 
-            // TODO: What to do if the one of the game objects is already root?
+            // If one of the game objects are already root, calling this
+            // method makes no sense.
+            if(GetRoot(gameObject1).Guid == gameObject1.Guid ||
+               GetRoot(gameObject2).Guid == gameObject2.Guid)
+            {
+                logger.Log(LogLevel.Info, "one of the game objects is already root");
+                return null;
+            }
 
             // Get the levels of the objects.
             int level1 = GetLevel(gameObject1);
@@ -126,7 +136,7 @@ namespace GameEngine.Core
                 }
             }
 
-            // Get the parent ofthe game objects.
+            // Get the parent of the game objects.
             GameObject p1 = gameObject1.GetParent();
             GameObject p2 = gameObject2.GetParent();
 
