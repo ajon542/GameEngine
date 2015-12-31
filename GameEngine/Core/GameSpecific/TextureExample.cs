@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+
+using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
@@ -12,25 +15,48 @@ namespace GameEngine.Core.GameSpecific
         /// <summary>
         /// Vertex array object identifier.
         /// </summary>
-        uint vertexArrayId;
+        private uint vertexArrayId;
 
         /// <summary>
         /// Vertex buffer identifier.
         /// </summary>
-        uint vertexbuffer;
+        private uint vertexbuffer;
 
         /// <summary>
         /// Vertex buffer data.
         /// </summary>
-        float[] vertexBufferData =
+        private float[] vertexBufferData =
         {
             -1.0f, -1.0f, -5.0f,
              1.0f, -1.0f, -5.0f,
-             0.0f,  1.0f, -5.0f,
+             1.0f,  1.0f, -5.0f,
+
+             1.0f,  1.0f, -5.0f,
+            -1.0f,  1.0f, -5.0f,
+            -1.0f, -1.0f, -5.0f,
         };
+
+        private float[] uvData = 
+        {
+            1, 0,
+            1, 1,
+            0, 1,
+            0, 1,
+            0, 0,
+            1, 0,
+        };
+
+        // Storage for the shader programs.
+        private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         public override void Initialize()
         {
+            // Add default shaders.
+            shaders.Add("texture", new ShaderProgram("Core/Shaders/texture-vert.glsl", "Core/Shaders/texture-frag.glsl", true));
+
+            // Load the texture.
+            int textureId = LoadTexture(@"C:\development\C#\Textures\Nuclear-Symbol.bmp");
+
             // Generate a VAO and set it as the current one.
             GL.GenVertexArrays(1, out vertexArrayId);
             GL.BindVertexArray(vertexArrayId);
@@ -63,8 +89,8 @@ namespace GameEngine.Core.GameSpecific
                 );
 
             // Draw the triangle.
-            // Starting from vertex 0; 3 vertices total -> 1 triangle.
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+            // Starting from vertex 0; 6 vertices total -> 1 quad.
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
             GL.DisableVertexAttribArray(0);
         }
 
