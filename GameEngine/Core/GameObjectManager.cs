@@ -46,7 +46,6 @@ namespace GameEngine.Core
         public static int GetLevel(GameObject gameObject)
         {
             int level = 0;
-
             GameObject parent = gameObject.GetParent();
             while (parent != null)
             {
@@ -55,6 +54,25 @@ namespace GameEngine.Core
             }
 
             return level;
+        }
+
+        /// <summary>
+        /// Gets the root game object.
+        /// </summary>
+        /// <remarks>
+        /// If the game object is already root, it returns the game object.
+        /// </remarks>
+        /// <param name="gameObject">The game object from which to find the root.</param>
+        /// <returns>The root game object.</returns>
+        public static GameObject GetRoot(GameObject gameObject)
+        {
+            GameObject parent = gameObject;
+            while (parent.GetParent() != null)
+            {
+                parent = parent.GetParent();
+            }
+
+            return parent;
         }
 
         /// <summary>

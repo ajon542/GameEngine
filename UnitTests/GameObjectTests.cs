@@ -13,7 +13,7 @@ namespace UnitTests
         {
             Component mesh = new Mesh();
             GameObject go = new GameObject();
-            
+
             Assert.IsNull(go.GetComponent<Mesh>());
             go.AddComponent<Mesh>(mesh);
             Assert.IsNotNull(go.GetComponent<Mesh>());
@@ -142,6 +142,23 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void TestGameObjectRoot()
+        {
+            GameObject go = new GameObject();
+            GameObject c1 = new GameObject("c1");
+            GameObject cc1 = new GameObject("cc1");
+            GameObject cc2 = new GameObject("cc2");
+            c1.AddChild(cc1);
+            c1.AddChild(cc2);
+            go.AddChild(c1);
+
+            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(go).Guid);
+            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(c1).Guid);
+            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(cc1).Guid);
+            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(cc2).Guid);
+        }
+
+        [TestMethod]
         public void TestClosestCommonParent()
         {
             GameObject go = new GameObject("go");
@@ -169,7 +186,7 @@ namespace UnitTests
             Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc1, cc2).Name);
             Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc3, cc2).Name);
             Assert.AreEqual("cc3", GameObjectManager.FindClosestCommonParent(cc5, cc4).Name);
-            
+
             // TODO: What should this method return if the game object is root?
             //Assert.AreEqual("go", GameObjectManager.FindClosestCommonParent(go, go).Name);
         }
