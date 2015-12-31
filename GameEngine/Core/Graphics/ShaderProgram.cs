@@ -88,7 +88,6 @@ namespace GameEngine.Core.Graphics
             GL.ShaderSource(address, code);
             GL.CompileShader(address);
             GL.AttachShader(ProgramId, address);
-            Console.WriteLine(GL.GetShaderInfoLog(address));
         }
 
         /// <summary>

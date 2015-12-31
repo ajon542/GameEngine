@@ -20,7 +20,12 @@ namespace GameEngine.Core.GameSpecific
         /// <summary>
         /// Vertex buffer identifier.
         /// </summary>
-        private uint vertexbuffer;
+        private uint vertexBuffer;
+
+        /// <summary>
+        /// Vertex attribute identifier.
+        /// </summary>
+        private int vertexAttribute;
 
         /// <summary>
         /// Vertex buffer data.
@@ -36,6 +41,20 @@ namespace GameEngine.Core.GameSpecific
             -1.0f, -1.0f, -5.0f,
         };
 
+
+        /// <summary>
+        /// UV buffer identifier.
+        /// </summary>
+        private uint uvBuffer;
+
+        /// <summary>
+        /// UV attribute identifier.
+        /// </summary>
+        private int uvAttribute;
+
+        /// <summary>
+        /// UV buffer data.
+        /// </summary>
         private float[] uvData = 
         {
             1, 0,
@@ -46,52 +65,89 @@ namespace GameEngine.Core.GameSpecific
             1, 0,
         };
 
+        // Get a handle for our "myTextureSampler" uniform
+        int textureUniform;
+        int textureId;
+
+        GameObject gameObject = new GameObject();
+
         // Storage for the shader programs.
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         public override void Initialize()
         {
+            // TODO: vshost appears to have stopped working occassionally.
+
             // Add default shaders.
             shaders.Add("texture", new ShaderProgram("Core/Shaders/texture-vert.glsl", "Core/Shaders/texture-frag.glsl", true));
 
             // Load the texture.
-            int textureId = LoadTexture(@"C:\development\C#\Textures\Nuclear-Symbol.bmp");
+            textureId = LoadTexture(@"C:\development\C#\Textures\Nuclear-Symbol.bmp");
 
             // Generate a VAO and set it as the current one.
-            GL.GenVertexArrays(1, out vertexArrayId);
+            /*GL.GenVertexArrays(1, out vertexArrayId);
             GL.BindVertexArray(vertexArrayId);
 
+            // Texture id.
+            textureUniform = shaders["texture"].GetUniform("myTextureSampler");
+
+            // Vertices.
+
             // Generate 1 buffer, put the resulting identifier in vertexbuffer.
-            GL.GenBuffers(1, out vertexbuffer);
+            vertexBuffer = shaders["texture"].GetBuffer("vPosition");
+            vertexAttribute = shaders["texture"].GetAttribute("vPosition");
 
             // The following commands will talk about our 'vertexbuffer' buffer.
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
 
             // Give our vertices to OpenGL.
             IntPtr vertexBufferSize = (IntPtr)(vertexBufferData.Length * Vector3.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertexBufferData, BufferUsageHint.StaticDraw);
+
+            // UVs.
+
+            // Generate 1 buffer, put the resulting identifier in uvBuffer.
+            uvBuffer = shaders["texture"].GetBuffer("vertexUV");
+            uvAttribute = shaders["texture"].GetAttribute("vertexUV");
+
+            // The following commands will talk about our 'uvBuffer' buffer.
+            GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
+
+            // Give our vertices to OpenGL.
+            IntPtr uvBufferSize = (IntPtr)(uvData.Length * Vector2.SizeInBytes);
+            GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uvData, BufferUsageHint.StaticDraw);*/
+        }
+
+        public override void Update()
+        {
+            /*gameObject.CalculateModelMatrix();
+            gameObject.ViewProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
+            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;*/
         }
 
 
         public override void Render()
         {
-            // First attribute buffer - vertices
-            GL.EnableVertexAttribArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
+            /*GL.UseProgram(shaders["texture"].ProgramId);
 
-            GL.VertexAttribPointer(
-                0,                              // attribute pointer, must match the layout in the shader.
-                3,                              // size
-                VertexAttribPointerType.Float,  // type
-                false,                          // normalized
-                0,                              // stride
-                0                               // array buffer offset
-                );
+            // Bind our texture in Texture Unit 0
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, textureId);
+            // Set our "myTextureSampler" sampler to user Texture Unit 0
+            GL.Uniform1(textureUniform, TextureUnit.Texture0 - TextureUnit.Texture0);
 
-            // Draw the triangle.
-            // Starting from vertex 0; 6 vertices total -> 1 quad.
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
+            GL.VertexAttribPointer(vertexAttribute, 3, VertexAttribPointerType.Float, false, 0, 0);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
+            GL.VertexAttribPointer(uvAttribute, 2, VertexAttribPointerType.Float, true, 0, 0);
+
+            shaders["texture"].EnableVertexAttribArrays();
+
+            GL.UniformMatrix4(shaders["texture"].GetUniform("modelview"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
-            GL.DisableVertexAttribArray(0);
+
+            shaders["texture"].DisableVertexAttribArrays();*/
         }
 
 
