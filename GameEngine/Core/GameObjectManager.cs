@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using NLog;
+
 namespace GameEngine.Core
 {
     public static class GameObjectManager
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Find the game object with the given guid.
         /// </summary>
@@ -31,6 +35,9 @@ namespace GameEngine.Core
                     unvisited.Enqueue(child);
                 }
             }
+
+            logger.Log(LogLevel.Info, "could not find game object with guid {0}", guid);
+
             return null;
         }
 
@@ -85,9 +92,15 @@ namespace GameEngine.Core
         /// <returns>The game object with the matching guid or null.</returns>
         public static GameObject FindClosestCommonParent(GameObject gameObject1, GameObject gameObject2)
         {
-            // TODO: Create a function to GetRoot();
+            // If the game objects do not have a common root, they cannot
+            // be part of the same hierarchy.
+            if (GetRoot(gameObject1).Guid != GetRoot(gameObject2).Guid)
+            {
+                logger.Log(LogLevel.Info, "game objects do not have a common root");
+                return null;
+            }
+
             // TODO: What to do if the one of the game objects is already root?
-            // TODO: What if their root objects are different?
 
             // Get the levels of the objects.
             int level1 = GetLevel(gameObject1);
