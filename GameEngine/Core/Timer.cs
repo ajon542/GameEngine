@@ -104,15 +104,6 @@ namespace GameEngine.Core
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="Timer"/> class.
-        /// </summary>
-        /// <param name="timer">Another instance of the timer class.</param>
-        private Timer(Timer timer)
-        {
-            // Prevents external copy construction.
-        }
-
-        /// <summary>
         /// Gets an instance of the <see cref="Timer"/> class.
         /// </summary>
         public static Timer Instance
