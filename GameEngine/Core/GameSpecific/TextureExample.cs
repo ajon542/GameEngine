@@ -54,6 +54,12 @@ namespace GameEngine.Core.GameSpecific
         /// <summary>
         /// UV buffer data.
         /// </summary>
+        /// <remarks>
+        /// 0,0 --- 1,0
+        ///  |       |
+        ///  |       |
+        /// 0,1 --- 1,1
+        /// </remarks>
         private float[] uvData = 
         {
             0, 1,
