@@ -94,6 +94,7 @@
     <Compile Include="Core\GameSpecific\TextureExample.cs" />
     <Compile Include="Core\GameSpecific\Tutorial2.cs" />
     <Compile Include="Core\Graphics\GraphicsProperties.cs" />
+    <Compile Include="Core\Material.cs" />
     <Compile Include="Core\Mesh.cs" />
     <Compile Include="Core\Renderer.cs" />
     <Compile Include="Core\Scene.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Core\Serialization\Vector3Converter.cs" />
     <Compile Include="Core\Serialization\Vector4Converter.cs" />
     <Compile Include="Core\Graphics\ShaderProgram.cs" />
+    <Compile Include="Core\Texture.cs" />
     <Compile Include="Core\Timer.cs" />
     <Compile Include="Core\Transform.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
