@@ -160,7 +160,7 @@ namespace GameEngine.Core.GameSpecific
 
             shaders[activeShader].EnableVertexAttribArrays();
 
-            GL.UniformMatrix4(shaders[activeShader].GetUniform("modelview"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders[activeShader].GetUniform("mvp"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawElements(BeginMode.Triangles, mesh.Triangles.Count, DrawElementsType.UnsignedInt,
                             indiceat * sizeof(uint));
 
@@ -180,7 +180,7 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["gameobject2"].EnableVertexAttribArrays();
 
-            GL.UniformMatrix4(shaders["gameobject2"].GetUniform("modelview"), false, ref gameObject2.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders["gameobject2"].GetUniform("mvp"), false, ref gameObject2.ModelViewProjectionMatrix);
             GL.DrawElements(BeginMode.Triangles, mesh2.Triangles.Count, DrawElementsType.UnsignedInt,
                             indiceat * sizeof(uint));
 

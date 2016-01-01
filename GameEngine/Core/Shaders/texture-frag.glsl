@@ -2,8 +2,9 @@
 
 in vec2 UV;
 out vec4 outputColor;
-uniform sampler2D myTextureSampler;
+uniform sampler2D textureSampler;
 
-void main() {
-    outputColor = vec4(texture( myTextureSampler, UV ).rgb, 1);
+void main() 
+{
+    outputColor = vec4(texture(textureSampler, UV).rgb, 1);
 }
