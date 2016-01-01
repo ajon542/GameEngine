@@ -53,7 +53,7 @@ namespace GameEngine.Core.GameSpecific
 
             GL.VertexAttribPointer(
                 0,                              // attribute pointer, must match the layout in the shader.
-                3,                              // size
+                3,                              // size - Vector3
                 VertexAttribPointerType.Float,  // type
                 false,                          // normalized
                 0,                              // stride

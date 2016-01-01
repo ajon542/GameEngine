@@ -1,5 +1,9 @@
 ﻿using System.Windows.Forms;
 
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+
 namespace GameEngine.Core
 {
     /// <summary>
@@ -12,6 +16,8 @@ namespace GameEngine.Core
     /// </remarks>
     public class Scene
     {
+        public Matrix4 ViewProjectionMatrix { get; set; }
+
         public virtual void Initialize()
         {
         }

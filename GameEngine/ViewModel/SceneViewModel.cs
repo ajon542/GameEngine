@@ -49,7 +49,7 @@ namespace GameEngine.ViewModel
         public SceneViewModel()
         {
             // TODO: We should really only have a single scene at a time.
-            SceneList = new List<Scene> { new Core.GameSpecific.InputExample() };
+            SceneList = new List<Scene> { new Core.GameSpecific.GameScene() };
         }
 
         #region Initialized Command
@@ -243,13 +243,18 @@ namespace GameEngine.ViewModel
             GL.Viewport(0, 0, width, height);
 
             // Create the perspective field of view matrix.
-            double aspectRatio = width / (double)height;
+            float aspectRatio = (width / (float)height);
             float fov = 1f;
             float near = 1.0f;
             float far = 1000.0f;
 
             Matrix4 perspectiveMatrix =
-               Matrix4.CreatePerspectiveFieldOfView(fov, (float)aspectRatio, near, far);
+               Matrix4.CreatePerspectiveFieldOfView(fov, aspectRatio, near, far);
+
+            foreach (Scene scene in SceneList)
+            {
+                scene.ViewProjectionMatrix = perspectiveMatrix;
+            }
 
             // Set the matrix mode and load the matrix.
             GL.MatrixMode(MatrixMode.Projection);

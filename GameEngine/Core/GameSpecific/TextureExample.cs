@@ -124,7 +124,7 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(1, 1200 / (float)800, 1.0f, 1000.0f);
+            gameObject.ViewProjectionMatrix = ViewProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
