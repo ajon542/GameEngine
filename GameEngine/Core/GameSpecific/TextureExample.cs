@@ -8,7 +8,6 @@ using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
-    // TODO: This texture example needs to be cleaned up.
     // TODO: Find somewhere to put the sample assets. For now they are in the GameSpecific/Assets/Textures
     class TextureExample : Scene
     {
@@ -73,14 +72,21 @@ namespace GameEngine.Core.GameSpecific
         /// <summary>
         /// Texture sampler uniform handle in fragment shader.
         /// </summary>
-        int textureSamplerUniform;
+        private int textureSamplerUniform;
 
         /// <summary>
         /// Loaded texture identifier.
         /// </summary>
-        int textureId;
+        private int textureId;
 
-        // Storage for the shader programs.
+        /// <summary>
+        /// Model-view-projection matrix uniform handle.
+        /// </summary>
+        private int mvpUniform;
+
+        /// <summary>
+        /// Storage for the shader programs.
+        /// </summary>
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         GameObject gameObject = new GameObject();
@@ -99,6 +105,9 @@ namespace GameEngine.Core.GameSpecific
 
             // Get the texture sampler uniform location from the fragment shader.
             textureSamplerUniform = shaders["texture"].GetUniform("textureSampler");
+
+            // Get the model-view-projection matrix uniform.
+            mvpUniform = shaders["texture"].GetUniform("mvp");
 
             // Vertices.
 
@@ -153,7 +162,7 @@ namespace GameEngine.Core.GameSpecific
             GL.VertexAttribPointer(uvAttribute, 2, VertexAttribPointerType.Float, true, 0, 0);
 
             // Load the model-view-projection matrix.
-            GL.UniformMatrix4(shaders["texture"].GetUniform("mvp"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(mvpUniform, false, ref gameObject.ModelViewProjectionMatrix);
 
             // Draw the arrays.
             shaders["texture"].EnableVertexAttribArrays();

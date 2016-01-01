@@ -20,7 +20,11 @@ namespace GameEngine.Core
         /// </summary>
         public List<Vector3> Colours { get; set; }
 
-        // TODO: UV
+        /// <summary>
+        /// Gets or sets the list of texture coords.
+        /// </summary>
+        public List<Vector2> UV { get; set; }
+
         // TODO: Normals
 
         /// <summary>
@@ -31,6 +35,7 @@ namespace GameEngine.Core
             Vertices = new List<Vector3>();
             Triangles = new List<int>();
             Colours = new List<Vector3>();
+            UV = new List<Vector2>(); 
         }
 
         /// <summary>
@@ -41,6 +46,7 @@ namespace GameEngine.Core
             Vertices.Clear();
             Triangles.Clear();
             Colours.Clear();
+            UV.Clear();
         }
     }
 }
