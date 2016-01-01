@@ -18,7 +18,7 @@ namespace GameEngine.Core.GameSpecific
             var mouse = Mouse.GetState();
             if (mouse[MouseButton.Left])
             {
-                Console.WriteLine("mouse button pressed");
+                Console.WriteLine("mouse button pressed ({0},{1})", mouse.X, mouse.Y);
             }
             var keyboard = Keyboard.GetState();
             if (keyboard[Key.A])
