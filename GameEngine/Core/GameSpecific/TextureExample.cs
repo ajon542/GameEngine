@@ -85,7 +85,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("texture", new ShaderProgram("Core/Shaders/texture-vert.glsl", "Core/Shaders/texture-frag.glsl", true));
 
             // Load the texture.
-            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Nuclear-Symbol.bmp");
+            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/UV-Template.bmp");
 
             // Generate a VAO and set it as the current one.
             GL.GenVertexArrays(1, out vertexArrayId);
