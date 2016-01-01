@@ -157,8 +157,7 @@ namespace GameEngine.Core.GameSpecific
         /// <returns>The generated texture id.</returns>
         private static int LoadTexture(string filename)
         {
-            if (String.IsNullOrEmpty(filename))
-                throw new ArgumentException(filename);
+            // TODO: Probably need to check if the file exists.
 
             int id = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, id);
@@ -182,6 +181,5 @@ namespace GameEngine.Core.GameSpecific
 
             return id;
         }
-
     }
 }

@@ -27,5 +27,15 @@ namespace GameEngine.Core
         public virtual void Render()
         {
         }
+
+        public virtual void Shutdown()
+        {
+            // TODO: Cleanup / shutdown
+            //glDeleteBuffers(1, &vertexbuffer);
+            //glDeleteBuffers(1, &uvbuffer);
+            //glDeleteProgram(programID);
+            //glDeleteTextures(1, &TextureID);
+            //glDeleteVertexArrays(1, &VertexArrayID);
+        }
     }
 }
