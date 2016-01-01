@@ -11,7 +11,7 @@ using GameEngine.Core.Graphics;
 namespace GameEngine.Core.GameSpecific
 {
     // TODO: This texture example needs to be cleaned up.
-    // TODO: Find somewhere to put the sample assets. They are currently local to my machine... which is bad...
+    // TODO: Find somewhere to put the sample assets. For now they are in the GameSpecific/Assets/Textures
     class TextureExample : Scene
     {
         /// <summary>
@@ -42,7 +42,6 @@ namespace GameEngine.Core.GameSpecific
             -1.0f,  1.0f, -5.0f,
             -1.0f, -1.0f, -5.0f,
         };
-
 
         /// <summary>
         /// UV buffer identifier.
@@ -82,7 +81,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("texture", new ShaderProgram("Core/Shaders/texture-vert.glsl", "Core/Shaders/texture-frag.glsl", true));
 
             // Load the texture.
-            textureId = LoadTexture(@"C:\development\C#\Textures\Nuclear-Symbol.bmp");
+            textureId = LoadTexture("Core/GameSpecific/Assets/Textures/Nuclear-Symbol.bmp");
 
             // Generate a VAO and set it as the current one.
             GL.GenVertexArrays(1, out vertexArrayId);
@@ -141,9 +140,10 @@ namespace GameEngine.Core.GameSpecific
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
             GL.VertexAttribPointer(uvAttribute, 2, VertexAttribPointerType.Float, true, 0, 0);
 
+            GL.UniformMatrix4(shaders["texture"].GetUniform("modelview"), false, ref gameObject.ModelViewProjectionMatrix);
+
             shaders["texture"].EnableVertexAttribArrays();
 
-            GL.UniformMatrix4(shaders["texture"].GetUniform("modelview"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
             shaders["texture"].DisableVertexAttribArrays();
