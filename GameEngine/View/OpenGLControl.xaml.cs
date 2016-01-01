@@ -194,11 +194,10 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (SceneInitialized == null)
+            if (SceneInitialized != null)
             {
-                return;
+                SceneInitialized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
             }
-            SceneInitialized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
         }
 
         /// <summary>
@@ -303,6 +302,7 @@ namespace GameEngine.View
             // Execute the update command.
             if (Update != null)
             {
+                // TODO: This occurs even when the window is not focused. Should it?
                 Update.Execute(null);
             }
             
