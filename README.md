@@ -10,6 +10,12 @@ greatest rendering techniques may not be one of the highest priorities of this p
 Make adding game objects to the scene more intuitive. This will most likely involve improving
 the batching of objects to be rendered and the use of the scene camera.
 
+In order to achieve this goal, I have been experimenting with how a game developer may use the
+game engine. I have been creating a number of different scenes to do things such as texturing,
+mouse input etc to try and find some of the repetitive actions. There are many so far, and by
+creating more scenes, I will gain a better understanding of what needs to be pulled out and made
+simpler.
+
 ## TODO
 (not in any particular order)
 - Create dockable windows for SceneView, GameView, HierarchyView, ConsoleOutputView etc
