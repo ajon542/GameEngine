@@ -27,20 +27,6 @@ namespace GameEngine.Core.GameSpecific
         private int vertexAttribute;
 
         /// <summary>
-        /// Vertex buffer data.
-        /// </summary>
-        private float[] vertexBufferData =
-        {
-            -1.0f, -1.0f, -5.0f,
-             1.0f, -1.0f, -5.0f,
-             1.0f,  1.0f, -5.0f,
-
-             1.0f,  1.0f, -5.0f,
-            -1.0f,  1.0f, -5.0f,
-            -1.0f, -1.0f, -5.0f,
-        };
-
-        /// <summary>
         /// UV buffer identifier.
         /// </summary>
         private uint uvBuffer;
@@ -49,25 +35,6 @@ namespace GameEngine.Core.GameSpecific
         /// UV attribute identifier.
         /// </summary>
         private int uvAttribute;
-
-        /// <summary>
-        /// UV buffer data.
-        /// </summary>
-        /// <remarks>
-        /// 0,0 --- 1,0
-        ///  |       |
-        ///  |       |
-        /// 0,1 --- 1,1
-        /// </remarks>
-        private float[] uvData = 
-        {
-            0, 1,
-            1, 1,
-            1, 0,
-            1, 0,
-            0, 0,
-            0, 1,
-        };
 
         /// <summary>
         /// Texture sampler uniform handle in fragment shader.
@@ -84,6 +51,8 @@ namespace GameEngine.Core.GameSpecific
         /// </summary>
         private int mvpUniform;
 
+        private Mesh mesh;
+
         /// <summary>
         /// Storage for the shader programs.
         /// </summary>
@@ -93,6 +62,16 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
+            QuadBehaviour quad = new QuadBehaviour();
+            // TODO: AddComponent must be called before Initialize.. It shouldn't be this fragile.
+            gameObject.AddComponent<QuadBehaviour>(quad);
+            quad.Initialize();
+
+            mesh = gameObject.GetComponent<Mesh>() as Mesh;
+
+            Vector3[] vertices = mesh.Vertices.ToArray();
+            Vector2[] uv = mesh.UV.ToArray();
+
             // Add default shaders.
             shaders.Add("texture", new ShaderProgram("Core/Shaders/texture-vert.glsl", "Core/Shaders/texture-frag.glsl", true));
 
@@ -119,8 +98,8 @@ namespace GameEngine.Core.GameSpecific
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
 
             // Give our vertices to OpenGL.
-            IntPtr vertexBufferSize = (IntPtr)(vertexBufferData.Length * Vector3.SizeInBytes);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertexBufferData, BufferUsageHint.StaticDraw);
+            IntPtr vertexBufferSize = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertices, BufferUsageHint.StaticDraw);
 
             // UVs.
 
@@ -132,12 +111,20 @@ namespace GameEngine.Core.GameSpecific
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
 
             // Give our vertices to OpenGL.
-            IntPtr uvBufferSize = (IntPtr)(uvData.Length * Vector2.SizeInBytes);
-            GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uvData, BufferUsageHint.StaticDraw);
+            IntPtr uvBufferSize = (IntPtr)(uv.Length * Vector2.SizeInBytes);
+            GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uv, BufferUsageHint.StaticDraw);
         }
 
         public override void Update()
         {
+            // TODO: A little inefficient
+            Behaviour component = gameObject.GetComponent<Behaviour>() as Behaviour;
+
+            if (component != null)
+            {
+                component.Update();
+            }
+
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = ViewProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
