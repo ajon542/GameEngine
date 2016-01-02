@@ -26,10 +26,6 @@ namespace GameEngine.Core
         {
         }
 
-        public virtual void KeyDown(KeyEventArgs key)
-        {
-        }
-
         public virtual void Render()
         {
         }

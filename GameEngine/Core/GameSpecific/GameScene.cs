@@ -184,15 +184,5 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["gameobject2"].DisableVertexAttribArrays();
         }
-
-        public override void KeyDown(KeyEventArgs key)
-        {
-            Behaviour component = gameObject.GetComponent<Behaviour>();
-
-            if (component != null)
-            {
-                component.KeyDown(key);
-            }
-        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-
+﻿
 namespace GameEngine.Core
 {
     /// <summary>
@@ -29,15 +28,6 @@ namespace GameEngine.Core
         /// </summary>
         public virtual void Update()
         {
-        }
-
-        /// <summary>
-        /// Handle the key press events.
-        /// </summary>
-        /// <param name="key">The key pressed event args.</param>
-        public virtual void KeyDown(KeyEventArgs key)
-        {
-            
         }
 
         /// <summary>

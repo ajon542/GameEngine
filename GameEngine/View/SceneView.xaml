@@ -13,7 +13,6 @@
             SceneInitialized="{Binding SceneInitializedCommand}"
             Update="{Binding UpdateCommand}"
             Render="{Binding RenderCommand}"
-            KeyDown="{Binding KeyDownCommand}"
             Resized="{Binding ResizedCommand}"/>
     </Grid>
 </UserControl>

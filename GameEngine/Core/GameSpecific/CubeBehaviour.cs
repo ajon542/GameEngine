@@ -53,16 +53,5 @@ namespace GameEngine.Core.GameSpecific
             GameObject.Transform.Position = new Vector3(0, 0, -5.0f);
             GameObject.Transform.Rotation = new Quaternion(1, 1, 1, 0.5f);
         }
-
-        public override void Update()
-        {
-        }
-
-        private float x;
-        public override void KeyDown(KeyEventArgs key)
-        {
-            x += 0.01f;
-            GameObject.Transform.Position = new Vector3(x, 0, -5.0f);
-        }
     }
 }
