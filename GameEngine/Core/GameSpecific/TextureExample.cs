@@ -51,8 +51,14 @@ namespace GameEngine.Core.GameSpecific
         /// </summary>
         private int mvpUniform;
 
+        /// <summary>
+        /// Reference to the game object mesh component.
+        /// </summary>
         private Mesh mesh;
 
+        /// <summary>
+        /// The game object containing the mesh.
+        /// </summary>
         GameObject gameObject = new GameObject();
 
         /// <summary>
