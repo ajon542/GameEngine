@@ -53,12 +53,12 @@ namespace GameEngine.Core.GameSpecific
 
         private Mesh mesh;
 
+        GameObject gameObject = new GameObject();
+
         /// <summary>
         /// Storage for the shader programs.
         /// </summary>
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
-
-        GameObject gameObject = new GameObject();
 
         public override void Initialize()
         {

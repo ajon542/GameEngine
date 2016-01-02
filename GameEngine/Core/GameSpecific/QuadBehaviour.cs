@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using OpenTK;
 
+using GameEngine.Core.Debugging;
+
 namespace GameEngine.Core.GameSpecific
 {
     class QuadBehaviour : Behaviour
@@ -10,6 +12,14 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
+            if(gameObject == null)
+            {
+                // The AddComponent method associates the behaviour with the game object. Before this
+                // method is called, the Initialize method can't be called because it will try to do
+                // things with the associated game object.
+                throw new GameEngineException("game object null");
+            }
+
             mesh = new Mesh();
 
             mesh.Vertices = new List<Vector3>
@@ -43,7 +53,7 @@ namespace GameEngine.Core.GameSpecific
 
             gameObject.AddComponent<Mesh>(mesh);
 
-            gameObject.Transform.Position = new Vector3(0, 0, -5.0f);
+            gameObject.Transform.Position = new Vector3(0, 0, -3.0f);
         }
     }
 }
