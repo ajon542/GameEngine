@@ -68,12 +68,11 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            QuadBehaviour quad = new QuadBehaviour();
             // TODO: AddComponent must be called before Initialize.. It shouldn't be this fragile.
-            gameObject.AddComponent<QuadBehaviour>(quad);
-            quad.Initialize();
+            gameObject.AddComponent<QuadBehaviour>(new QuadBehaviour());
+            gameObject.GetComponent<QuadBehaviour>().Initialize();
 
-            mesh = gameObject.GetComponent<Mesh>() as Mesh;
+            mesh = gameObject.GetComponent<Mesh>();
 
             Vector3[] vertices = mesh.Vertices.ToArray();
             Vector2[] uv = mesh.UV.ToArray();

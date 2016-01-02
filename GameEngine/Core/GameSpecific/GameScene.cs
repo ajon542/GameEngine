@@ -59,8 +59,8 @@ namespace GameEngine.Core.GameSpecific
             gameObject2.AddComponent<Behaviour>(cubeBehaviour2);
             cubeBehaviour2.Initialize();
 
-            mesh = gameObject.GetComponent<Mesh>() as Mesh;
-            mesh2 = gameObject2.GetComponent<Mesh>() as Mesh;
+            mesh = gameObject.GetComponent<Mesh>();
+            mesh2 = gameObject2.GetComponent<Mesh>();
 
             Vector3[] vertices = mesh.Vertices.ToArray();
             int[] triangles = mesh.Triangles.ToArray();
@@ -117,14 +117,14 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             // TODO: A little inefficient
-            Behaviour component = gameObject.GetComponent<Behaviour>() as Behaviour;
+            Behaviour component = gameObject.GetComponent<Behaviour>();
 
             if (component != null)
             {
                 component.Update();
             }
 
-            component = gameObject2.GetComponent<Behaviour>() as Behaviour;
+            component = gameObject2.GetComponent<Behaviour>();
 
             if (component != null)
             {
@@ -187,7 +187,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void KeyDown(KeyEventArgs key)
         {
-            Behaviour component = gameObject.GetComponent<Behaviour>() as Behaviour;
+            Behaviour component = gameObject.GetComponent<Behaviour>();
 
             if (component != null)
             {

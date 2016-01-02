@@ -135,7 +135,7 @@ namespace GameEngine.Core
         /// </summary>
         /// <typeparam name="T">The type of component to add.</typeparam>
         /// <param name="component">The component to add.</param>
-        public void AddComponent<T>(Component component)
+        public void AddComponent<T>(Component component) where T : class
         {
             if (GetComponent<T>() == null)
             {
@@ -151,7 +151,7 @@ namespace GameEngine.Core
         /// Removes a component from the game object.
         /// </summary>
         /// <typeparam name="T">The type of component to remove.</typeparam>
-        public void RemoveComponent<T>()
+        public void RemoveComponent<T>() where T : class
         {
             // Search for a component of type T.
             for (int i = 0; i < components.Count; ++i)
@@ -170,14 +170,14 @@ namespace GameEngine.Core
         /// </summary>
         /// <typeparam name="T">The type of component to get.</typeparam>
         /// <returns>The component or null if not found.</returns>
-        public Component GetComponent<T>()
+        public T GetComponent<T>() where T : class
         {
             // Search for a component of type T.
             foreach (Component component in components)
             {
                 if (component is T)
                 {
-                    return component;
+                    return component as T;
                 }
             }
 
