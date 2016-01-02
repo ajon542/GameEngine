@@ -12,7 +12,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            if(gameObject == null)
+            if (GameObject == null)
             {
                 // The AddComponent method associates the behaviour with the game object. Before this
                 // method is called, the Initialize method can't be called because it will try to do
@@ -51,9 +51,9 @@ namespace GameEngine.Core.GameSpecific
                 new Vector2(0, 1),
             };
 
-            gameObject.AddComponent<Mesh>(mesh);
+            GameObject.AddComponent<Mesh>(mesh);
 
-            gameObject.Transform.Position = new Vector3(0, 0, -3.0f);
+            GameObject.Transform.Position = new Vector3(0, 0, -3.0f);
         }
     }
 }

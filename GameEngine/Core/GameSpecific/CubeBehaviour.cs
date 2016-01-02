@@ -48,10 +48,10 @@ namespace GameEngine.Core.GameSpecific
                 new Vector3(0, 0, 0),
             };
 
-            gameObject.AddComponent<Mesh>(mesh);
+            GameObject.AddComponent<Mesh>(mesh);
 
-            gameObject.Transform.Position = new Vector3(0, 0, -5.0f);
-            gameObject.Transform.Rotation = new Quaternion(1, 1, 1, 0.5f);
+            GameObject.Transform.Position = new Vector3(0, 0, -5.0f);
+            GameObject.Transform.Rotation = new Quaternion(1, 1, 1, 0.5f);
         }
 
         public override void Update()
@@ -62,7 +62,7 @@ namespace GameEngine.Core.GameSpecific
         public override void KeyDown(KeyEventArgs key)
         {
             x += 0.01f;
-            gameObject.Transform.Position = new Vector3(x, 0, -5.0f);
+            GameObject.Transform.Position = new Vector3(x, 0, -5.0f);
         }
     }
 }

@@ -80,5 +80,38 @@ namespace UnitTests
             Assert.AreEqual(root.Guid, loadedRoot.Guid);
             Assert.AreEqual(c1.Guid, children[0].Guid);
         }
+
+        [TestMethod]
+        public void TestComponentSerialization()
+        {
+            // Create a game object and add a mesh component.
+            Mesh mesh = new Mesh();
+            GameObject gameObject = new GameObject();
+            gameObject.AddComponent<Mesh>(mesh);
+
+            // Serialize and deserialize the original object.
+            ISerializer<GameObject> serializer = new Serializer<GameObject>();
+            string output = serializer.Serialize(gameObject);
+            GameObject loadedGameObject = serializer.Deserialize(output);
+
+            // Deserialized game object should have a mesh.
+            Mesh resultMesh = loadedGameObject.GetComponent<Mesh>() as Mesh;
+            Assert.IsNotNull(resultMesh);
+
+            // The mesh reference to the game object should be the original.
+            Assert.AreEqual(gameObject.Guid, resultMesh.GameObject.Guid);
+
+            ISerializer<GameObject> serializeResult = new Serializer<GameObject>();
+            string resultOutput = serializeResult.Serialize(loadedGameObject);
+
+            // Compare the resulting strings for equality.
+            Assert.AreEqual(string.Compare(output, resultOutput), 0);
+        }
+
+        private GameObject SerializeDeserialize()
+        {
+            // TODO: Implement this.
+            return null;
+        }
     }
 }

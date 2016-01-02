@@ -1,4 +1,5 @@
-﻿
+﻿using Newtonsoft.Json;
+
 namespace GameEngine.Core
 {
     public class Component
@@ -6,7 +7,7 @@ namespace GameEngine.Core
         /// <summary>
         /// The game object containing this component.
         /// </summary>
-        protected GameObject gameObject;
+        public GameObject GameObject { get; set; }
 
         /// <summary>
         /// Associate a game object with this component.
@@ -14,7 +15,7 @@ namespace GameEngine.Core
         /// <param name="go">The associated game object.</param>
         public void AssociateGameObject(GameObject go)
         {
-            gameObject = go;
+            GameObject = go;
         }
     }
 }
