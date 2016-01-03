@@ -43,31 +43,31 @@ namespace GameEngine.Core
             }
 
             // If parameter cannot be cast to Transform return false.
-            Transform p = obj as Transform;
-            if (p == null)
+            Transform t = obj as Transform;
+            if (t == null)
             {
                 return false;
             }
 
             // Return true if the fields match.
-            return Match(p);
+            return Match(t);
         }
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
-        /// <param name="p">The object to compare with the current object.</param>
+        /// <param name="t">The object to compare with the current object.</param>
         /// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
-        public bool Equals(Transform p)
+        public bool Equals(Transform t)
         {
             // If parameter is null return false:
-            if (p == null)
+            if (t == null)
             {
                 return false;
             }
 
             // Return true if the fields match.
-            return Match(p);
+            return Match(t);
         }
 
         /// <summary>
