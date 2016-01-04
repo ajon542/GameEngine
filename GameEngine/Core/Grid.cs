@@ -34,26 +34,33 @@ namespace GameEngine.Core
         public List<Vector3> Colours { get; set; }
         public List<int> Indices { get; set; }
 
+        private Vector3 defaultColor = new Vector3(.3f, .3f, .3f);
+
         public Grid()
         {
-            Vertices = new List<Vector3>
+            Vertices = new List<Vector3>();
+            Colours = new List<Vector3>();
+            Indices = new List<int>();
+
+            int indexCount = 0;
+            for (int i = 0; i <= 10; i += 1)
             {
-                new Vector3(0, 0, -3),
-                new Vector3(0, 1, -3),
-                new Vector3(1, 0, -3),
-                new Vector3(1, 1, -3),
-            };
-            Colours = new List<Vector3>
-            {
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-            };
-            Indices = new List<int>
-            {
-                0, 1, 2, 3
-            };
+                Vertices.Add(new Vector3(i, 0.0f, 0.0f));
+                Colours.Add(defaultColor);
+                Indices.Add(indexCount++);
+
+                Vertices.Add(new Vector3(i, 0.0f, 10));
+                Colours.Add(defaultColor);
+                Indices.Add(indexCount++);
+
+                Vertices.Add(new Vector3(0.0f, 0.0f, i));
+                Colours.Add(defaultColor);
+                Indices.Add(indexCount++);
+
+                Vertices.Add(new Vector3(10, 0.0f, i));
+                Colours.Add(defaultColor);
+                Indices.Add(indexCount++);
+            }
         }
     }
 }

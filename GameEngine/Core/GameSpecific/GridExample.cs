@@ -76,6 +76,17 @@ namespace GameEngine.Core.GameSpecific
                 cam.Move(0f, 0f, 0.1f);
             }
 
+            if (keyboard[Key.R])
+            {
+                cam.AddRotation(0.1f, 0);
+            }
+            if (keyboard[Key.T])
+            {
+                cam.AddRotation(-0.1f, 0f);
+            }
+
+
+
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = cam.GetViewMatrix() * ViewProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
