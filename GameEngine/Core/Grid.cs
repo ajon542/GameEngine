@@ -43,13 +43,13 @@ namespace GameEngine.Core
             Indices = new List<int>();
 
             int indexCount = 0;
-            for (int i = 0; i <= 10; i += 1)
+            for (int i = 0; i >= -1000; i -= 1)
             {
                 Vertices.Add(new Vector3(i, 0.0f, 0.0f));
                 Colours.Add(defaultColor);
                 Indices.Add(indexCount++);
 
-                Vertices.Add(new Vector3(i, 0.0f, 10));
+                Vertices.Add(new Vector3(i, 0.0f, -1000));
                 Colours.Add(defaultColor);
                 Indices.Add(indexCount++);
 
@@ -57,7 +57,7 @@ namespace GameEngine.Core
                 Colours.Add(defaultColor);
                 Indices.Add(indexCount++);
 
-                Vertices.Add(new Vector3(10, 0.0f, i));
+                Vertices.Add(new Vector3(-1000, 0.0f, i));
                 Colours.Add(defaultColor);
                 Indices.Add(indexCount++);
             }
