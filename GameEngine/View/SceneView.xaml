@@ -8,7 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Grid>
-        <!-- TODO: Make Update and Render optional, or provide some error notification. -->
         <view:OpenGLControl 
             SceneInitialized="{Binding SceneInitializedCommand}"
             Update="{Binding UpdateCommand}"

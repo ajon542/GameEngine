@@ -5,9 +5,14 @@ using NLog;
 
 namespace GameEngine.Core
 {
-    // TODO: This class is not really a manager... think of a better name.
-    public static class GameObjectManager
+    /// <summary>
+    /// Provides some useful methods to traverse the game object hierarchy.
+    /// </summary>
+    public static class GameObjectHierarchy
     {
+        /// <summary>
+        /// Reference to the logging mechanism.
+        /// </summary>
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>

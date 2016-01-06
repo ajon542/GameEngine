@@ -76,14 +76,14 @@ namespace UnitTests
             go.AddChild(c3);
 
             // Check that all children are found.
-            Assert.IsNotNull(GameObjectManager.FindGameObject(go, c1.Guid));
-            Assert.IsNotNull(GameObjectManager.FindGameObject(go, cc1.Guid));
-            Assert.IsNotNull(GameObjectManager.FindGameObject(go, cc2.Guid));
-            Assert.IsNotNull(GameObjectManager.FindGameObject(go, c2.Guid));
-            Assert.IsNotNull(GameObjectManager.FindGameObject(go, c3.Guid));
+            Assert.IsNotNull(GameObjectHierarchy.FindGameObject(go, c1.Guid));
+            Assert.IsNotNull(GameObjectHierarchy.FindGameObject(go, cc1.Guid));
+            Assert.IsNotNull(GameObjectHierarchy.FindGameObject(go, cc2.Guid));
+            Assert.IsNotNull(GameObjectHierarchy.FindGameObject(go, c2.Guid));
+            Assert.IsNotNull(GameObjectHierarchy.FindGameObject(go, c3.Guid));
 
             // Check that a child that was not added, is not found.
-            Assert.IsNull(GameObjectManager.FindGameObject(go, Guid.NewGuid()));
+            Assert.IsNull(GameObjectHierarchy.FindGameObject(go, Guid.NewGuid()));
         }
 
         [TestMethod]
@@ -102,12 +102,12 @@ namespace UnitTests
             c1.RemoveChildren();
 
             // Check that children aren't found.
-            Assert.IsNull(GameObjectManager.FindGameObject(go, cc1.Guid));
-            Assert.IsNull(GameObjectManager.FindGameObject(go, cc2.Guid));
+            Assert.IsNull(GameObjectHierarchy.FindGameObject(go, cc1.Guid));
+            Assert.IsNull(GameObjectHierarchy.FindGameObject(go, cc2.Guid));
 
             // Remove the children.
             go.RemoveChildren();
-            Assert.IsNull(GameObjectManager.FindGameObject(go, c1.Guid));
+            Assert.IsNull(GameObjectHierarchy.FindGameObject(go, c1.Guid));
         }
 
         [TestMethod]
@@ -134,11 +134,11 @@ namespace UnitTests
             go.AddChild(c1);
 
             // Root object is level 0.
-            Assert.AreEqual(0, GameObjectManager.GetLevel(go));
+            Assert.AreEqual(0, GameObjectHierarchy.GetLevel(go));
 
-            Assert.AreEqual(1, GameObjectManager.GetLevel(c1));
-            Assert.AreEqual(2, GameObjectManager.GetLevel(cc1));
-            Assert.AreEqual(2, GameObjectManager.GetLevel(cc2));
+            Assert.AreEqual(1, GameObjectHierarchy.GetLevel(c1));
+            Assert.AreEqual(2, GameObjectHierarchy.GetLevel(cc1));
+            Assert.AreEqual(2, GameObjectHierarchy.GetLevel(cc2));
         }
 
         [TestMethod]
@@ -152,10 +152,10 @@ namespace UnitTests
             c1.AddChild(cc2);
             go.AddChild(c1);
 
-            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(go).Guid);
-            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(c1).Guid);
-            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(cc1).Guid);
-            Assert.AreEqual(go.Guid, GameObjectManager.GetRoot(cc2).Guid);
+            Assert.AreEqual(go.Guid, GameObjectHierarchy.GetRoot(go).Guid);
+            Assert.AreEqual(go.Guid, GameObjectHierarchy.GetRoot(c1).Guid);
+            Assert.AreEqual(go.Guid, GameObjectHierarchy.GetRoot(cc1).Guid);
+            Assert.AreEqual(go.Guid, GameObjectHierarchy.GetRoot(cc2).Guid);
         }
 
         [TestMethod]
@@ -169,7 +169,7 @@ namespace UnitTests
             go2.AddChild(c2);
 
             // The game objects do not have same root, null expected.
-            Assert.IsNull(GameObjectManager.FindClosestCommonParent(c1, c2));
+            Assert.IsNull(GameObjectHierarchy.FindClosestCommonParent(c1, c2));
         }
 
         [TestMethod]
@@ -180,7 +180,7 @@ namespace UnitTests
             go.AddChild(c1);
 
             // One of the game objects is already root, null expected.
-            Assert.IsNull(GameObjectManager.FindClosestCommonParent(go, c1));
+            Assert.IsNull(GameObjectHierarchy.FindClosestCommonParent(go, c1));
         }
 
         [TestMethod]
@@ -206,11 +206,11 @@ namespace UnitTests
             go.AddChild(c1);
             go.AddChild(c2);
 
-            Assert.AreEqual("go", GameObjectManager.FindClosestCommonParent(c2, cc6).Name);
-            Assert.AreEqual("go", GameObjectManager.FindClosestCommonParent(c1, c2).Name);
-            Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc1, cc2).Name);
-            Assert.AreEqual("c1", GameObjectManager.FindClosestCommonParent(cc3, cc2).Name);
-            Assert.AreEqual("cc3", GameObjectManager.FindClosestCommonParent(cc5, cc4).Name);
+            Assert.AreEqual("go", GameObjectHierarchy.FindClosestCommonParent(c2, cc6).Name);
+            Assert.AreEqual("go", GameObjectHierarchy.FindClosestCommonParent(c1, c2).Name);
+            Assert.AreEqual("c1", GameObjectHierarchy.FindClosestCommonParent(cc1, cc2).Name);
+            Assert.AreEqual("c1", GameObjectHierarchy.FindClosestCommonParent(cc3, cc2).Name);
+            Assert.AreEqual("cc3", GameObjectHierarchy.FindClosestCommonParent(cc5, cc4).Name);
         }
     }
 }

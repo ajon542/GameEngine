@@ -88,7 +88,7 @@
     <Compile Include="Core\Component.cs" />
     <Compile Include="Core\Debugging\GameEngineException.cs" />
     <Compile Include="Core\GameObject.cs" />
-    <Compile Include="Core\GameObjectManager.cs" />
+    <Compile Include="Core\GameObjectHierarchy.cs" />
     <Compile Include="Core\GameSpecific\CubeBehaviour.cs" />
     <Compile Include="Core\GameSpecific\GameScene.cs" />
     <Compile Include="Core\GameSpecific\GridExample.cs" />
