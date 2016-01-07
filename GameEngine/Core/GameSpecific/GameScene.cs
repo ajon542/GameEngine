@@ -63,11 +63,11 @@ namespace GameEngine.Core.GameSpecific
             mesh2 = gameObject2.GetComponent<Mesh>();
 
             Vector3[] vertices = mesh.Vertices.ToArray();
-            int[] triangles = mesh.Triangles.ToArray();
+            int[] indices = mesh.Indices.ToArray();
             Vector3[] colours = mesh.Colours.ToArray();
 
             Vector3[] vertices2 = mesh2.Vertices.ToArray();
-            int[] triangles2 = mesh2.Triangles.ToArray();
+            int[] indices2 = mesh2.Indices.ToArray();
             Vector3[] colours2 = mesh2.Colours.ToArray();
 
             // Bind vertices.
@@ -85,9 +85,9 @@ namespace GameEngine.Core.GameSpecific
                 true, 0, 0);
 
             // Bind the indices.
-            IntPtr trianglesBufferSize = (IntPtr)(triangles.Length * sizeof(int));
+            IntPtr indicesBufferSize = (IntPtr)(indices.Length * sizeof(int));
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, trianglesBufferSize, triangles, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indicesBufferSize, indices, BufferUsageHint.StaticDraw);
 
             // gameobject 2
 
@@ -106,9 +106,9 @@ namespace GameEngine.Core.GameSpecific
                 true, 0, 0);
 
             // Bind the indices.
-            IntPtr trianglesBufferSize2 = (IntPtr)(triangles2.Length * sizeof(int));
+            IntPtr indicesBufferSize2 = (IntPtr)(indices2.Length * sizeof(int));
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements2);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, trianglesBufferSize2, triangles2, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indicesBufferSize2, indices2, BufferUsageHint.StaticDraw);
 
             GL.UseProgram(shaders[activeShader].ProgramId);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -159,7 +159,7 @@ namespace GameEngine.Core.GameSpecific
             shaders[activeShader].EnableVertexAttribArrays();
 
             GL.UniformMatrix4(shaders[activeShader].GetUniform("mvp"), false, ref gameObject.ModelViewProjectionMatrix);
-            GL.DrawElements(BeginMode.Triangles, mesh.Triangles.Count, DrawElementsType.UnsignedInt,
+            GL.DrawElements(BeginMode.Triangles, mesh.Indices.Count, DrawElementsType.UnsignedInt,
                             indiceat * sizeof(uint));
 
             shaders[activeShader].DisableVertexAttribArrays();
@@ -179,7 +179,7 @@ namespace GameEngine.Core.GameSpecific
             shaders["gameobject2"].EnableVertexAttribArrays();
 
             GL.UniformMatrix4(shaders["gameobject2"].GetUniform("mvp"), false, ref gameObject2.ModelViewProjectionMatrix);
-            GL.DrawElements(BeginMode.Triangles, mesh2.Triangles.Count, DrawElementsType.UnsignedInt,
+            GL.DrawElements(BeginMode.Triangles, mesh2.Indices.Count, DrawElementsType.UnsignedInt,
                             indiceat * sizeof(uint));
 
             shaders["gameobject2"].DisableVertexAttribArrays();

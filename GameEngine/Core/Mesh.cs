@@ -11,9 +11,9 @@ namespace GameEngine.Core
         public List<Vector3> Vertices { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of triangles.
+        /// Gets or sets the list of indices.
         /// </summary>
-        public List<int> Triangles { get; set; }
+        public List<int> Indices { get; set; }
 
         /// <summary>
         /// Gets or sets the list of colours.
@@ -33,7 +33,7 @@ namespace GameEngine.Core
         public Mesh()
         {
             Vertices = new List<Vector3>();
-            Triangles = new List<int>();
+            Indices = new List<int>();
             Colours = new List<Vector3>();
             UV = new List<Vector2>(); 
         }
@@ -44,7 +44,7 @@ namespace GameEngine.Core
         public void Clear()
         {
             Vertices.Clear();
-            Triangles.Clear();
+            Indices.Clear();
             Colours.Clear();
             UV.Clear();
         }

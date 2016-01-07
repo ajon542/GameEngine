@@ -24,7 +24,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
 
             Vector3[] vertices = grid.Vertices.ToArray();
-            int[] triangles = grid.Indices.ToArray();
+            int[] indices = grid.Indices.ToArray();
             Vector3[] colours = grid.Colours.ToArray();
 
             // Bind vertices.
@@ -42,9 +42,9 @@ namespace GameEngine.Core.GameSpecific
                 true, 0, 0);
 
             // Bind the indices.
-            IntPtr trianglesBufferSize = (IntPtr)(triangles.Length * sizeof(int));
+            IntPtr indicesBufferSize = (IntPtr)(indices.Length * sizeof(int));
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo_elements);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, trianglesBufferSize, triangles, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indicesBufferSize, indices, BufferUsageHint.StaticDraw);
         }
 
         public override void Update()

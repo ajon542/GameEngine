@@ -26,7 +26,7 @@ namespace GameEngine.Core.GameSpecific
                 new Vector3(-0.5f, 0.5f, 0.5f)
             };
 
-            mesh.Triangles = new List<int>
+            mesh.Indices = new List<int>
             {
                 0, 2, 1, 0, 3, 2, // left
                 1, 2, 6, 6, 5, 1, // back
