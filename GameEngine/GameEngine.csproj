@@ -94,6 +94,7 @@
     <Compile Include="Core\GameSpecific\GridExample.cs" />
     <Compile Include="Core\GameSpecific\InputExample.cs" />
     <Compile Include="Core\GameSpecific\QuadBehaviour.cs" />
+    <Compile Include="Core\GameSpecific\TextureBlendExample.cs" />
     <Compile Include="Core\GameSpecific\TextureExample.cs" />
     <Compile Include="Core\GameSpecific\Tutorial2.cs" />
     <Compile Include="Core\Graphics\GraphicsProperties.cs" />
@@ -179,6 +180,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Core\Shaders\frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Core\Shaders\texture-blend-frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Core\Shaders\texture-blend-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\texture-frag.glsl">
