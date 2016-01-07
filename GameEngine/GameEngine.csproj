@@ -97,6 +97,7 @@
     <Compile Include="Core\GameSpecific\TextureBlendExample.cs" />
     <Compile Include="Core\GameSpecific\TextureExample.cs" />
     <Compile Include="Core\GameSpecific\Tutorial2.cs" />
+    <Compile Include="Core\GameSpecific\VaoExample.cs" />
     <Compile Include="Core\Graphics\GraphicsProperties.cs" />
     <Compile Include="Core\Grid.cs" />
     <Compile Include="Core\Material.cs" />

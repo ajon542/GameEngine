@@ -42,14 +42,6 @@ namespace GameEngine.Core.GameSpecific
             // Give our vertices to OpenGL.
             IntPtr vertexBufferSize = (IntPtr)(vertexBufferData.Length * Vector3.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertexBufferData, BufferUsageHint.StaticDraw);
-        }
-
-
-        public override void Render()
-        {
-            // First attribute buffer - vertices
-            GL.EnableVertexAttribArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
 
             GL.VertexAttribPointer(
                 0,                              // attribute pointer, must match the layout in the shader.
@@ -59,6 +51,14 @@ namespace GameEngine.Core.GameSpecific
                 0,                              // stride
                 0                               // array buffer offset
                 );
+        }
+
+
+        public override void Render()
+        {
+            // First attribute buffer - vertices
+            GL.EnableVertexAttribArray(0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
 
             // Draw the triangle.
             // Starting from vertex 0; 3 vertices total -> 1 triangle.
