@@ -41,9 +41,19 @@ namespace GameEngine.Core.GameSpecific
         private int textureSamplerUniform;
 
         /// <summary>
+        /// Texture sampler uniform handle in fragment shader.
+        /// </summary>
+        private int textureSamplerUniform1;
+
+        /// <summary>
         /// Loaded texture identifier.
         /// </summary>
         private int textureId;
+
+        /// <summary>
+        /// Loaded texture identifier.
+        /// </summary>
+        private int textureId1;
 
         /// <summary>
         /// Model-view-projection matrix uniform handle.
@@ -81,6 +91,7 @@ namespace GameEngine.Core.GameSpecific
 
             // Load the texture.
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/UV-Template.bmp");
+            textureId1 = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Nuclear-Symbol.bmp");
 
             // Generate a VAO and set it as the current one.
             GL.GenVertexArrays(1, out vertexArrayId);
@@ -88,6 +99,7 @@ namespace GameEngine.Core.GameSpecific
 
             // Get the texture sampler uniform location from the fragment shader.
             textureSamplerUniform = shaders["texture"].GetUniform("textureSampler");
+            textureSamplerUniform1 = shaders["texture"].GetUniform("textureSampler1");
 
             // Get the model-view-projection matrix uniform.
             mvpUniform = shaders["texture"].GetUniform("mvp");
@@ -143,6 +155,12 @@ namespace GameEngine.Core.GameSpecific
             GL.BindTexture(TextureTarget.Texture2D, textureId);
             // Set our "textureSampler" sampler to user Texture Unit 0
             GL.Uniform1(textureSamplerUniform, TextureUnit.Texture0 - TextureUnit.Texture0);
+
+            // Bind our texture in Texture Unit 1
+            GL.ActiveTexture(TextureUnit.Texture1);
+            GL.BindTexture(TextureTarget.Texture2D, textureId1);
+            // Set our "textureSampler" sampler to user Texture Unit 1
+            GL.Uniform1(textureSamplerUniform1, TextureUnit.Texture1 - TextureUnit.Texture0);
 
             // Set the vertex buffer attribute pointer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
