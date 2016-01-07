@@ -83,6 +83,12 @@ namespace GameEngine.Core.GameSpecific
             // Load the texture.
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/UV-Template.bmp");
 
+            // TODO: Figure out what a vertex array is used for.
+            // This question highlights my concern as everything works without this even being set.
+            // http://stackoverflow.com/questions/5970087/understanding-vertex-array-objects-glgenvertexarrays
+            // The following document appears to be an explanation:
+            // http://www.openglsuperbible.com/2013/12/09/vertex-array-performance/
+
             // Generate a VAO and set it as the current one.
             GL.GenVertexArrays(1, out vertexArrayId);
             GL.BindVertexArray(vertexArrayId);
