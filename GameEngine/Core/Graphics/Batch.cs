@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-using GameEngine.Core.Graphics;
-
 namespace GameEngine.Core.Graphics
 {
     public static class Vao
@@ -25,6 +23,8 @@ namespace GameEngine.Core.Graphics
 
     class Batch
     {
+        private PrimitiveType renderType;
+
         private uint[] vertexArrObjects;
         private uint[] vertexBufObjects;
 
@@ -32,6 +32,8 @@ namespace GameEngine.Core.Graphics
 
         public Batch(Mesh mesh)
         {
+            renderType = mesh.RenderType;
+
             vertexArrObjects = new uint[Vao.Count];
             vertexBufObjects = new uint[Vbo.Count];
 
@@ -65,12 +67,14 @@ namespace GameEngine.Core.Graphics
         public void Render()
         {
             GL.BindVertexArray(vertexArrObjects[Vao.Cube]);
-            GL.DrawElements(PrimitiveType.Triangles, indicesCount, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
         }
     }
 
     class ShaderBatch
     {
+        private PrimitiveType renderType;
+
         private uint[] vertexArrObjects;
         private int indexBufObject;
         private int indicesCount;
@@ -84,6 +88,8 @@ namespace GameEngine.Core.Graphics
 
         public ShaderBatch(Mesh mesh)
         {
+            renderType = mesh.RenderType;
+
             shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
 
             vertexArrObjects = new uint[Vao.Count];
@@ -131,7 +137,7 @@ namespace GameEngine.Core.Graphics
 
             // TODO: Matrix is kinda weird in here...
             GL.UniformMatrix4(shaders["default"].GetUniform("mvp"), false, ref mat);
-            GL.DrawElements(BeginMode.Triangles, indicesCount, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
             shaders["default"].DisableVertexAttribArrays();
         }

@@ -45,8 +45,7 @@ namespace GameEngine.ViewModel
         /// </summary>
         public SceneViewModel()
         {
-            // TODO: We should really only have a single scene at a time.
-            SceneList = new List<Scene> { new Core.GameSpecific.GameScene() };
+            SceneList = new List<Scene> { new Core.GameSpecific.GridExample() };
         }
 
         #region Initialized Command

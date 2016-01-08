@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.Core
 {
     public class Mesh : Component
     {
+        /// <summary>
+        /// Gets or sets how the vertex stream should be interpreted.
+        /// </summary>
+        public PrimitiveType RenderType { get; set; }
+
         /// <summary>
         /// Gets or sets the list of vertices.
         /// </summary>
