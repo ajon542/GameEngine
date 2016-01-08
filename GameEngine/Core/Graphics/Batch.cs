@@ -68,4 +68,72 @@ namespace GameEngine.Core.Graphics
             GL.DrawElements(PrimitiveType.Triangles, indicesCount, DrawElementsType.UnsignedInt, 0);
         }
     }
+
+    class ShaderBatch
+    {
+        private uint[] vertexArrObjects;
+        private int indexBufObject;
+        private int indicesCount;
+
+        private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
+
+        private uint positionBuffer;
+        private int positionAttr;
+        private uint colourBuffer;
+        private int colourAttr;
+
+        public ShaderBatch(Mesh mesh)
+        {
+            shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
+
+            vertexArrObjects = new uint[Vao.Count];
+
+            GL.GenVertexArrays(Vao.Count, vertexArrObjects);
+            GL.BindVertexArray(vertexArrObjects[Vao.Cube]);
+            GL.GenBuffers(1, out indexBufObject);
+
+            Vector3[] vertices = mesh.Vertices.ToArray();
+            Vector3[] colours = mesh.Colours.ToArray();
+            int[] indices = mesh.Indices.ToArray();
+
+            IntPtr verticesLength = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
+            IntPtr coloursLength = (IntPtr)(colours.Length * Vector3.SizeInBytes);
+            IntPtr indicesLength = (IntPtr)(indices.Length * sizeof(int));
+            indicesCount = indices.Length;
+
+            positionBuffer = shaders["default"].GetBuffer("vPosition");
+            positionAttr = shaders["default"].GetAttribute("vPosition");
+            colourBuffer = shaders["default"].GetBuffer("vColor");
+            colourAttr = shaders["default"].GetAttribute("vColor");
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, positionBuffer);
+            GL.BufferData(BufferTarget.ArrayBuffer, verticesLength, vertices, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(positionAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
+            //GL.EnableClientState(ArrayCap.VertexArray);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
+            GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
+            // TODO: This EnableClientState appears to make the GameScene example crash.
+            //GL.EnableClientState(ArrayCap.ColorArray);
+
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexBufObject);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indicesLength, indices, BufferUsageHint.StaticDraw);
+        }
+
+        public void Render(Matrix4 mat)
+        {
+            GL.UseProgram(shaders["default"].ProgramId);
+
+            GL.BindVertexArray(vertexArrObjects[Vao.Cube]);
+
+            shaders["default"].EnableVertexAttribArrays();
+
+            // TODO: Matrix is kinda weird in here...
+            GL.UniformMatrix4(shaders["default"].GetUniform("mvp"), false, ref mat);
+            GL.DrawElements(BeginMode.Triangles, indicesCount, DrawElementsType.UnsignedInt, 0);
+
+            shaders["default"].DisableVertexAttribArrays();
+        }
+    }
 }
