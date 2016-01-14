@@ -8,7 +8,7 @@ using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core
 {
-    public class Grid
+    public class Grid : Mesh
     {
         // The grid class will be used to store the data to display
         // a grid in the scene. The grid shall provide some orientation
@@ -30,14 +30,12 @@ namespace GameEngine.Core
         // |        |        |
         //  ------------------
 
-        public List<Vector3> Vertices { get; set; }
-        public List<Vector3> Colours { get; set; }
-        public List<int> Indices { get; set; }
-
         private Vector3 defaultColor = new Vector3(.3f, .3f, .3f);
 
         public Grid()
         {
+            RenderType = PrimitiveType.Lines;
+
             Vertices = new List<Vector3>();
             Colours = new List<Vector3>();
             Indices = new List<int>();

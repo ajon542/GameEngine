@@ -29,6 +29,7 @@ namespace GameEngine.Core.GameSpecific
         {
             // TODO: Remove this pushmatrix stuff. We should be passing these vertices into a shader
             // along with the mvp matrix.
+            // http://sol.gfxile.net/instancing.html
             GL.PushMatrix();
             GL.Translate(0, 0, -3);
             batch1.Render();
