@@ -39,7 +39,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/ambient-frag.glsl", true));
+            shaders.Add("default", new ShaderProgram("Core/Shaders/ambient-vert.glsl", "Core/Shaders/ambient-frag.glsl", true));
             positionBuffer = shaders["default"].GetBuffer("vPosition");
             positionAttr = shaders["default"].GetAttribute("vPosition");
             colourBuffer = shaders["default"].GetBuffer("vColor");
