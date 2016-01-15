@@ -40,10 +40,10 @@ namespace GameEngine.Core.GameSpecific
         public override void Initialize()
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/ambient-vert.glsl", "Core/Shaders/ambient-frag.glsl", true));
-            positionBuffer = shaders["default"].GetBuffer("vPosition");
-            positionAttr = shaders["default"].GetAttribute("vPosition");
-            colourBuffer = shaders["default"].GetBuffer("vColor");
-            colourAttr = shaders["default"].GetAttribute("vColor");
+            positionBuffer = shaders["default"].GetBuffer("VertexPosition");
+            positionAttr = shaders["default"].GetAttribute("VertexPosition");
+            colourBuffer = shaders["default"].GetBuffer("VertexColor");
+            colourAttr = shaders["default"].GetAttribute("VertexColor");
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -85,7 +85,7 @@ namespace GameEngine.Core.GameSpecific
             shaders["default"].EnableVertexAttribArrays();
 
             GL.Uniform4(shaders["default"].GetUniform("ambient"), new Vector4(0.5f, 0.5f, 0.5f, 1));
-            GL.UniformMatrix4(shaders["default"].GetUniform("mvp"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
             shaders["default"].DisableVertexAttribArrays();

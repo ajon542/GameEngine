@@ -45,7 +45,10 @@ namespace GameEngine.Core
             Indices = new List<int>();
             Colours = new List<Vector3>();
             Normals = new List<Vector3>();
-            UV = new List<Vector2>(); 
+            UV = new List<Vector2>();
+
+            // Set default render primitive.
+            RenderType = PrimitiveType.Triangles;
         }
 
         /// <summary>

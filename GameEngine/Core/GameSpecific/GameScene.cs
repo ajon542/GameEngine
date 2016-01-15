@@ -27,8 +27,8 @@ namespace GameEngine.Core.GameSpecific
         public override void Initialize()
         {
             // Set up depth test and face culling.
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
+            //GL.Enable(EnableCap.DepthTest);
+            //GL.Enable(EnableCap.CullFace);
 
             // Add our cube behaviour.
             CubeBehaviour cubeBehaviour = new CubeBehaviour();

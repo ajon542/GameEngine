@@ -107,10 +107,10 @@ namespace GameEngine.Core.Graphics
             IntPtr indicesLength = (IntPtr)(indices.Length * sizeof(int));
             indicesCount = indices.Length;
 
-            positionBuffer = shaders["default"].GetBuffer("vPosition");
-            positionAttr = shaders["default"].GetAttribute("vPosition");
-            colourBuffer = shaders["default"].GetBuffer("vColor");
-            colourAttr = shaders["default"].GetAttribute("vColor");
+            positionBuffer = shaders["default"].GetBuffer("VertexPosition");
+            positionAttr = shaders["default"].GetAttribute("VertexPosition");
+            colourBuffer = shaders["default"].GetBuffer("VertexColor");
+            colourAttr = shaders["default"].GetAttribute("VertexColor");
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, positionBuffer);
             GL.BufferData(BufferTarget.ArrayBuffer, verticesLength, vertices, BufferUsageHint.StaticDraw);
@@ -136,7 +136,7 @@ namespace GameEngine.Core.Graphics
             shaders["default"].EnableVertexAttribArrays();
 
             // TODO: Matrix is kinda weird in here...
-            GL.UniformMatrix4(shaders["default"].GetUniform("mvp"), false, ref mat);
+            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref mat);
             GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
             shaders["default"].DisableVertexAttribArrays();

@@ -97,13 +97,13 @@ namespace GameEngine.Core.GameSpecific
             textureSamplerUniform = shaders["texture"].GetUniform("textureSampler");
 
             // Get the model-view-projection matrix uniform.
-            mvpUniform = shaders["texture"].GetUniform("mvp");
+            mvpUniform = shaders["texture"].GetUniform("MVPMatrix");
 
             // Vertices.
 
             // Generate 1 buffer, put the resulting identifier in vertexbuffer.
-            vertexBuffer = shaders["texture"].GetBuffer("vPosition");
-            vertexAttribute = shaders["texture"].GetAttribute("vPosition");
+            vertexBuffer = shaders["texture"].GetBuffer("VertexPosition");
+            vertexAttribute = shaders["texture"].GetAttribute("VertexPosition");
 
             // The following commands will talk about our 'vertexbuffer' buffer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
@@ -115,8 +115,8 @@ namespace GameEngine.Core.GameSpecific
             // UVs.
 
             // Generate 1 buffer, put the resulting identifier in uvBuffer.
-            uvBuffer = shaders["texture"].GetBuffer("vertexUV");
-            uvAttribute = shaders["texture"].GetAttribute("vertexUV");
+            uvBuffer = shaders["texture"].GetBuffer("VertexUV");
+            uvAttribute = shaders["texture"].GetAttribute("VertexUV");
 
             // The following commands will talk about our 'uvBuffer' buffer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
