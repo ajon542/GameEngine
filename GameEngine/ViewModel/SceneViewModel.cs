@@ -46,7 +46,7 @@ namespace GameEngine.ViewModel
         public SceneViewModel()
         {
             // TODO: We should really only have a single scene at a time.
-            SceneList = new List<Scene> { new Core.GameSpecific.LightingExample() };
+            SceneList = new List<Scene> { new Core.GameSpecific.GridExample() };
         }
 
         #region Initialized Command
@@ -217,7 +217,7 @@ namespace GameEngine.ViewModel
 
             foreach (Scene scene in SceneList)
             {
-                scene.ViewProjectionMatrix = perspectiveMatrix;
+                scene.ProjectionMatrix = perspectiveMatrix;
             }
 
             // Set the matrix mode and load the matrix.

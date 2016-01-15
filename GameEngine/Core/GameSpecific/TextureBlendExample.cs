@@ -142,7 +142,7 @@ namespace GameEngine.Core.GameSpecific
             }
 
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = ViewProjectionMatrix;
+            gameObject.ViewProjectionMatrix = ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 

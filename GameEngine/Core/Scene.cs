@@ -16,7 +16,7 @@ namespace GameEngine.Core
     /// </remarks>
     public class Scene
     {
-        public Matrix4 ViewProjectionMatrix { get; set; }
+        public Matrix4 ProjectionMatrix { get; set; }
 
         // NOTES:
         // Thinking about this from a top-down approach, it we want to have a single
