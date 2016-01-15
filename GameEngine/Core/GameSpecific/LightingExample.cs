@@ -84,7 +84,7 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["default"].EnableVertexAttribArrays();
 
-            GL.Uniform4(shaders["default"].GetUniform("ambient"), new Vector4(0.5f, 0.5f, 0.5f, 1));
+            GL.Uniform4(shaders["default"].GetUniform("Ambient"), new Vector4(0.5f, 0.5f, 0.5f, 1));
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
