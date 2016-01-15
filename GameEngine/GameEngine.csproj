@@ -86,6 +86,7 @@
     <Compile Include="Core\Behaviour.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Component.cs" />
+    <Compile Include="Core\Cube.cs" />
     <Compile Include="Core\Debugging\GameEngineException.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\GameObjectHierarchy.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Core\GameSpecific\GridExample.cs" />
     <Compile Include="Core\GameSpecific\InputExample.cs" />
     <Compile Include="Core\GameSpecific\InstancingExample.cs" />
+    <Compile Include="Core\GameSpecific\LightingExample.cs" />
     <Compile Include="Core\GameSpecific\QuadBehaviour.cs" />
     <Compile Include="Core\GameSpecific\TextureBlendExample.cs" />
     <Compile Include="Core\GameSpecific\TextureExample.cs" />

@@ -12,6 +12,7 @@ namespace GameEngine.Core.GameSpecific
         
         public override void Initialize()
         {
+            // TODO: Replace with Cube
             mesh = new Mesh();
 
             mesh.Vertices = new List<Vector3>
