@@ -31,7 +31,10 @@ namespace GameEngine.Core
         /// </summary>
         public List<Vector2> UV { get; set; }
 
-        // TODO: Normals
+        /// <summary>
+        /// Gets or sets the list of normals.
+        /// </summary>
+        public List<Vector3> Normals { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Mesh"/> class.
@@ -41,6 +44,7 @@ namespace GameEngine.Core
             Vertices = new List<Vector3>();
             Indices = new List<int>();
             Colours = new List<Vector3>();
+            Normals = new List<Vector3>();
             UV = new List<Vector2>(); 
         }
 
@@ -52,6 +56,7 @@ namespace GameEngine.Core
             Vertices.Clear();
             Indices.Clear();
             Colours.Clear();
+            Normals.Clear();
             UV.Clear();
         }
     }

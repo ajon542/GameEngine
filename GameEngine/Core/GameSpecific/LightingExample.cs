@@ -8,6 +8,9 @@ using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
+    // Ambient lighting is completed.
+    // In order to complete the directional lighting, I need to learn about
+    // the normal matrix and how to calculate it, then pass it to the vertex shader.
     public class LightingExample : Scene
     {
         private static class Vbo
