@@ -7,14 +7,11 @@ hierarchy. It should be possible to save and load the scene. However, employing 
 greatest rendering techniques may not be one of the highest priorities of this project.
 
 ## Current Goal
-Make adding game objects to the scene more intuitive. This will most likely involve improving
-the batching of objects to be rendered and the use of the scene camera.
-
-In order to achieve this goal, I have been experimenting with how a game developer may use the
-game engine. I have been creating a number of different scenes to do things such as texturing,
-mouse input etc to try and find some of the repetitive actions. There are many so far, and by
-creating more scenes, I will gain a better understanding of what needs to be pulled out and made
-simpler.
+There is much boiler-plate code that I have found in the Initialize method for each scene. I
+have made an attempt to move some of this boilerplate out into the Batch and ShaderBatch class.
+However, I have found there seem to not be a common way to do these things. Additionally, the
+Batch class is tied too closely to the particular shader being used. I think some more
+experimentation needs to be done in order to improve the amount of boilerplate code needed.
 
 ## TODO
 (not in any particular order)
@@ -29,6 +26,16 @@ simpler.
 ## Previous Goals
 
 -------------------------------------------------------------------------------------------
+Goal 3
+Make adding game objects to the scene more intuitive. This will most likely involve improving
+the batching of objects to be rendered and the use of the scene camera.
+
+In order to achieve this goal, I have been experimenting with how a game developer may use the
+game engine. I have been creating a number of different scenes to do things such as texturing,
+mouse input etc to try and find some of the repetitive actions. There are many so far, and by
+creating more scenes, I will gain a better understanding of what needs to be pulled out and made
+simpler.
+
 Goal 2
 Integrate AvalonDock to the project and make dockable windows based on the Window menu item.
 This is still a slow work in progress as I have become side-tracked in creating a better scene

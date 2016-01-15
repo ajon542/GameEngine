@@ -13,14 +13,6 @@ namespace GameEngine.Core.GameSpecific
     // the normal matrix and how to calculate it, then pass it to the vertex shader.
     public class LightingExample : Scene
     {
-        private static class Vbo
-        {
-            public const int Vertices = 0;
-            public const int Colours = 1;
-            public const int Elements = 2;
-            public const int Count = 3;
-        }
-
         private uint vertexArrObject;
         private int indicesCount;
         private uint positionBuffer;
