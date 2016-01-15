@@ -36,7 +36,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/frag.glsl", true));
+            shaders.Add("default", new ShaderProgram("Core/Shaders/vert.glsl", "Core/Shaders/ambient-frag.glsl", true));
             positionBuffer = shaders["default"].GetBuffer("vPosition");
             positionAttr = shaders["default"].GetAttribute("vPosition");
             colourBuffer = shaders["default"].GetBuffer("vColor");
@@ -66,7 +66,8 @@ namespace GameEngine.Core.GameSpecific
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indicesLength, indices, BufferUsageHint.StaticDraw);
 
-            gameObject.Transform.Position = new Vector3(0, 0, -3);
+            gameObject.Transform.Position = new Vector3(0, 0, -5);
+            gameObject.Transform.Rotation = new Quaternion(1, 1, 0, 1);
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = cam.GetViewMatrix() * ViewProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
@@ -80,6 +81,7 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["default"].EnableVertexAttribArrays();
 
+            GL.Uniform4(shaders["default"].GetUniform("ambient"), new Vector4(0.5f, 0.5f, 0.5f, 1));
             GL.UniformMatrix4(shaders["default"].GetUniform("mvp"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
