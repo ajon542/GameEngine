@@ -8,6 +8,11 @@ namespace GameEngine.Core.GameSpecific
     /// <summary>
     /// An example to investigate the performance enhancements acheived from instancing.
     /// </summary>
+    /// <remarks>
+    /// TODO: Complete the instancing example.
+    /// http://ogldev.atspace.co.uk/www/tutorial33/tutorial33.html
+    /// http://sol.gfxile.net/instancing.html
+    /// </remarks>
     public class InstancingExample : Scene
     {
         /// <summary>
