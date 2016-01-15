@@ -20,15 +20,18 @@ namespace GameEngine.Core
             Orientation = new Vector3((float)Math.PI, 0f, 0f);
         }
 
-        public Matrix4 GetViewMatrix()
+        public Matrix4 ViewMatrix
         {
-            Vector3 lookat = new Vector3();
+            get
+            {
+                Vector3 lookat = new Vector3();
 
-            lookat.X = (float)(Math.Sin(Orientation.X) * Math.Cos(Orientation.Y));
-            lookat.Y = (float)Math.Sin(Orientation.Y);
-            lookat.Z = (float)(Math.Cos(Orientation.X) * Math.Cos(Orientation.Y));
+                lookat.X = (float)(Math.Sin(Orientation.X) * Math.Cos(Orientation.Y));
+                lookat.Y = (float)Math.Sin(Orientation.Y);
+                lookat.Z = (float)(Math.Cos(Orientation.X) * Math.Cos(Orientation.Y));
 
-            return Matrix4.LookAt(Position, Position + lookat, Vector3.UnitY);
+                return Matrix4.LookAt(Position, Position + lookat, Vector3.UnitY);   
+            }
         }
 
         public void Move(float x, float y, float z)

@@ -64,12 +64,12 @@ namespace GameEngine.Core.GameSpecific
 
             // Update...
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() * ProjectionMatrix;
+            gameObject.ViewProjectionMatrix = cam.ViewMatrix * ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
 
             gameObject2.Transform.Position = new Vector3(2, 0, -5.0f);
             gameObject2.CalculateModelMatrix();
-            gameObject2.ViewProjectionMatrix = cam.GetViewMatrix() * ProjectionMatrix;
+            gameObject2.ViewProjectionMatrix = cam.ViewMatrix * ProjectionMatrix;
             gameObject2.ModelViewProjectionMatrix = gameObject2.ModelMatrix * gameObject2.ViewProjectionMatrix;
         }
 

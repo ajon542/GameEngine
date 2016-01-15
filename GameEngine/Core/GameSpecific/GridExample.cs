@@ -56,7 +56,7 @@ namespace GameEngine.Core.GameSpecific
             }
 
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() * ProjectionMatrix;
+            gameObject.ViewProjectionMatrix = cam.ViewMatrix * ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 

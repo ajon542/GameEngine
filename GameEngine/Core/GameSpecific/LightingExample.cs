@@ -72,7 +72,7 @@ namespace GameEngine.Core.GameSpecific
             gameObject.Transform.Position = new Vector3(0, 0, -5);
             gameObject.Transform.Rotation = new Quaternion(1, 1, 0, 1);
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = cam.GetViewMatrix() * ProjectionMatrix;
+            gameObject.ViewProjectionMatrix = cam.ViewMatrix * ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
