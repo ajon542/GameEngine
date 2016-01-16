@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.Core
 {
+    /// <summary>
+    /// Quad mesh.
+    /// </summary>
     class Quad : Mesh
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Quad"/> mesh class.
+        /// </summary>
         public Quad()
         {
             Vertices = new List<Vector3>
