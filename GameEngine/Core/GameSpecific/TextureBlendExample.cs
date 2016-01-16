@@ -134,7 +134,7 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             // TODO: A little inefficient
-            Behaviour component = gameObject.GetComponent<Behaviour>() as Behaviour;
+            Behaviour component = gameObject.GetComponent<Behaviour>();
 
             if (component != null)
             {
