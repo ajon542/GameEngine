@@ -6,13 +6,9 @@ namespace GameEngine.Core.GameSpecific
     {
         public Vector3 Colour { get; set; }
 
-        private Mesh mesh;
-        
         public override void Initialize()
         {
-            mesh = new Cube();
-
-            GameObject.AddComponent<Mesh>(mesh);
+            GameObject.AddComponent<Mesh>(new Cube());
 
             GameObject.Transform.Position = new Vector3(0, 0, -5.0f);
             GameObject.Transform.Rotation = new Quaternion(1, 1, 1, 0.5f);
