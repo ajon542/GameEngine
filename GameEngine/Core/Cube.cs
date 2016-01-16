@@ -64,64 +64,32 @@ namespace GameEngine.Core
                 new Vector3(-0.5f, -0.5f, 0.5f),
             };
 
+            AddFaceNormals(new Vector3(-1, 0, 0)); // Left
+            AddFaceNormals(new Vector3(0, 0, -1)); // Back
+            AddFaceNormals(new Vector3(1, 0, 0));  // Right
+            AddFaceNormals(new Vector3(0, 1, 0));  // Top
+            AddFaceNormals(new Vector3(0, 0, 1));  // Front
+            AddFaceNormals(new Vector3(0, -1, 0)); // Bottom
+
             Indices = new List<int>();
             Colours = new List<Vector3>();
             for(int i = 0; i < Vertices.Count; ++i)
             {
                 Indices.Add(i);
-                Colours.Add(new Vector3(1, 0, 0));
+                Colours.Add(new Vector3(1, 1, 1));
             }
+        }
 
-            Normals = new List<Vector3>
+        /// <summary>
+        /// Helper method to add the face normals.
+        /// </summary>
+        /// <param name="normal">The normal vector.</param>
+        private void AddFaceNormals(Vector3 normal)
+        {
+            for(int i = 0; i < 6; ++i)
             {
-                // Left
-                new Vector3(-1, 0, 0),
-                new Vector3(-1, 0, 0),
-                new Vector3(-1, 0, 0),
-                new Vector3(-1, 0, 0),
-                new Vector3(-1, 0, 0),
-                new Vector3(-1, 0, 0),
-
-                // Back
-                new Vector3(0, 0, -1),
-                new Vector3(0, 0, -1),
-                new Vector3(0, 0, -1),
-                new Vector3(0, 0, -1),
-                new Vector3(0, 0, -1),
-                new Vector3(0, 0, -1),
-
-                // Right
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-                new Vector3(1, 0, 0),
-
-                // Top
-                new Vector3(0, 1, 0),
-                new Vector3(0, 1, 0),
-                new Vector3(0, 1, 0),
-                new Vector3(0, 1, 0),
-                new Vector3(0, 1, 0),
-                new Vector3(0, 1, 0),
-
-                // Front
-                new Vector3(0, 0, 1),
-                new Vector3(0, 0, 1),
-                new Vector3(0, 0, 1),
-                new Vector3(0, 0, 1),
-                new Vector3(0, 0, 1),
-                new Vector3(0, 0, 1),
-
-                // Bottom
-                new Vector3(0, -1, 0),
-                new Vector3(0, -1, 0),
-                new Vector3(0, -1, 0),
-                new Vector3(0, -1, 0),
-                new Vector3(0, -1, 0),
-                new Vector3(0, -1, 0),
-            };
+                Normals.Add(normal);
+            }
         }
     }
 }
