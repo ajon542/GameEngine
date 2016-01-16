@@ -106,6 +106,7 @@
     <Compile Include="Core\Grid.cs" />
     <Compile Include="Core\Material.cs" />
     <Compile Include="Core\Mesh.cs" />
+    <Compile Include="Core\Quad.cs" />
     <Compile Include="Core\Renderer.cs" />
     <Compile Include="Core\Scene.cs" />
     <Compile Include="Core\Serialization\ISerializer.cs" />
