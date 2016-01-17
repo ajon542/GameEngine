@@ -71,6 +71,9 @@ namespace GameEngine.Core.GameSpecific
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indicesLength, indices, BufferUsageHint.StaticDraw);
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.CullFace);
         }
 
         public float xRot = 0;
@@ -92,7 +95,7 @@ namespace GameEngine.Core.GameSpecific
                 zRot += 0.1f;
             }
 
-            gameObject.Transform.Position = new Vector3(0, 0, -5);
+            gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.Transform.Rotation = new Quaternion(xRot, yRot, zRot, 1);
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = cam.ViewMatrix * ProjectionMatrix;
@@ -110,10 +113,10 @@ namespace GameEngine.Core.GameSpecific
             // TODO: Determine good values for the directional lighting.
             GL.Uniform3(shaders["default"].GetUniform("Ambient"), new Vector3(0.5f, 0.5f, 0.5f));
             GL.Uniform3(shaders["default"].GetUniform("LightColor"), new Vector3(1, 1, 1));
-            GL.Uniform3(shaders["default"].GetUniform("LightDirection"), new Vector3(1, 1, 1));
+            GL.Uniform3(shaders["default"].GetUniform("LightDirection"), new Vector3(1, 0, 0));
             GL.Uniform3(shaders["default"].GetUniform("HalfVector"), new Vector3(0, 0, 0));
-            GL.Uniform1(shaders["default"].GetUniform("Shininess"), 1.0f);
-            GL.Uniform1(shaders["default"].GetUniform("Strength"), 1.0f);
+            GL.Uniform1(shaders["default"].GetUniform("Shininess"), 1f);
+            GL.Uniform1(shaders["default"].GetUniform("Strength"), 1f);
 
             // TODO: Calculate the normal matrix correctly.
             // See: http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/
