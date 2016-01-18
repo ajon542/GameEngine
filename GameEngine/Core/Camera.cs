@@ -5,6 +5,18 @@ namespace GameEngine.Core
 {
     public class Camera
     {
+        // TODO: Complete the camera class implementation.
+        // position
+        // field of view
+        // near plane
+        // far plane
+        // orientation
+        // look at
+        // viewport aspect ratio
+        // view matrix
+        // projection matrix
+        // view projection matrix
+
         public float MoveSpeed = 0.2f;
         public float MouseSensitivity = 0.01f;
 
@@ -30,7 +42,7 @@ namespace GameEngine.Core
                 lookat.Y = (float)Math.Sin(Orientation.Y);
                 lookat.Z = (float)(Math.Cos(Orientation.X) * Math.Cos(Orientation.Y));
 
-                return Matrix4.LookAt(Position, Position + lookat, Vector3.UnitY);   
+                return Matrix4.LookAt(Position, Position + lookat, Vector3.UnitY);
             }
         }
 
