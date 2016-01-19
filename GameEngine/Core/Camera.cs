@@ -21,7 +21,12 @@ namespace GameEngine.Core
         public float MouseSensitivity = 0.01f;
 
         public Vector3 Position { get; set; }
+        public float FieldOfView { get; set; }
+        public float NearPlane { get; set; }
+        public float FarPlane { get; set; }
         public Vector3 Orientation { get; set; }
+        public Vector3 LookAt { get; set; }
+        public float AspectRatio { get; set; }
 
         /// <summary>
         /// Initialize a new instance of the <see cref="Camera"/> class.
@@ -29,7 +34,11 @@ namespace GameEngine.Core
         public Camera()
         {
             Position = Vector3.Zero;
+            FieldOfView = 1.0f;
+            NearPlane = 1.0f;
+            FarPlane = 1000.0f;
             Orientation = new Vector3((float)Math.PI, 0f, 0f);
+            LookAt = new Vector3(0, 0, -10);
         }
 
         public Matrix4 ViewMatrix

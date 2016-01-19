@@ -18,20 +18,6 @@ namespace GameEngine.Core
     {
         public Matrix4 ProjectionMatrix { get; set; }
 
-        // NOTES:
-        // Thinking about this from a top-down approach, it we want to have a single
-        // call such as gameObject.AddComponent<Cube>() and then have that cube rendered
-        // in the scene.
-        //
-        // Cube will have a mesh containing verts, colours, indices, uvs.
-        // Initialize the scene and use the corresponding shader.
-        // Render the scene accordingly.
-        // Consider having a single shader for each mesh / game object.
-        // Submit the mesh and specify the shader we are going to use with it.
-        // For simplicities sake, we can have two shaders:
-        // 1. Vert and colors
-        // 2. Texture
-
         public virtual void Initialize()
         {
         }
@@ -42,6 +28,27 @@ namespace GameEngine.Core
 
         public virtual void Render()
         {
+        }
+
+        public virtual void SetupViewPort(int width, int height)
+        {
+            // Set the view port.
+            GL.Viewport(0, 0, width, height);
+
+            // Create the perspective field of view matrix.
+            float aspectRatio = (width / (float)height);
+            float fov = 1f;
+            float near = 1.0f;
+            float far = 1000.0f;
+
+            Matrix4 perspectiveMatrix =
+               Matrix4.CreatePerspectiveFieldOfView(fov, aspectRatio, near, far);
+
+            ProjectionMatrix = perspectiveMatrix;
+
+            // Set the matrix mode and load the matrix.
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perspectiveMatrix);
         }
 
         public virtual void Shutdown()

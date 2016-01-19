@@ -91,11 +91,11 @@ namespace GameEngine.ViewModel
             if (!loaded)
             {
                 GraphicsProperties properties = sender as GraphicsProperties;
-                SetupViewport(properties.Width, properties.Height);
 
                 // Initialize all the scenes.
                 foreach (Scene scene in SceneList)
                 {
+                    scene.SetupViewPort(properties.Width, properties.Height);
                     scene.Initialize();
                 }
                 loaded = true;
@@ -195,34 +195,11 @@ namespace GameEngine.ViewModel
         private void Resized(object sender)
         {
             GraphicsProperties properties = sender as GraphicsProperties;
-            SetupViewport(properties.Width, properties.Height);
-        }
-
-        /// <summary>
-        /// Set the viewport.
-        /// </summary>
-        private void SetupViewport(int width, int height)
-        {
-            // Set the view port.
-            GL.Viewport(0, 0, width, height);
-
-            // Create the perspective field of view matrix.
-            float aspectRatio = (width / (float)height);
-            float fov = 1f;
-            float near = 1.0f;
-            float far = 1000.0f;
-
-            Matrix4 perspectiveMatrix =
-               Matrix4.CreatePerspectiveFieldOfView(fov, aspectRatio, near, far);
 
             foreach (Scene scene in SceneList)
             {
-                scene.ProjectionMatrix = perspectiveMatrix;
+                scene.SetupViewPort(properties.Width, properties.Height);
             }
-
-            // Set the matrix mode and load the matrix.
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref perspectiveMatrix);
         }
     }
 }
