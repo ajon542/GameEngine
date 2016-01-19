@@ -29,7 +29,7 @@ namespace GameEngine.Core.GameSpecific
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Sphere();
+        private Mesh mesh = new Sphere(1, 1, 25, 25);
         Light activeLight = new Light(new Vector3(0, 3, -11), new Vector3(1.0f, 0.0f, 0.0f));
 
         public override void Initialize()
@@ -76,12 +76,12 @@ namespace GameEngine.Core.GameSpecific
             GL.Enable(EnableCap.CullFace);
         }
 
-        private int mouseWheelIndex = 0;
-        private int prevX = 0;
-        private int prevY = 0;
+        private int mouseWheelIndex;
+        private int prevX;
+        private int prevY;
         private float mouseSensitivity = 0.01f;
 
-        private bool mouseLeftDown = false;
+        private bool mouseLeftDown;
         private void CameraUpdate()
         {
             var mouse = Mouse.GetState();
