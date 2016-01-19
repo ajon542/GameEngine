@@ -29,8 +29,8 @@ namespace GameEngine.Core.GameSpecific
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Cube();
-        Light activeLight = new Light(new Vector3(-3, 0, 0), new Vector3(1.0f, 0.0f, 0.0f));
+        private Mesh mesh = new Sphere();
+        Light activeLight = new Light(new Vector3(0, 3, -11), new Vector3(1.0f, 0.0f, 0.0f));
 
         public override void Initialize()
         {

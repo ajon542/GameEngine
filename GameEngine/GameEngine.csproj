@@ -119,6 +119,7 @@
     <Compile Include="Core\Serialization\Vector3Converter.cs" />
     <Compile Include="Core\Serialization\Vector4Converter.cs" />
     <Compile Include="Core\Graphics\ShaderProgram.cs" />
+    <Compile Include="Core\Sphere.cs" />
     <Compile Include="Core\Texture.cs" />
     <Compile Include="Core\Timer.cs" />
     <Compile Include="Core\Transform.cs" />
