@@ -22,8 +22,6 @@ namespace GameEngine.Core.GameSpecific
         private ShaderBatch batch1;
         private ShaderBatch batch2;
 
-        private int mouseWheelIndex = 0;
-
         /// <summary>
         /// Initialize the scene.
         /// </summary>
@@ -44,27 +42,52 @@ namespace GameEngine.Core.GameSpecific
             batch2 = new ShaderBatch(gameObject2.GetComponent<Mesh>());
         }
 
-        public override void Update()
+        private int mouseWheelIndex = 0;
+        private int prevX = 0;
+        private int prevY = 0;
+        private float mouseSensitivity = 0.05f;
+        private void CameraUpdate()
         {
-            // TODO: A little inefficient
-            gameObject.GetComponent<Behaviour>().Update();
-            gameObject2.GetComponent<Behaviour>().Update();
+            var mouse = Mouse.GetState();
+            if (mouse[MouseButton.Left])
+            {
+                if(prevY > mouse.Y)
+                {
+                    MainCamera.Move(0, -mouseSensitivity, 0);
+                    prevY = mouse.Y;
+                }
+                if(prevY < mouse.Y)
+                {
+                    MainCamera.Move(0, mouseSensitivity, 0);
+                    prevY = mouse.Y;
+                }
+
+                if (prevX > mouse.X)
+                {
+                    MainCamera.Move(mouseSensitivity, 0, 0);
+                    prevX = mouse.X;
+                }
+                if (prevX < mouse.X)
+                {
+                    MainCamera.Move(-mouseSensitivity, 0, 0);
+                    prevX = mouse.X;
+                }
+            }
 
             // Handle zoom.
-            var mouse = Mouse.GetState();
             if (mouseWheelIndex != mouse.Wheel)
             {
                 Vector3 vec = MainCamera.LookAt - MainCamera.Position;
 
                 if (mouseWheelIndex > mouse.Wheel)
                 {
-                    vec *= 0.5f;
+                    vec *= -0.5f;
                 }
                 else
                 {
-                    vec *= -0.5f;
+                    vec *= 0.5f;
                 }
-                
+
                 MainCamera.LookAt = new Vector3(
                     MainCamera.LookAt.X + vec.X,
                     MainCamera.LookAt.Y + vec.Y,
@@ -78,7 +101,15 @@ namespace GameEngine.Core.GameSpecific
                 mouseWheelIndex = mouse.Wheel;
                 Console.WriteLine("LookAt {0}, Position {1}, Vec {2}", MainCamera.LookAt, MainCamera.Position, vec);
             }
+        }
 
+        public override void Update()
+        {
+            // TODO: A little inefficient
+            gameObject.GetComponent<Behaviour>().Update();
+            gameObject2.GetComponent<Behaviour>().Update();
+
+            CameraUpdate();
 
             // Update.
             gameObject.Transform.Position = new Vector3(-1, 0, -5.0f);

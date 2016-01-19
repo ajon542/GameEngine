@@ -64,5 +64,17 @@ namespace GameEngine.Core
                 return projectionMatrix;
             }
         }
+
+        /// <summary>
+        /// Move the camera by the given amount for each coordinate.
+        /// </summary>
+        /// <param name="x">The amount to move the x-coordinate.</param>
+        /// <param name="y">The amount to move the y-coordinate.</param>
+        /// <param name="z">The amount to move the z-coordinate.</param>
+        public void Move(float x, float y, float z)
+        {
+            Position = new Vector3(Position.X + x, Position.Y + y, Position.Z + z);
+            LookAt = new Vector3(LookAt.X + x, LookAt.Y + y, LookAt.Z + z);
+        }
     }
 }
