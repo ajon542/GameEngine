@@ -34,7 +34,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            shaders.Add("default", new ShaderProgram("Core/Shaders/directional-vert.glsl", "Core/Shaders/directional-frag.glsl", true));
+            shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");
             positionAttr = shaders["default"].GetAttribute("VertexPosition");
             colourBuffer = shaders["default"].GetBuffer("VertexColor");
@@ -76,6 +76,78 @@ namespace GameEngine.Core.GameSpecific
             GL.Enable(EnableCap.CullFace);
         }
 
+        private int mouseWheelIndex = 0;
+        private int prevX = 0;
+        private int prevY = 0;
+        private float mouseSensitivity = 0.01f;
+
+        private bool mouseLeftDown = false;
+        private void CameraUpdate()
+        {
+            var mouse = Mouse.GetState();
+            if (mouse[MouseButton.Left])
+            {
+                if (mouseLeftDown == false)
+                {
+                    prevX = mouse.X;
+                    prevY = mouse.Y;
+                }
+                mouseLeftDown = true;
+
+                if (prevY > mouse.Y)
+                {
+                    MainCamera.Move(0, (prevY - mouse.Y) * -mouseSensitivity, 0);
+                }
+                if (prevY < mouse.Y)
+                {
+                    MainCamera.Move(0, (mouse.Y - prevY) * mouseSensitivity, 0);
+                }
+                if (prevX > mouse.X)
+                {
+                    MainCamera.Move((prevX - mouse.X) * mouseSensitivity, 0, 0);
+                }
+                if (prevX < mouse.X)
+                {
+                    MainCamera.Move((mouse.X - prevX) * -mouseSensitivity, 0, 0);
+                }
+                prevX = mouse.X;
+                prevY = mouse.Y;
+            }
+            else
+            {
+                mouseLeftDown = false;
+            }
+
+            // Handle zoom.
+            if (mouseWheelIndex != mouse.Wheel)
+            {
+                Vector3 vec = MainCamera.LookAt - MainCamera.Position;
+
+                if (mouseWheelIndex > mouse.Wheel)
+                {
+                    vec *= -0.5f;
+                }
+                else
+                {
+                    vec *= 0.5f;
+                }
+
+                MainCamera.LookAt = new Vector3(
+                    MainCamera.LookAt.X + vec.X,
+                    MainCamera.LookAt.Y + vec.Y,
+                    MainCamera.LookAt.Z + vec.Z
+                    );
+                MainCamera.Position = new Vector3(
+                    MainCamera.Position.X + vec.X,
+                    MainCamera.Position.Y + vec.Y,
+                    MainCamera.Position.Z + vec.Z
+                    );
+                mouseWheelIndex = mouse.Wheel;
+                Console.WriteLine("LookAt {0}, Position {1}, Vec {2}", MainCamera.LookAt, MainCamera.Position, vec);
+            }
+        }
+
+
         public float xRot = 0;
         public float yRot = 0;
         public float zRot = 0;
@@ -94,6 +166,8 @@ namespace GameEngine.Core.GameSpecific
             {
                 zRot += 0.1f;
             }
+
+            CameraUpdate();
 
             gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.Transform.Rotation = new Quaternion(xRot, yRot, zRot, 1);
