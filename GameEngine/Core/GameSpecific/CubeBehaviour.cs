@@ -4,8 +4,6 @@ namespace GameEngine.Core.GameSpecific
 {
     class CubeBehaviour : Behaviour
     {
-        public Vector3 Colour { get; set; }
-
         public override void Initialize()
         {
             GameObject.AddComponent<Mesh>(new Cube());

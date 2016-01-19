@@ -55,6 +55,19 @@ namespace GameEngine.Core
             }
         }
 
+        public Matrix4 ProjectionMatrix
+        {
+            get
+            {
+                Matrix4 projectionMatrix =
+                    Matrix4.CreatePerspectiveFieldOfView
+                    (
+                    FieldOfView, AspectRatio, NearPlane, FarPlane
+                    );
+                return projectionMatrix;
+            }
+        }
+
         public void Move(float x, float y, float z)
         {
             Vector3 offset = new Vector3();

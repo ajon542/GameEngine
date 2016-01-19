@@ -36,7 +36,6 @@ namespace GameEngine.Core.GameSpecific
         };
 
         private GameObject gameObject = new GameObject();
-        private Camera cam = new Camera();
         private List<Matrix4> transformMatrices = new List<Matrix4>();
 
         public override void Initialize()
@@ -72,7 +71,7 @@ namespace GameEngine.Core.GameSpecific
                 {
                     gameObject.Transform.Position = new Vector3(x, y, -600);
                     gameObject.CalculateModelMatrix();
-                    gameObject.ViewProjectionMatrix = cam.ViewMatrix * ProjectionMatrix;
+                    gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
                     gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
 
                     transformMatrices.Add(gameObject.ModelViewProjectionMatrix);

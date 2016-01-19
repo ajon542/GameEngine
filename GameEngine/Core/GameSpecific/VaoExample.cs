@@ -18,7 +18,7 @@ namespace GameEngine.Core.GameSpecific
             GL.Enable(EnableCap.CullFace);
 
             // Add our cube behaviour.
-            gameObject.AddComponent<Behaviour>(new CubeBehaviour { Colour = new Vector3(1, 0, 0) });
+            gameObject.AddComponent<Behaviour>(new CubeBehaviour());
             gameObject.GetComponent<CubeBehaviour>().Initialize();
 
             batch1 = new Batch(gameObject.GetComponent<Mesh>());
@@ -31,12 +31,12 @@ namespace GameEngine.Core.GameSpecific
             // along with the mvp matrix.
             // http://sol.gfxile.net/instancing.html
             GL.PushMatrix();
-            GL.Translate(0, 0, -3);
+            GL.Translate(-1, 0, -3);
             batch1.Render();
             GL.PopMatrix();
 
             GL.PushMatrix();
-            GL.Translate(2, 0, -3);
+            GL.Translate(1, 0, -3);
             batch2.Render();
             GL.PopMatrix();
         }

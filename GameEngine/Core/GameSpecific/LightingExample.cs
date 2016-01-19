@@ -29,7 +29,6 @@ namespace GameEngine.Core.GameSpecific
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         private GameObject gameObject = new GameObject();
-        private Camera cam = new Camera();
         private Mesh mesh = new Cube();
 
         public override void Initialize()
@@ -98,7 +97,7 @@ namespace GameEngine.Core.GameSpecific
             gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.Transform.Rotation = new Quaternion(xRot, yRot, zRot, 1);
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = cam.ViewMatrix * ProjectionMatrix;
+            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
@@ -120,7 +119,7 @@ namespace GameEngine.Core.GameSpecific
 
             // TODO: Calculate the normal matrix correctly.
             // See: http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/
-            Matrix4 modelViewMatrix = gameObject.ModelMatrix * cam.ViewMatrix;
+            Matrix4 modelViewMatrix = gameObject.ModelMatrix * MainCamera.ViewMatrix;
             GL.UniformMatrix4(shaders["default"].GetUniform("NormalMatrix"), false, ref modelViewMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);

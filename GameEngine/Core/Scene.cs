@@ -16,7 +16,10 @@ namespace GameEngine.Core
     /// </remarks>
     public class Scene
     {
-        public Matrix4 ProjectionMatrix { get; set; }
+        /// <summary>
+        /// Gets or sets the main camera for the scene.
+        /// </summary>
+        protected Camera MainCamera { get; set; }
 
         public virtual void Initialize()
         {
@@ -35,20 +38,16 @@ namespace GameEngine.Core
             // Set the view port.
             GL.Viewport(0, 0, width, height);
 
-            // Create the perspective field of view matrix.
-            float aspectRatio = (width / (float)height);
-            float fov = 1f;
-            float near = 1.0f;
-            float far = 1000.0f;
-
-            Matrix4 perspectiveMatrix =
-               Matrix4.CreatePerspectiveFieldOfView(fov, aspectRatio, near, far);
-
-            ProjectionMatrix = perspectiveMatrix;
+            MainCamera = new Camera();
+            MainCamera.AspectRatio = (width / (float)height);
+            MainCamera.FieldOfView = 1.0f;
+            MainCamera.NearPlane = 1.0f;
+            MainCamera.FarPlane = 1000.0f;
 
             // Set the matrix mode and load the matrix.
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref perspectiveMatrix);
+            Matrix4 projectionMatrix = MainCamera.ProjectionMatrix;
+            GL.LoadMatrix(ref projectionMatrix);
         }
 
         public virtual void Shutdown()
