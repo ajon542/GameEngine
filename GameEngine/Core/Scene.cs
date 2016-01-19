@@ -38,7 +38,11 @@ namespace GameEngine.Core
             // Set the view port.
             GL.Viewport(0, 0, width, height);
 
-            MainCamera = new Camera();
+            if (MainCamera == null)
+            {
+                MainCamera = new Camera();
+            }
+
             MainCamera.AspectRatio = (width / (float)height);
             MainCamera.FieldOfView = 1.0f;
             MainCamera.NearPlane = 1.0f;

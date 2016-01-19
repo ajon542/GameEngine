@@ -1,6 +1,9 @@
-﻿using GameEngine.Core.Graphics;
+﻿using System;
+
+using GameEngine.Core.Graphics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 
 using NLog;
 
@@ -19,6 +22,8 @@ namespace GameEngine.Core.GameSpecific
         private ShaderBatch batch1;
         private ShaderBatch batch2;
 
+        private int mouseWheelIndex = 0;
+
         /// <summary>
         /// Initialize the scene.
         /// </summary>
@@ -29,13 +34,11 @@ namespace GameEngine.Core.GameSpecific
             GL.Enable(EnableCap.CullFace);
 
             // Add our cube behaviour.
-            CubeBehaviour cubeBehaviour = new CubeBehaviour();
-            gameObject.AddComponent<Behaviour>(cubeBehaviour);
-            cubeBehaviour.Initialize();
+            gameObject.AddComponent<Behaviour>(new CubeBehaviour());
+            gameObject.GetComponent<Behaviour>().Initialize();
 
-            CubeBehaviour cubeBehaviour2 = new CubeBehaviour();
-            gameObject2.AddComponent<Behaviour>(cubeBehaviour2);
-            cubeBehaviour2.Initialize();
+            gameObject2.AddComponent<Behaviour>(new CubeBehaviour());
+            gameObject2.GetComponent<Behaviour>().Initialize();
 
             batch1 = new ShaderBatch(gameObject.GetComponent<Mesh>());
             batch2 = new ShaderBatch(gameObject2.GetComponent<Mesh>());
@@ -44,26 +47,46 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             // TODO: A little inefficient
-            Behaviour component = gameObject.GetComponent<Behaviour>();
+            gameObject.GetComponent<Behaviour>().Update();
+            gameObject2.GetComponent<Behaviour>().Update();
 
-            if (component != null)
+            // Handle zoom.
+            var mouse = Mouse.GetState();
+            if (mouseWheelIndex != mouse.Wheel)
             {
-                component.Update();
+                Vector3 vec = MainCamera.LookAt - MainCamera.Position;
+
+                if (mouseWheelIndex > mouse.Wheel)
+                {
+                    vec *= 0.5f;
+                }
+                else
+                {
+                    vec *= -0.5f;
+                }
+                
+                MainCamera.LookAt = new Vector3(
+                    MainCamera.LookAt.X + vec.X,
+                    MainCamera.LookAt.Y + vec.Y,
+                    MainCamera.LookAt.Z + vec.Z
+                    );
+                MainCamera.Position = new Vector3(
+                    MainCamera.Position.X + vec.X,
+                    MainCamera.Position.Y + vec.Y,
+                    MainCamera.Position.Z + vec.Z
+                    );
+                mouseWheelIndex = mouse.Wheel;
+                Console.WriteLine("LookAt {0}, Position {1}, Vec {2}", MainCamera.LookAt, MainCamera.Position, vec);
             }
 
-            component = gameObject2.GetComponent<Behaviour>();
 
-            if (component != null)
-            {
-                component.Update();
-            }
-
-            // Update...
+            // Update.
+            gameObject.Transform.Position = new Vector3(-1, 0, -5.0f);
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
 
-            gameObject2.Transform.Position = new Vector3(2, 0, -5.0f);
+            gameObject2.Transform.Position = new Vector3(1, 0, -5.0f);
             gameObject2.CalculateModelMatrix();
             gameObject2.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
             gameObject2.ModelViewProjectionMatrix = gameObject2.ModelMatrix * gameObject2.ViewProjectionMatrix;

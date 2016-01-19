@@ -17,7 +17,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Update()
         {
-            var keyboard = Keyboard.GetState();
+            /*var keyboard = Keyboard.GetState();
             if(keyboard[Key.W])
             {
                 // TODO: This cam is moving in the z direction when it should be y.
@@ -51,7 +51,7 @@ namespace GameEngine.Core.GameSpecific
             if (keyboard[Key.T])
             {
                 MainCamera.AddRotation(-0.1f, 0f);
-            }
+            }*/
 
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
