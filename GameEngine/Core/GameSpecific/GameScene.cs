@@ -45,33 +45,43 @@ namespace GameEngine.Core.GameSpecific
         private int mouseWheelIndex = 0;
         private int prevX = 0;
         private int prevY = 0;
-        private float mouseSensitivity = 0.05f;
+        private float mouseSensitivity = 0.01f;
+
+        private bool mouseLeftDown = false;
         private void CameraUpdate()
         {
             var mouse = Mouse.GetState();
             if (mouse[MouseButton.Left])
             {
+                if (mouseLeftDown == false)
+                {
+                    prevX = mouse.X;
+                    prevY = mouse.Y;
+                }
+                mouseLeftDown = true;
+
                 if(prevY > mouse.Y)
                 {
-                    MainCamera.Move(0, -mouseSensitivity, 0);
-                    prevY = mouse.Y;
+                    MainCamera.Move(0, (prevY - mouse.Y) * -mouseSensitivity, 0);
                 }
                 if(prevY < mouse.Y)
                 {
-                    MainCamera.Move(0, mouseSensitivity, 0);
-                    prevY = mouse.Y;
+                    MainCamera.Move(0, (mouse.Y - prevY) * mouseSensitivity, 0);
                 }
-
                 if (prevX > mouse.X)
                 {
-                    MainCamera.Move(mouseSensitivity, 0, 0);
-                    prevX = mouse.X;
+                    MainCamera.Move((prevX - mouse.X) * mouseSensitivity, 0, 0);
                 }
                 if (prevX < mouse.X)
                 {
-                    MainCamera.Move(-mouseSensitivity, 0, 0);
-                    prevX = mouse.X;
+                    MainCamera.Move((mouse.X - prevX) * -mouseSensitivity, 0, 0);
                 }
+                prevX = mouse.X;
+                prevY = mouse.Y;
+            }
+            else
+            {
+                mouseLeftDown = false;
             }
 
             // Handle zoom.
