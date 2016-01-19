@@ -30,6 +30,7 @@ namespace GameEngine.Core.GameSpecific
 
         private GameObject gameObject = new GameObject();
         private Mesh mesh = new Cube();
+        Light activeLight = new Light(new Vector3(-3, 0, 0), new Vector3(1.0f, 0.0f, 0.0f));
 
         public override void Initialize()
         {
@@ -109,19 +110,25 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["default"].EnableVertexAttribArrays();
 
-            // TODO: Determine good values for the directional lighting.
-            GL.Uniform3(shaders["default"].GetUniform("Ambient"), new Vector3(0.5f, 0.5f, 0.5f));
-            GL.Uniform3(shaders["default"].GetUniform("LightColor"), new Vector3(1, 1, 1));
-            GL.Uniform3(shaders["default"].GetUniform("LightDirection"), new Vector3(1, 0, 0));
-            GL.Uniform3(shaders["default"].GetUniform("HalfVector"), new Vector3(0, 0, 0));
-            GL.Uniform1(shaders["default"].GetUniform("Shininess"), 1f);
-            GL.Uniform1(shaders["default"].GetUniform("Strength"), 1f);
+            Matrix4 viewMatrix = MainCamera.ViewMatrix;
 
-            // TODO: Calculate the normal matrix correctly.
-            // See: http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/
-            Matrix4 modelViewMatrix = gameObject.ModelMatrix * MainCamera.ViewMatrix;
-            GL.UniformMatrix4(shaders["default"].GetUniform("NormalMatrix"), false, ref modelViewMatrix);
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
+            Vector3 ambientColor = new Vector3(0.1880f, 0.1880f, 0.1880f);
+            Vector3 diffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
+            Vector3 specularColor = new Vector3(0.1000f, 0.1000f, 0.1000f);
+            float specularExponent = 1.0f;
+
+            GL.UniformMatrix4(shaders["default"].GetUniform("ModelViewMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("ViewMatrix"), false, ref viewMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref gameObject.ModelMatrix);
+            GL.Uniform3(shaders["default"].GetUniform("material_ambient"), ref ambientColor);
+            GL.Uniform3(shaders["default"].GetUniform("material_diffuse"), ref diffuseColor);
+            GL.Uniform3(shaders["default"].GetUniform("material_specular"), ref specularColor);
+            GL.Uniform1(shaders["default"].GetUniform("material_specExponent"), specularExponent);
+            GL.Uniform3(shaders["default"].GetUniform("light_position"), ref activeLight.Position);
+            GL.Uniform3(shaders["default"].GetUniform("light_color"), ref activeLight.Color);
+            GL.Uniform1(shaders["default"].GetUniform("light_diffuseIntensity"), activeLight.DiffuseIntensity);
+            GL.Uniform1(shaders["default"].GetUniform("light_ambientIntensity"), activeLight.AmbientIntensity);
+
             GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
             shaders["default"].DisableVertexAttribArrays();

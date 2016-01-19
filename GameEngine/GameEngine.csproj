@@ -104,6 +104,7 @@
     <Compile Include="Core\Graphics\Batch.cs" />
     <Compile Include="Core\Graphics\GraphicsProperties.cs" />
     <Compile Include="Core\Grid.cs" />
+    <Compile Include="Core\Light.cs" />
     <Compile Include="Core\Material.cs" />
     <Compile Include="Core\Mesh.cs" />
     <Compile Include="Core\Quad.cs" />
@@ -191,10 +192,10 @@
     <None Include="Core\Shaders\ambient-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Core\Shaders\directional-frag.glsl">
+    <None Include="Core\Shaders\blinnphong-frag.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Core\Shaders\directional-vert.glsl">
+    <None Include="Core\Shaders\blinnphong-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\frag.glsl">

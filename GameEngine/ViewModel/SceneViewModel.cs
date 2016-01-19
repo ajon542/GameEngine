@@ -46,7 +46,7 @@ namespace GameEngine.ViewModel
         public SceneViewModel()
         {
             // TODO: Need a way to change this at runtime.
-            SceneList = new List<Scene> { new Core.GameSpecific.GameScene() };
+            SceneList = new List<Scene> { new Core.GameSpecific.LightingExample() };
         }
 
         #region Initialized Command
