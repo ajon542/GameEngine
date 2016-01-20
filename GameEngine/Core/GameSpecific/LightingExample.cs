@@ -84,6 +84,8 @@ namespace GameEngine.Core.GameSpecific
         private float rotation = 0.01f;
 
         private bool mouseLeftDown;
+        // TODO: This should probably be in the camera class
+        //http://learnopengl.com/#!Getting-started/Camera
         private void CameraUpdate()
         {
             var mouse = Mouse.GetState();
