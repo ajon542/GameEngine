@@ -29,7 +29,8 @@ namespace GameEngine.Core.GameSpecific
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Sphere(1, 1, 25, 25);
+        //private Mesh mesh = new Sphere(1, 1, 25, 25);
+        private Mesh mesh = new Cube();
         Light activeLight = new Light(new Vector3(0, 3, -11), new Vector3(1.0f, 0.0f, 0.0f));
 
         public override void Initialize()
@@ -80,6 +81,7 @@ namespace GameEngine.Core.GameSpecific
         private int prevX;
         private int prevY;
         private float mouseSensitivity = 0.01f;
+        private float rotation = 0.01f;
 
         private bool mouseLeftDown;
         private void CameraUpdate()
@@ -145,6 +147,16 @@ namespace GameEngine.Core.GameSpecific
                 mouseWheelIndex = mouse.Wheel;
                 Console.WriteLine("LookAt {0}, Position {1}, Vec {2}", MainCamera.LookAt, MainCamera.Position, vec);
             }
+
+            if (mouse[MouseButton.Right])
+            {
+                float radius = 10.0f;
+                float camX = (float)Math.Sin(rotation) * radius;
+                float camZ = (float)Math.Cos(rotation) * radius;
+                MainCamera.Position = new Vector3(camX, 0.0f, camZ);
+                MainCamera.LookAt = new Vector3(0, 0, 0);
+                rotation += 0.01f;
+            }
         }
 
 
@@ -169,7 +181,7 @@ namespace GameEngine.Core.GameSpecific
 
             CameraUpdate();
 
-            gameObject.Transform.Position = new Vector3(0, 0, -10);
+            gameObject.Transform.Position = new Vector3(0, 0, 0);
             gameObject.Transform.Rotation = new Quaternion(xRot, yRot, zRot, 1);
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
