@@ -31,9 +31,10 @@ namespace GameEngine.Core
         public Camera()
         {
             Position = Vector3.Zero;
-            FieldOfView = 1.0f;
+            FieldOfView = (float)((Math.PI / 180) * 45);
             NearPlane = 1.0f;
             FarPlane = 1000.0f;
+            AspectRatio = 4 / (float)3;
             Orientation = new Vector3((float)Math.PI, 0f, 0f);
             LookAt = new Vector3(0, 0, -1);
         }

@@ -44,9 +44,6 @@ namespace GameEngine.Core
             }
 
             MainCamera.AspectRatio = (width / (float)height);
-            MainCamera.FieldOfView = 1.0f;
-            MainCamera.NearPlane = 1.0f;
-            MainCamera.FarPlane = 1000.0f;
 
             // Set the matrix mode and load the matrix.
             GL.MatrixMode(MatrixMode.Projection);
