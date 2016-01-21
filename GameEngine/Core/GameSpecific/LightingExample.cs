@@ -30,8 +30,9 @@ namespace GameEngine.Core.GameSpecific
 
         private GameObject gameObject = new GameObject();
         //private Mesh mesh = new Sphere(1, 1, 25, 25);
-        private Mesh mesh = new Cube();
-        Light activeLight = new Light(new Vector3(5, 5, -5), new Vector3(1.0f, 0.0f, 0.0f));
+        //private Mesh mesh = new Cube();
+        private Mesh mesh = new Torus();
+        Light activeLight = new Light(new Vector3(5, 5, -5), new Vector3(1.0f, 1.0f, 1.0f));
 
         public override void Initialize()
         {
@@ -202,8 +203,8 @@ namespace GameEngine.Core.GameSpecific
 
             Vector3 ambientColor = new Vector3(0.1880f, 0.1880f, 0.1880f);
             Vector3 diffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
-            Vector3 specularColor = new Vector3(0.1000f, 0.1000f, 0.1000f);
-            float specularExponent = 1.0f;
+            Vector3 specularColor = new Vector3(1.0f, 0.0f, 00f);
+            float specularExponent = 10.0f;
 
             GL.UniformMatrix4(shaders["default"].GetUniform("ModelViewMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("ViewMatrix"), false, ref viewMatrix);

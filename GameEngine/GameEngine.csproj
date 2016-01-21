@@ -122,6 +122,7 @@
     <Compile Include="Core\Sphere.cs" />
     <Compile Include="Core\Texture.cs" />
     <Compile Include="Core\Timer.cs" />
+    <Compile Include="Core\Torus.cs" />
     <Compile Include="Core\Transform.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
