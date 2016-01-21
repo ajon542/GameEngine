@@ -15,10 +15,10 @@ uniform mat4 ModelViewMatrix;
 void
 main()
 {
-	gl_Position = ModelViewMatrix * vec4(VertexPosition, 1.0);
+    gl_Position = ModelViewMatrix * vec4(VertexPosition, 1.0);
 
-	mat3 normMatrix = transpose(inverse(mat3(ModelMatrix)));
-	Normal = normMatrix * VertexNormal;
-	Position = (ModelMatrix * vec4(VertexPosition, 1.0)).xyz;
-	Color = vec4(VertexColor, 1.0);
+    mat3 normMatrix = transpose(inverse(mat3(ModelMatrix)));
+    Normal = normMatrix * VertexNormal;
+    Position = (ModelMatrix * vec4(VertexPosition, 1.0)).xyz;
+    Color = vec4(VertexColor, 1.0);
 }

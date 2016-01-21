@@ -119,14 +119,14 @@ namespace GameEngine.Core.GameSpecific
             GL.UniformMatrix4(shaders["default"].GetUniform("ModelViewMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("ViewMatrix"), false, ref viewMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref gameObject.ModelMatrix);
-            GL.Uniform3(shaders["default"].GetUniform("material_ambient"), ref ambientColor);
-            GL.Uniform3(shaders["default"].GetUniform("material_diffuse"), ref diffuseColor);
-            GL.Uniform3(shaders["default"].GetUniform("material_specular"), ref specularColor);
-            GL.Uniform1(shaders["default"].GetUniform("material_specExponent"), specularExponent);
-            GL.Uniform3(shaders["default"].GetUniform("light_position"), ref activeLight.Position);
-            GL.Uniform3(shaders["default"].GetUniform("light_color"), ref activeLight.Color);
-            GL.Uniform1(shaders["default"].GetUniform("light_diffuseIntensity"), activeLight.DiffuseIntensity);
-            GL.Uniform1(shaders["default"].GetUniform("light_ambientIntensity"), activeLight.AmbientIntensity);
+            GL.Uniform3(shaders["default"].GetUniform("MaterialAmbient"), ref ambientColor);
+            GL.Uniform3(shaders["default"].GetUniform("MaterialDiffuse"), ref diffuseColor);
+            GL.Uniform3(shaders["default"].GetUniform("MaterialSpecular"), ref specularColor);
+            GL.Uniform1(shaders["default"].GetUniform("MaterialSpecExponent"), specularExponent);
+            GL.Uniform3(shaders["default"].GetUniform("LightPosition"), ref activeLight.Position);
+            GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref activeLight.Color);
+            GL.Uniform1(shaders["default"].GetUniform("LightDiffuseIntensity"), activeLight.DiffuseIntensity);
+            GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), activeLight.AmbientIntensity);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
