@@ -104,6 +104,7 @@
     <Compile Include="Core\Graphics\Batch.cs" />
     <Compile Include="Core\Graphics\GraphicsProperties.cs" />
     <Compile Include="Core\Grid.cs" />
+    <Compile Include="Core\HeightMap.cs" />
     <Compile Include="Core\Light.cs" />
     <Compile Include="Core\Material.cs" />
     <Compile Include="Core\Mesh.cs" />
