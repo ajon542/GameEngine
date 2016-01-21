@@ -1,22 +1,12 @@
 ﻿using System;
 using OpenTK;
+using OpenTK.Input;
 
 namespace GameEngine.Core
 {
+    // http://learnopengl.com/#!Getting-started/Camera
     public class Camera
     {
-        // TODO: Complete the camera class implementation.
-        // position
-        // field of view
-        // near plane
-        // far plane
-        // orientation
-        // look at
-        // viewport aspect ratio
-        // view matrix
-        // projection matrix
-        // view projection matrix
-
         public Vector3 Position { get; set; }
         public float FieldOfView { get; set; }
         public float NearPlane { get; set; }
@@ -76,6 +66,87 @@ namespace GameEngine.Core
         {
             Position = new Vector3(Position.X + x, Position.Y + y, Position.Z + z);
             LookAt = new Vector3(LookAt.X + x, LookAt.Y + y, LookAt.Z + z);
+        }
+
+        private int mouseWheelIndex;
+        private int prevX;
+        private int prevY;
+        private float mouseSensitivity = 0.01f;
+        private float rotation = 0.01f;
+        private bool mouseLeftDown;
+        public void Update()
+        {
+            var mouse = Mouse.GetState();
+            if (mouse[MouseButton.Left])
+            {
+                if (mouseLeftDown == false)
+                {
+                    prevX = mouse.X;
+                    prevY = mouse.Y;
+                }
+                mouseLeftDown = true;
+
+                if (prevY > mouse.Y)
+                {
+                    Move(0, (prevY - mouse.Y) * -mouseSensitivity, 0);
+                }
+                if (prevY < mouse.Y)
+                {
+                    Move(0, (mouse.Y - prevY) * mouseSensitivity, 0);
+                }
+                if (prevX > mouse.X)
+                {
+                    Move((prevX - mouse.X) * mouseSensitivity, 0, 0);
+                }
+                if (prevX < mouse.X)
+                {
+                    Move((mouse.X - prevX) * -mouseSensitivity, 0, 0);
+                }
+                prevX = mouse.X;
+                prevY = mouse.Y;
+            }
+            else
+            {
+                mouseLeftDown = false;
+            }
+
+            // Handle zoom.
+            if (mouseWheelIndex != mouse.Wheel)
+            {
+                Vector3 vec = LookAt - Position;
+
+                if (mouseWheelIndex > mouse.Wheel)
+                {
+                    vec *= -0.5f;
+                }
+                else
+                {
+                    vec *= 0.5f;
+                }
+
+                LookAt = new Vector3(
+                    LookAt.X + vec.X,
+                    LookAt.Y + vec.Y,
+                    LookAt.Z + vec.Z
+                    );
+                Position = new Vector3(
+                    Position.X + vec.X,
+                    Position.Y + vec.Y,
+                    Position.Z + vec.Z
+                    );
+                mouseWheelIndex = mouse.Wheel;
+                Console.WriteLine("LookAt {0}, Position {1}, Vec {2}", LookAt, Position, vec);
+            }
+
+            if (mouse[MouseButton.Right])
+            {
+                float radius = 10.0f;
+                float camX = (float)Math.Sin(rotation) * radius;
+                float camZ = (float)Math.Cos(rotation) * radius;
+                Position = new Vector3(camX, 0.0f, camZ);
+                LookAt = new Vector3(0, 0, 0);
+                rotation += 0.01f;
+            }
         }
     }
 }

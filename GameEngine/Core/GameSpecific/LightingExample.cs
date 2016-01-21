@@ -9,9 +9,6 @@ using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
-    // Ambient lighting is completed.
-    // In order to complete the directional lighting, I need to learn about
-    // the normal matrix and how to calculate it, then pass it to the vertex shader.
     public class LightingExample : Scene
     {
         private uint vertexArrObject;
@@ -23,8 +20,6 @@ namespace GameEngine.Core.GameSpecific
         private uint normalBuffer;
         private int normalAttr;
         private uint elementBuffer;
-
-        private PrimitiveType renderType = PrimitiveType.Triangles;
 
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
@@ -78,91 +73,6 @@ namespace GameEngine.Core.GameSpecific
             GL.Enable(EnableCap.CullFace);
         }
 
-        private int mouseWheelIndex;
-        private int prevX;
-        private int prevY;
-        private float mouseSensitivity = 0.01f;
-        private float rotation = 0.01f;
-
-        private bool mouseLeftDown;
-        // TODO: This should probably be in the camera class
-        //http://learnopengl.com/#!Getting-started/Camera
-        private void CameraUpdate()
-        {
-            var mouse = Mouse.GetState();
-            if (mouse[MouseButton.Left])
-            {
-                if (mouseLeftDown == false)
-                {
-                    prevX = mouse.X;
-                    prevY = mouse.Y;
-                }
-                mouseLeftDown = true;
-
-                if (prevY > mouse.Y)
-                {
-                    MainCamera.Move(0, (prevY - mouse.Y) * -mouseSensitivity, 0);
-                }
-                if (prevY < mouse.Y)
-                {
-                    MainCamera.Move(0, (mouse.Y - prevY) * mouseSensitivity, 0);
-                }
-                if (prevX > mouse.X)
-                {
-                    MainCamera.Move((prevX - mouse.X) * mouseSensitivity, 0, 0);
-                }
-                if (prevX < mouse.X)
-                {
-                    MainCamera.Move((mouse.X - prevX) * -mouseSensitivity, 0, 0);
-                }
-                prevX = mouse.X;
-                prevY = mouse.Y;
-            }
-            else
-            {
-                mouseLeftDown = false;
-            }
-
-            // Handle zoom.
-            if (mouseWheelIndex != mouse.Wheel)
-            {
-                Vector3 vec = MainCamera.LookAt - MainCamera.Position;
-
-                if (mouseWheelIndex > mouse.Wheel)
-                {
-                    vec *= -0.5f;
-                }
-                else
-                {
-                    vec *= 0.5f;
-                }
-
-                MainCamera.LookAt = new Vector3(
-                    MainCamera.LookAt.X + vec.X,
-                    MainCamera.LookAt.Y + vec.Y,
-                    MainCamera.LookAt.Z + vec.Z
-                    );
-                MainCamera.Position = new Vector3(
-                    MainCamera.Position.X + vec.X,
-                    MainCamera.Position.Y + vec.Y,
-                    MainCamera.Position.Z + vec.Z
-                    );
-                mouseWheelIndex = mouse.Wheel;
-                Console.WriteLine("LookAt {0}, Position {1}, Vec {2}", MainCamera.LookAt, MainCamera.Position, vec);
-            }
-
-            if (mouse[MouseButton.Right])
-            {
-                float radius = 10.0f;
-                float camX = (float)Math.Sin(rotation) * radius;
-                float camZ = (float)Math.Cos(rotation) * radius;
-                MainCamera.Position = new Vector3(camX, 0.0f, camZ);
-                MainCamera.LookAt = new Vector3(0, 0, 0);
-                rotation += 0.01f;
-            }
-        }
-
-
         public float xRot = 0;
         public float yRot = 0;
         public float zRot = 0;
@@ -182,7 +92,7 @@ namespace GameEngine.Core.GameSpecific
                 zRot += 0.1f;
             }
 
-            CameraUpdate();
+            MainCamera.Update();
 
             gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.Transform.Rotation = new Quaternion(xRot, yRot, zRot, 1);
@@ -218,7 +128,7 @@ namespace GameEngine.Core.GameSpecific
             GL.Uniform1(shaders["default"].GetUniform("light_diffuseIntensity"), activeLight.DiffuseIntensity);
             GL.Uniform1(shaders["default"].GetUniform("light_ambientIntensity"), activeLight.AmbientIntensity);
 
-            GL.DrawElements(renderType, indicesCount, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
             shaders["default"].DisableVertexAttribArrays();
         }
