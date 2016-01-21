@@ -15,7 +15,7 @@ namespace GameEngine.Core
         {
             Vertices = new List<Vector3>
             {
-                // Left
+                // Back
                 new Vector3(-0.5f, -0.5f, -0.5f),
                 new Vector3(0.5f, 0.5f, -0.5f),
                 new Vector3(0.5f, -0.5f, -0.5f),
@@ -23,7 +23,7 @@ namespace GameEngine.Core
                 new Vector3(-0.5f, 0.5f, -0.5f),
                 new Vector3(0.5f, 0.5f, -0.5f),
 
-                // Back
+                // Right
                 new Vector3(0.5f, -0.5f, -0.5f),
                 new Vector3(0.5f, 0.5f, -0.5f),
                 new Vector3(0.5f, 0.5f, 0.5f),
@@ -31,7 +31,7 @@ namespace GameEngine.Core
                 new Vector3(0.5f, -0.5f, 0.5f),
                 new Vector3(0.5f, -0.5f, -0.5f),
 
-                // Right
+                // Front
                 new Vector3(-0.5f, -0.5f, 0.5f),
                 new Vector3(0.5f, -0.5f, 0.5f),
                 new Vector3(0.5f, 0.5f, 0.5f),
@@ -47,7 +47,7 @@ namespace GameEngine.Core
                 new Vector3(-0.5f, 0.5f, -0.5f),
                 new Vector3(-0.5f, 0.5f, 0.5f),
 
-                // Front
+                // Left
                 new Vector3(-0.5f, -0.5f, -0.5f),
                 new Vector3(-0.5f, 0.5f, 0.5f),
                 new Vector3(-0.5f, 0.5f, -0.5f),
@@ -64,11 +64,11 @@ namespace GameEngine.Core
                 new Vector3(-0.5f, -0.5f, 0.5f),
             };
 
-            AddFaceNormals(new Vector3(-1, 0, 0)); // Left
             AddFaceNormals(new Vector3(0, 0, -1)); // Back
             AddFaceNormals(new Vector3(1, 0, 0));  // Right
-            AddFaceNormals(new Vector3(0, 1, 0));  // Top
             AddFaceNormals(new Vector3(0, 0, 1));  // Front
+            AddFaceNormals(new Vector3(0, 1, 0));  // Top
+            AddFaceNormals(new Vector3(-1, 0, 0)); // Left
             AddFaceNormals(new Vector3(0, -1, 0)); // Bottom
 
             Indices = new List<int>();
