@@ -134,7 +134,13 @@ namespace GameEngine.Core.Graphics
         {
             // Link the shader program object.
             GL.LinkProgram(ProgramId);
-            Console.WriteLine(GL.GetProgramInfoLog(ProgramId));
+
+            // Check for errors.
+            string programLog = GL.GetProgramInfoLog(ProgramId);
+            if (programLog != string.Empty)
+            {
+                throw new Exception(programLog);
+            }
 
             // Get attribute and uniform count from the program object.
             GL.GetProgram(ProgramId, GetProgramParameterName.ActiveAttributes, out attributeCount);
