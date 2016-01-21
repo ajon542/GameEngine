@@ -23,6 +23,31 @@ namespace GameEngine.Core
                 new Vector3(-1.0f, -1.0f, 0.0f),
             };
 
+            Indices = new List<int>
+            {
+                0, 1, 2, 3, 4, 5
+            };
+
+            Normals = new List<Vector3>
+            {
+                new Vector3(0, 0, 1),
+                new Vector3(0, 0, 1),
+                new Vector3(0, 0, 1),
+                new Vector3(0, 0, 1),
+                new Vector3(0, 0, 1),
+                new Vector3(0, 0, 1),
+            };
+
+            Colours = new List<Vector3>
+            {
+                new Vector3(0.9f, 0.9f, 0.9f),
+                new Vector3(0.9f, 0.9f, 0.9f),
+                new Vector3(0.9f, 0.9f, 0.9f),
+                new Vector3(0.9f, 0.9f, 0.9f),
+                new Vector3(0.9f, 0.9f, 0.9f),
+                new Vector3(0.9f, 0.9f, 0.9f),
+            };
+
             /// <summary>
             /// UV buffer data.
             /// </summary>
