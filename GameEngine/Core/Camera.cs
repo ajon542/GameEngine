@@ -7,24 +7,19 @@ namespace GameEngine.Core
     // http://learnopengl.com/#!Getting-started/Camera
     public class Camera
     {
-        public const float YAW = -90.0f;
-        public const float PITCH = 0.0f;
-        public const float SPEED = 3.0f;
-        public const float SENSITIVTY = 0.25f;
-        public const float ZOOM = 45.0f;
-
-        // Camera Attributes
-        public Vector3 Position;
-        public Vector3 Front;
-        public Vector3 Up;
-        public Vector3 Right;
-        public Vector3 WorldUp;
         // Eular Angles
-        float Yaw = YAW;
-        float Pitch = PITCH;
+        float Yaw = -90.0f;
+        float Pitch = 0.0f;
         // Camera options
-        float MovementSpeed = SPEED;
-        float MouseSensitivity = SENSITIVTY;
+        float MovementSpeed = 3.0f;
+        float MouseSensitivity = 0.25f;
+        
+        // Camera Attributes
+        public Vector3 Position { get; set; }
+        public Vector3 Front { get; set; }
+        public Vector3 Up { get; set; }
+        public Vector3 Right { get; set; }
+        public Vector3 WorldUp { get; set; }
 
         public float FieldOfView { get; set; }
         public float NearPlane { get; set; }
@@ -41,32 +36,28 @@ namespace GameEngine.Core
             Up = new Vector3(0.0f, 1.0f, 0.0f);
             WorldUp = new Vector3(0.0f, 1.0f, 0.0f);
 
-
-            FieldOfView = (float)((Math.PI / 180) * 45);
+            FieldOfView = (float)ConvertToRadians(45);
             NearPlane = 1.0f;
             FarPlane = 1000.0f;
             AspectRatio = 4 / (float)3;
         }
 
             // Calculates the front vector from the Camera's (updated) Eular Angles
-        private void updateCameraVectors()
+        private void UpdateCameraVectors()
         {
             // Calculate the new Front vector
-            Vector3 front = new Vector3(
+            Front = new Vector3(
                 (float)(Math.Cos(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch))),
                 (float)(Math.Sin(ConvertToRadians(Pitch))),
                 (float)(Math.Sin(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch)))
             );
-            front.Normalize();
-            Front = front;
-            // Also re-calculate the Right and Up vector
-            Right = Vector3.Normalize(Vector3.Cross(Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-            Up    = Vector3.Normalize(Vector3.Cross(Right, Front));
-        }
+            Front.Normalize();
 
-        private double ConvertToRadians(double angle)
-        {
-            return (Math.PI / 180) * angle;
+            // Also re-calculate the Right and Up vector
+            // Normalize the vectors, because their length gets closer to 0
+            // the more you look up or down which results in slower movement.
+            Right = Vector3.Normalize(Vector3.Cross(Front, WorldUp));
+            Up = Vector3.Normalize(Vector3.Cross(Right, Front));
         }
 
         /// <summary>
@@ -102,7 +93,7 @@ namespace GameEngine.Core
         float xoffset;
         float yoffset;
 
-        private int mouseWheelIndex;
+        //private int mouseWheelIndex;
         public void Update()
         {
             var mouse = Mouse.GetState();
@@ -116,30 +107,21 @@ namespace GameEngine.Core
                 }
                 mouseLeftDown = true;
 
-                xoffset = prevX - mouse.X;
-                yoffset = mouse.Y - prevY;
-
-                xoffset *= MouseSensitivity;
-                yoffset *= MouseSensitivity;
+                xoffset = (prevX - mouse.X) * MouseSensitivity;
+                yoffset = (mouse.Y - prevY) * MouseSensitivity;
 
                 Yaw += xoffset;
                 Pitch += yoffset;
 
-                if (true)
-                {
-                    if (Pitch > 89.0f)
-                        Pitch = 89.0f;
-                    if (Pitch < -89.0f)
-                        Pitch = -89.0f;
-                }
+                Clamp(ref Pitch, -89.0f, 89.0f);
             }
 
             prevX = mouse.X;
             prevY = mouse.Y;
 
-            if (mouseWheelIndex != mouse.Wheel)
-            {
-            }
+            //if (mouseWheelIndex != mouse.Wheel)
+            //{
+            //}
 
             if (mouse[MouseButton.Right])
             {
@@ -155,7 +137,24 @@ namespace GameEngine.Core
             if (keyboard[Key.D])
                 Position += Right * MovementSpeed;
 
-            updateCameraVectors();
+            UpdateCameraVectors();
+        }
+
+        private double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
+        }
+
+        private void Clamp(ref float value, float min, float max)
+        {
+            if (value > max)
+            {
+                value = max;
+            }
+            if (value < min)
+            {
+                value = min;
+            }
         }
     }
 }
