@@ -7,12 +7,28 @@ namespace GameEngine.Core
     // http://learnopengl.com/#!Getting-started/Camera
     public class Camera
     {
-        public Vector3 Position { get; set; }
+        public const float YAW = -90.0f;
+        public const float PITCH = 0.0f;
+        public const float SPEED = 3.0f;
+        public const float SENSITIVTY = 0.25f;
+        public const float ZOOM = 45.0f;
+
+        // Camera Attributes
+        public Vector3 Position;
+        public Vector3 Front;
+        public Vector3 Up;
+        public Vector3 Right;
+        public Vector3 WorldUp;
+        // Eular Angles
+        float Yaw = YAW;
+        float Pitch = PITCH;
+        // Camera options
+        float MovementSpeed = SPEED;
+        float MouseSensitivity = SENSITIVTY;
+
         public float FieldOfView { get; set; }
         public float NearPlane { get; set; }
         public float FarPlane { get; set; }
-        public Vector3 Orientation { get; set; }
-        public Vector3 LookAt { get; set; }
         public float AspectRatio { get; set; }
 
         /// <summary>
@@ -21,12 +37,36 @@ namespace GameEngine.Core
         public Camera()
         {
             Position = Vector3.Zero;
+            Front = new Vector3(0.0f, 0.0f, -1.0f);
+            Up = new Vector3(0.0f, 1.0f, 0.0f);
+            WorldUp = new Vector3(0.0f, 1.0f, 0.0f);
+
+
             FieldOfView = (float)((Math.PI / 180) * 45);
             NearPlane = 1.0f;
             FarPlane = 1000.0f;
             AspectRatio = 4 / (float)3;
-            Orientation = new Vector3((float)Math.PI, 0f, 0f);
-            LookAt = new Vector3(0, 0, -1);
+        }
+
+            // Calculates the front vector from the Camera's (updated) Eular Angles
+        private void updateCameraVectors()
+        {
+            // Calculate the new Front vector
+            Vector3 front = new Vector3(
+                (float)(Math.Cos(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch))),
+                (float)(Math.Sin(ConvertToRadians(Pitch))),
+                (float)(Math.Sin(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch)))
+            );
+            front.Normalize();
+            Front = front;
+            // Also re-calculate the Right and Up vector
+            Right = Vector3.Normalize(Vector3.Cross(Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+            Up    = Vector3.Normalize(Vector3.Cross(Right, Front));
+        }
+
+        private double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
         }
 
         /// <summary>
@@ -36,7 +76,7 @@ namespace GameEngine.Core
         {
             get
             {
-                return Matrix4.LookAt(Position, LookAt, Vector3.UnitY);
+                return Matrix4.LookAt(Position, Position + Front, Up);
             }
         }
 
@@ -56,27 +96,17 @@ namespace GameEngine.Core
             }
         }
 
-        /// <summary>
-        /// Move the camera by the given amount for each coordinate.
-        /// </summary>
-        /// <param name="x">The amount to move the x-coordinate.</param>
-        /// <param name="y">The amount to move the y-coordinate.</param>
-        /// <param name="z">The amount to move the z-coordinate.</param>
-        public void Move(float x, float y, float z)
-        {
-            Position = new Vector3(Position.X + x, Position.Y + y, Position.Z + z);
-            LookAt = new Vector3(LookAt.X + x, LookAt.Y + y, LookAt.Z + z);
-        }
-
-        private int mouseWheelIndex;
         private int prevX;
         private int prevY;
-        private float mouseSensitivity = 0.01f;
-        private float rotation = 0.01f;
         private bool mouseLeftDown;
+        float xoffset;
+        float yoffset;
+
+        private int mouseWheelIndex;
         public void Update()
         {
             var mouse = Mouse.GetState();
+
             if (mouse[MouseButton.Left])
             {
                 if (mouseLeftDown == false)
@@ -86,67 +116,46 @@ namespace GameEngine.Core
                 }
                 mouseLeftDown = true;
 
-                if (prevY > mouse.Y)
+                xoffset = prevX - mouse.X;
+                yoffset = mouse.Y - prevY;
+
+                xoffset *= MouseSensitivity;
+                yoffset *= MouseSensitivity;
+
+                Yaw += xoffset;
+                Pitch += yoffset;
+
+                if (true)
                 {
-                    Move(0, (prevY - mouse.Y) * -mouseSensitivity, 0);
+                    if (Pitch > 89.0f)
+                        Pitch = 89.0f;
+                    if (Pitch < -89.0f)
+                        Pitch = -89.0f;
                 }
-                if (prevY < mouse.Y)
-                {
-                    Move(0, (mouse.Y - prevY) * mouseSensitivity, 0);
-                }
-                if (prevX > mouse.X)
-                {
-                    Move((prevX - mouse.X) * mouseSensitivity, 0, 0);
-                }
-                if (prevX < mouse.X)
-                {
-                    Move((mouse.X - prevX) * -mouseSensitivity, 0, 0);
-                }
-                prevX = mouse.X;
-                prevY = mouse.Y;
-            }
-            else
-            {
-                mouseLeftDown = false;
             }
 
-            // Handle zoom.
+            prevX = mouse.X;
+            prevY = mouse.Y;
+
             if (mouseWheelIndex != mouse.Wheel)
             {
-                Vector3 vec = LookAt - Position;
-
-                if (mouseWheelIndex > mouse.Wheel)
-                {
-                    vec *= -0.5f;
-                }
-                else
-                {
-                    vec *= 0.5f;
-                }
-
-                LookAt = new Vector3(
-                    LookAt.X + vec.X,
-                    LookAt.Y + vec.Y,
-                    LookAt.Z + vec.Z
-                    );
-                Position = new Vector3(
-                    Position.X + vec.X,
-                    Position.Y + vec.Y,
-                    Position.Z + vec.Z
-                    );
-                mouseWheelIndex = mouse.Wheel;
-                Console.WriteLine("LookAt {0}, Position {1}, Vec {2}", LookAt, Position, vec);
             }
 
             if (mouse[MouseButton.Right])
             {
-                float radius = 10.0f;
-                float camX = (float)Math.Sin(rotation) * radius;
-                float camZ = (float)Math.Cos(rotation) * radius;
-                Position = new Vector3(camX, 0.0f, camZ);
-                LookAt = new Vector3(0, 0, 0);
-                rotation += 0.01f;
             }
+
+            var keyboard = Keyboard.GetState();
+            if (keyboard[Key.W])
+                Position += Front * MovementSpeed;
+            if (keyboard[Key.S])
+                Position -= Front * MovementSpeed;
+            if (keyboard[Key.A])
+                Position -= Right * MovementSpeed;
+            if (keyboard[Key.D])
+                Position += Right * MovementSpeed;
+
+            updateCameraVectors();
         }
     }
 }

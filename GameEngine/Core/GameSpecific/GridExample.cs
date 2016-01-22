@@ -17,41 +17,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Update()
         {
-            /*var keyboard = Keyboard.GetState();
-            if(keyboard[Key.W])
-            {
-                // TODO: This cam is moving in the z direction when it should be y.
-                MainCamera.Move(0f, 0.1f, 0f);
-            }
-            if (keyboard[Key.S])
-            {
-                MainCamera.Move(0f, -0.1f, 0f);
-            }
-            if (keyboard[Key.A])
-            {
-                MainCamera.Move(-0.1f, 0f, 0f);
-            }
-            if (keyboard[Key.D])
-            {
-                MainCamera.Move(0.1f, 0f, 0f);
-            }
-            if (keyboard[Key.Z])
-            {
-                MainCamera.Move(0f, 0f, -0.1f);
-            }
-            if (keyboard[Key.X])
-            {
-                MainCamera.Move(0f, 0f, 0.1f);
-            }
-
-            if (keyboard[Key.R])
-            {
-                MainCamera.AddRotation(0.1f, 0);
-            }
-            if (keyboard[Key.T])
-            {
-                MainCamera.AddRotation(-0.1f, 0f);
-            }*/
+            MainCamera.Update();
 
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
