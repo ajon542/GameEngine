@@ -10,12 +10,12 @@ out vec4 Color;
 
 uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
-uniform mat4 ModelViewMatrix;
+uniform mat4 MVPMatrix;
 
 void
 main()
 {
-    gl_Position = ModelViewMatrix * vec4(VertexPosition, 1.0);
+    gl_Position = MVPMatrix * vec4(VertexPosition, 1.0);
 
     mat3 normMatrix = transpose(inverse(mat3(ModelMatrix)));
     Normal = normMatrix * VertexNormal;

@@ -42,8 +42,9 @@ namespace GameEngine.Core
                         Y = (float)(height * Math.Cos(phi)),
                         Z = (float)(radius * Math.Sin(phi) * Math.Sin(theta)),
                     };
+
                     Vector3 normal = Vector3.Normalize(vertex);
-                    Vector2 uv = new Vector2()
+                    Vector2 uv = new Vector2
                     {
                         X = (float)(x / (segments - 1)),
                         Y = (float)(y / (rings - 1))

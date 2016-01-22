@@ -24,9 +24,9 @@ namespace GameEngine.Core.GameSpecific
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         private GameObject gameObject = new GameObject();
-        //private Mesh mesh = new Sphere(1, 1, 25, 25);
+        private Mesh mesh = new Sphere(1, 1, 25, 25);
         //private Mesh mesh = new Cube();
-        private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
+        //private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
         Light activeLight = new Light(new Vector3(5, 5, -5), new Vector3(1.0f, 1.0f, 1.0f));
 
         public override void Initialize()
@@ -116,7 +116,7 @@ namespace GameEngine.Core.GameSpecific
             Vector3 specularColor = new Vector3(1.0f, 0.0f, 00f);
             float specularExponent = 10.0f;
 
-            GL.UniformMatrix4(shaders["default"].GetUniform("ModelViewMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("ViewMatrix"), false, ref viewMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref gameObject.ModelMatrix);
             GL.Uniform3(shaders["default"].GetUniform("MaterialAmbient"), ref ambientColor);
