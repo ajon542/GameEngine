@@ -8,11 +8,17 @@ namespace GameEngine.Core
     public class Camera
     {
         // Eular Angles
-        float Yaw = -90.0f;
-        float Pitch = 0.0f;
+        private float Yaw = -90.0f;
+        private float Pitch = 0.0f;
         // Camera options
-        float MovementSpeed = 3.0f;
-        float MouseSensitivity = 0.25f;
+        private float MovementSpeed = 1.0f;
+        private float MouseSensitivity = 0.15f;
+
+        private int prevX;
+        private int prevY;
+        private bool mouseLeftDown;
+        private float xoffset;
+        private float yoffset;
         
         // Camera Attributes
         public Vector3 Position { get; set; }
@@ -25,40 +31,6 @@ namespace GameEngine.Core
         public float NearPlane { get; set; }
         public float FarPlane { get; set; }
         public float AspectRatio { get; set; }
-
-        /// <summary>
-        /// Initialize a new instance of the <see cref="Camera"/> class.
-        /// </summary>
-        public Camera()
-        {
-            Position = Vector3.Zero;
-            Front = new Vector3(0.0f, 0.0f, -1.0f);
-            Up = new Vector3(0.0f, 1.0f, 0.0f);
-            WorldUp = new Vector3(0.0f, 1.0f, 0.0f);
-
-            FieldOfView = (float)ConvertToRadians(45);
-            NearPlane = 1.0f;
-            FarPlane = 1000.0f;
-            AspectRatio = 4 / (float)3;
-        }
-
-            // Calculates the front vector from the Camera's (updated) Eular Angles
-        private void UpdateCameraVectors()
-        {
-            // Calculate the new Front vector
-            Front = new Vector3(
-                (float)(Math.Cos(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch))),
-                (float)(Math.Sin(ConvertToRadians(Pitch))),
-                (float)(Math.Sin(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch)))
-            );
-            Front.Normalize();
-
-            // Also re-calculate the Right and Up vector
-            // Normalize the vectors, because their length gets closer to 0
-            // the more you look up or down which results in slower movement.
-            Right = Vector3.Normalize(Vector3.Cross(Front, WorldUp));
-            Up = Vector3.Normalize(Vector3.Cross(Right, Front));
-        }
 
         /// <summary>
         /// Gets the view matrix for the camera.
@@ -87,11 +59,41 @@ namespace GameEngine.Core
             }
         }
 
-        private int prevX;
-        private int prevY;
-        private bool mouseLeftDown;
-        float xoffset;
-        float yoffset;
+        /// <summary>
+        /// Initialize a new instance of the <see cref="Camera"/> class.
+        /// </summary>
+        public Camera()
+        {
+            Position = Vector3.Zero;
+            Front = new Vector3(0.0f, 0.0f, -1.0f);
+            Up = new Vector3(0.0f, 1.0f, 0.0f);
+            WorldUp = new Vector3(0.0f, 1.0f, 0.0f);
+
+            FieldOfView = (float)ConvertToRadians(45);
+            NearPlane = 1.0f;
+            FarPlane = 1000.0f;
+            AspectRatio = 4 / (float)3;
+        }
+
+        /// <summary>
+        /// Calculates the front vector from the Camera's (updated) Eular Angles.
+        /// </summary>
+        private void UpdateCameraVectors()
+        {
+            // Calculate the new Front vector.
+            Front = new Vector3(
+                (float)(Math.Cos(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch))),
+                (float)(Math.Sin(ConvertToRadians(Pitch))),
+                (float)(Math.Sin(ConvertToRadians(Yaw)) * Math.Cos(ConvertToRadians(Pitch)))
+            );
+            Front.Normalize();
+
+            // Re-calculate the Right and Up vector.
+            // Normalize the vectors, because their length gets closer to 0
+            // the more you look up or down which results in slower movement.
+            Right = Vector3.Normalize(Vector3.Cross(Front, WorldUp));
+            Up = Vector3.Normalize(Vector3.Cross(Right, Front));
+        }
 
         //private int mouseWheelIndex;
         public void Update()
@@ -140,11 +142,22 @@ namespace GameEngine.Core
             UpdateCameraVectors();
         }
 
+        /// <summary>
+        /// Helper method to convert degrees to radians.
+        /// </summary>
+        /// <param name="angle">The angle in degrees.</param>
+        /// <returns>The result in radians.</returns>
         private double ConvertToRadians(double angle)
         {
             return (Math.PI / 180) * angle;
         }
 
+        /// <summary>
+        /// Clamp the value.
+        /// </summary>
+        /// <param name="value">The value to clamp.</param>
+        /// <param name="min">The minimum value to clamp to.</param>
+        /// <param name="max">The maximum value to clamp to.</param>
         private void Clamp(ref float value, float min, float max)
         {
             if (value > max)
