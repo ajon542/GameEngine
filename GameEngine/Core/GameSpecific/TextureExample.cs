@@ -16,29 +16,11 @@ namespace GameEngine.Core.GameSpecific
         /// </summary>
         private uint vertexArrayId;
 
-        /// <summary>
-        /// Vertex buffer identifier.
-        /// </summary>
         private uint vertexBuffer;
-
-        /// <summary>
-        /// Vertex attribute identifier.
-        /// </summary>
         private int vertexAttribute;
-
-        /// <summary>
-        /// UV buffer identifier.
-        /// </summary>
         private uint uvBuffer;
-
-        /// <summary>
-        /// UV attribute identifier.
-        /// </summary>
         private int uvAttribute;
 
-        /// <summary>
-        /// Texture sampler uniform handle in fragment shader.
-        /// </summary>
         private int textureSamplerUniform;
 
         /// <summary>
@@ -83,12 +65,6 @@ namespace GameEngine.Core.GameSpecific
             // Load the texture.
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/UV-Template.bmp");
 
-            // TODO: Figure out what a vertex array is used for.
-            // This question highlights my concern as everything works without this even being set.
-            // http://stackoverflow.com/questions/5970087/understanding-vertex-array-objects-glgenvertexarrays
-            // The following document appears to be an explanation:
-            // http://www.openglsuperbible.com/2013/12/09/vertex-array-performance/
-
             // Generate a VAO and set it as the current one.
             GL.GenVertexArrays(1, out vertexArrayId);
             GL.BindVertexArray(vertexArrayId);
@@ -99,31 +75,21 @@ namespace GameEngine.Core.GameSpecific
             // Get the model-view-projection matrix uniform.
             mvpUniform = shaders["texture"].GetUniform("MVPMatrix");
 
-            // Vertices.
-
-            // Generate 1 buffer, put the resulting identifier in vertexbuffer.
+            // Setup the vertices.
             vertexBuffer = shaders["texture"].GetBuffer("VertexPosition");
             vertexAttribute = shaders["texture"].GetAttribute("VertexPosition");
-
-            // The following commands will talk about our 'vertexbuffer' buffer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
-
-            // Give our vertices to OpenGL.
             IntPtr vertexBufferSize = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertices, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(vertexAttribute, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            // UVs.
-
-            // Generate 1 buffer, put the resulting identifier in uvBuffer.
+            // Setup the texture coords.
             uvBuffer = shaders["texture"].GetBuffer("VertexUV");
             uvAttribute = shaders["texture"].GetAttribute("VertexUV");
-
-            // The following commands will talk about our 'uvBuffer' buffer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
-
-            // Give our vertices to OpenGL.
             IntPtr uvBufferSize = (IntPtr)(uv.Length * Vector2.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uv, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(uvAttribute, 2, VertexAttribPointerType.Float, true, 0, 0);
         }
 
         public override void Update()
@@ -151,15 +117,8 @@ namespace GameEngine.Core.GameSpecific
             // Set our "textureSampler" sampler to user Texture Unit 0
             GL.Uniform1(textureSamplerUniform, TextureUnit.Texture0 - TextureUnit.Texture0);
 
-            // Set the vertex buffer attribute pointer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
-            GL.VertexAttribPointer(vertexAttribute, 3, VertexAttribPointerType.Float, false, 0, 0);
-
-            // Set the UV buffer attribute pointer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
-            GL.VertexAttribPointer(uvAttribute, 2, VertexAttribPointerType.Float, true, 0, 0);
-
-            // Load the model-view-projection matrix.
             GL.UniformMatrix4(mvpUniform, false, ref gameObject.ModelViewProjectionMatrix);
 
             // Draw the arrays.

@@ -10,29 +10,10 @@ namespace GameEngine.Core.GameSpecific
 {
     public class TextureBlendExample : Scene
     {
-        /// <summary>
-        /// Vertex array object identifier.
-        /// </summary>
         private uint vertexArrayId;
-
-        /// <summary>
-        /// Vertex buffer identifier.
-        /// </summary>
         private uint vertexBuffer;
-
-        /// <summary>
-        /// Vertex attribute identifier.
-        /// </summary>
         private int vertexAttribute;
-
-        /// <summary>
-        /// UV buffer identifier.
-        /// </summary>
         private uint uvBuffer;
-
-        /// <summary>
-        /// UV attribute identifier.
-        /// </summary>
         private int uvAttribute;
 
         /// <summary>
@@ -116,6 +97,7 @@ namespace GameEngine.Core.GameSpecific
             // Give our vertices to OpenGL.
             IntPtr vertexBufferSize = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertices, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(vertexAttribute, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             // UVs.
 
@@ -129,6 +111,7 @@ namespace GameEngine.Core.GameSpecific
             // Give our vertices to OpenGL.
             IntPtr uvBufferSize = (IntPtr)(uv.Length * Vector2.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uv, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(uvAttribute, 2, VertexAttribPointerType.Float, true, 0, 0);
         }
 
         public override void Update()
@@ -162,13 +145,9 @@ namespace GameEngine.Core.GameSpecific
             // Set our "textureSampler" sampler to user Texture Unit 1
             GL.Uniform1(textureSamplerUniform1, TextureUnit.Texture1 - TextureUnit.Texture0);
 
-            // Set the vertex buffer attribute pointer.
+            // Bind the buffers.
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
-            GL.VertexAttribPointer(vertexAttribute, 3, VertexAttribPointerType.Float, false, 0, 0);
-
-            // Set the UV buffer attribute pointer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
-            GL.VertexAttribPointer(uvAttribute, 2, VertexAttribPointerType.Float, true, 0, 0);
 
             // Load the model-view-projection matrix.
             GL.UniformMatrix4(mvpUniform, false, ref gameObject.ModelViewProjectionMatrix);

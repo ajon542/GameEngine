@@ -8,6 +8,7 @@ namespace GameEngine.Core.Graphics
 {
     public static class Vao
     {
+        // TODO: Fix these, they don't belong in the batch class.
         public const int Cube = 0;
         public const int Cone = 1;
         public const int Count = 2;
