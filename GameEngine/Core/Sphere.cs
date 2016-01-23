@@ -55,6 +55,8 @@ namespace GameEngine.Core
             Normals = new List<Vector3>(normals);
             UV = new List<Vector2>(uv);
             Indices = new List<int>(triangles);
+            // TODO: Tangents
+            // Tangents = new List<Vector3>(tangents);
         }
 
         private void CreateOctahedron(Vector3[] vertices, int[] triangles, int resolution)

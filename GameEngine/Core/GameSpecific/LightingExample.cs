@@ -132,7 +132,7 @@ namespace GameEngine.Core.GameSpecific
 
             Vector3 ambientColor = new Vector3(0.1880f, 0.1880f, 0.1880f);
             Vector3 diffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
-            Vector3 specularColor = new Vector3(1.0f, 0.0f, 00f);
+            Vector3 specularColor = new Vector3(1.0f, 1.0f, 1.0f);
             float specularExponent = 10.0f;
 
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
