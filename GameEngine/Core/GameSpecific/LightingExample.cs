@@ -30,7 +30,8 @@ namespace GameEngine.Core.GameSpecific
         private GameObject gameObject = new GameObject();
         //private Mesh mesh = new Sphere(1, 1, 25, 25);
         //private Mesh mesh = new Cube();
-        private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
+        //private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
+        private Mesh mesh = new OctahedronSphere(6, 2);
         Light activeLight = new Light(new Vector3(5, 5, -5), new Vector3(1.0f, 1.0f, 1.0f));
 
         public override void Initialize()
