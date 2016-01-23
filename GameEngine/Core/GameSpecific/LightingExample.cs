@@ -20,24 +20,32 @@ namespace GameEngine.Core.GameSpecific
         private uint normalBuffer;
         private int normalAttr;
         private uint elementBuffer;
+        private int uvAttr;
+        private uint uvBuffer;
+
+        private int textureId;
 
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Sphere(1, 1, 25, 25);
+        //private Mesh mesh = new Sphere(1, 1, 25, 25);
         //private Mesh mesh = new Cube();
-        //private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
+        private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
         Light activeLight = new Light(new Vector3(5, 5, -5), new Vector3(1.0f, 1.0f, 1.0f));
 
         public override void Initialize()
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
+            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Donut.jpg");
+
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");
             positionAttr = shaders["default"].GetAttribute("VertexPosition");
-            colourBuffer = shaders["default"].GetBuffer("VertexColor");
-            colourAttr = shaders["default"].GetAttribute("VertexColor");
+            //colourBuffer = shaders["default"].GetBuffer("VertexColor");
+            //colourAttr = shaders["default"].GetAttribute("VertexColor");
             normalBuffer = shaders["default"].GetBuffer("VertexNormal");
             normalAttr = shaders["default"].GetAttribute("VertexNormal");
+            uvBuffer = shaders["default"].GetBuffer("VertexUV");
+            uvAttr = shaders["default"].GetAttribute("VertexUV");
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -46,11 +54,13 @@ namespace GameEngine.Core.GameSpecific
             Vector3[] vertices = mesh.Vertices.ToArray();
             Vector3[] colours = mesh.Colours.ToArray();
             Vector3[] normals = mesh.Normals.ToArray();
+            Vector2[] uv = mesh.UV.ToArray();
             int[] indices = mesh.Indices.ToArray();
 
             IntPtr verticesLength = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
             IntPtr coloursLength = (IntPtr)(colours.Length * Vector3.SizeInBytes);
             IntPtr normalsLength = (IntPtr)(normals.Length * Vector3.SizeInBytes);
+            IntPtr uvsLength = (IntPtr)(uv.Length * Vector2.SizeInBytes);
             IntPtr indicesLength = (IntPtr)(indices.Length * sizeof(int));
             indicesCount = indices.Length;
 
@@ -58,13 +68,17 @@ namespace GameEngine.Core.GameSpecific
             GL.BufferData(BufferTarget.ArrayBuffer, verticesLength, vertices, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(positionAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
+            //GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
+            //GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
+            //GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalBuffer);
             GL.BufferData(BufferTarget.ArrayBuffer, normalsLength, normals, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(normalAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
+            GL.BufferData(BufferTarget.ArrayBuffer, uvsLength, uv, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(uvAttr, 2, VertexAttribPointerType.Float, false, 0, 0);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indicesLength, indices, BufferUsageHint.StaticDraw);
@@ -104,6 +118,10 @@ namespace GameEngine.Core.GameSpecific
         public override void Render()
         {
             GL.UseProgram(shaders["default"].ProgramId);
+
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, textureId);
+            GL.Uniform1(shaders["default"].GetUniform("mainTexture"), TextureUnit.Texture0 - TextureUnit.Texture0);
 
             GL.BindVertexArray(vertexArrObject);
 

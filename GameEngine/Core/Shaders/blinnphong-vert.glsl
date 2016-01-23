@@ -3,10 +3,12 @@
 in vec3 VertexNormal;
 in vec3 VertexPosition;
 in vec3 VertexColor;
+in vec2 VertexUV;
 
 out vec3 Normal;
 out vec3 Position;
 out vec4 Color;
+out vec2 UV;
 
 uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
@@ -21,4 +23,5 @@ main()
     Normal = normMatrix * VertexNormal;
     Position = (ModelMatrix * vec4(VertexPosition, 1.0)).xyz;
     Color = vec4(VertexColor, 1.0);
+	UV = VertexUV;
 }
