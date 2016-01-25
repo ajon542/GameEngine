@@ -4,6 +4,8 @@ using GameEngine.Core.Debugging;
 
 namespace GameEngine.Core.Utilities
 {
+    // TODO: Support face data greater than 3
+
     // Polygonal face element (see below)
     // f 1 2 3
     // f 3/1 4/2 5/3

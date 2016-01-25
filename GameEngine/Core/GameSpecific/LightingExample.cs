@@ -39,9 +39,17 @@ namespace GameEngine.Core.GameSpecific
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/UV-Template.bmp");
-
             ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/Cube.obj");
+            try
+            {
+                file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
+            }
+            catch (Exception e)
+            {
+                // TODO: Exceptions thrown in Initialize seem to get caught in xaml and execution continues.
+                Console.WriteLine(e);
+            }
+
             mesh.Indices = file.Indices;
             mesh.Normals = file.Normals;
             mesh.Vertices = file.Vertices;
