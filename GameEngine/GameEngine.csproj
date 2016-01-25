@@ -125,6 +125,11 @@
     <Compile Include="Core\Timer.cs" />
     <Compile Include="Core\Torus.cs" />
     <Compile Include="Core\Transform.cs" />
+    <Compile Include="Core\Utilities\Face.cs" />
+    <Compile Include="Core\Utilities\IObjType.cs" />
+    <Compile Include="Core\Utilities\Normal.cs" />
+    <Compile Include="Core\Utilities\TextureCoord.cs" />
+    <Compile Include="Core\Utilities\Vertex.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -251,6 +256,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
