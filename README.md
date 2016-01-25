@@ -15,9 +15,15 @@ experimentation needs to be done in order to improve the amount of boilerplate c
 
 ## TODO
 (not in any particular order)
+- Lighting
+- Materials
+- Vertex attributes
+- Batching
+- Instancing
+- Make the scene selectable through the UI
+- Move the game specific stuff out of the core
+- Complete some of the examples I started
 - Create dockable windows for SceneView, GameView, HierarchyView, ConsoleOutputView etc
-- Move around the scene
-- Place objects in the scene
 - Scene hierarchy
 - Add scripts to game objects
 - Enter "play mode"
