@@ -39,6 +39,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Planet.png");
 
+            // TODO: Created a vertex attribute classs
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");
             positionAttr = shaders["default"].GetAttribute("VertexPosition");
             //colourBuffer = shaders["default"].GetBuffer("VertexColor");
