@@ -139,7 +139,7 @@ namespace GameEngine.Core.Graphics
             string programLog = GL.GetProgramInfoLog(ProgramId);
             if (programLog != string.Empty)
             {
-                throw new Exception(programLog);
+                throw new GameEngineException(programLog);
             }
 
             // Get attribute and uniform count from the program object.

@@ -200,6 +200,7 @@
     </Content>
     <Content Include="Core\GameSpecific\Assets\Mesh\IcoSphere.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Core\Shaders\ambient-frag.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

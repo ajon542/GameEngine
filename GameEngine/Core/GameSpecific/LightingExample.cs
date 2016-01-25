@@ -40,15 +40,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
             ObjFile file = new ObjFile();
-            try
-            {
-                file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
-            }
-            catch (Exception e)
-            {
-                // TODO: Exceptions thrown in Initialize seem to get caught in xaml and execution continues.
-                Console.WriteLine(e);
-            }
+            file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
 
             mesh.Indices = file.Indices;
             mesh.Normals = file.Normals;
