@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using GameEngine.Core.Utilities;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
@@ -31,13 +31,21 @@ namespace GameEngine.Core.GameSpecific
         //private Mesh mesh = new Sphere(1, 1, 25, 25);
         //private Mesh mesh = new Cube();
         //private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
-        private Mesh mesh = new Sphere(6, 2);
+        //private Mesh mesh = new Sphere(6, 2);
+        private Mesh mesh = new Mesh();
         Light activeLight = new Light(new Vector3(5, 5, -5), new Vector3(1.0f, 1.0f, 1.0f));
 
         public override void Initialize()
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
-            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Planet.png");
+            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/UV-Template.bmp");
+
+            ObjFile file = new ObjFile();
+            file.Read("Core/GameSpecific/Assets/Mesh/Cube.obj");
+            mesh.Indices = file.Indices;
+            mesh.Normals = file.Normals;
+            mesh.Vertices = file.Vertices;
+            mesh.UV = file.TexCoords;
 
             // TODO: Created a vertex attribute classs
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");
