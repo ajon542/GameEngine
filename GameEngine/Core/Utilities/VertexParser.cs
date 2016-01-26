@@ -11,7 +11,7 @@ namespace GameEngine.Core.Utilities
     {
         private List<Vector3> vertices;
 
-        public override string Id { get { return "v"; } }
+        protected override string Id { get { return "v"; } }
 
         public VertexParser(List<Vector3> vertices)
         {

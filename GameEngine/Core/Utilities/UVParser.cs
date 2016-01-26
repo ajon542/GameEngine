@@ -12,7 +12,7 @@ namespace GameEngine.Core.Utilities
     {
         private List<Vector2> uvs;
 
-        public override string Id { get { return "vt"; } }
+        protected override string Id { get { return "vt"; } }
 
         public UVParser(List<Vector2> uvs)
         {

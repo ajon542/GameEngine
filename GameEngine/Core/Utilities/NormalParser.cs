@@ -12,7 +12,7 @@ namespace GameEngine.Core.Utilities
     {
         private List<Vector3> normals;
 
-        public override string Id { get { return "vn"; } }
+        protected override string Id { get { return "vn"; } }
 
         public NormalParser(List<Vector3> normals)
         {

@@ -12,7 +12,7 @@ namespace GameEngine.Core.Utilities
     {
         private List<Face> faces;
 
-        public override string Id { get { return "f"; } }
+        protected override string Id { get { return "f"; } }
 
         // Vertex/TexCoord/Normal Indices
         public FaceParser(List<Face> faces)
