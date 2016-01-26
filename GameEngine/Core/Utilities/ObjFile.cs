@@ -37,8 +37,8 @@ namespace GameEngine.Core.Utilities
                     
                     if (split.Length > 1)
                     {
-                        string id = split[0];
-                        string input = split[1];
+                        string id = split[0].Trim();
+                        string input = split[1].Trim();
 
                         foreach(IObjType parser in parsers)
                         {

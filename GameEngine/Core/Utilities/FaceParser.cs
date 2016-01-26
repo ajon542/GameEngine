@@ -25,48 +25,61 @@ namespace GameEngine.Core.Utilities
         public override void Parse(string input)
         {
             string[] faceData = input.Split(' ');
-            if (faceData.Length != 3)
+            if (faceData.Length < 3)
             {
-                throw new GameEngineException("could not deserialize face data");
+                throw new GameEngineException("not enough vertices to create a face");
             }
 
+            for (int i = 1; i < faceData.Length - 1; ++i)
+            {
+                AddFace(faceData[0].Split('/'), faceData[i].Split('/'), faceData[i+1].Split('/'));
+            }
+        }
+
+        private void AddFace(string[] v0, string[] v1, string[] v2)
+        {
             List<int> vertexIndices = new List<int>();
             List<int> uvIndices = new List<int>();
             List<int> normalIndices = new List<int>();
 
-            foreach (string item in faceData)
+
+            if (v0.Length == 1)
             {
-                string[] split = item.Split('/');
-
-                if (split.Length == 1)
-                {
-                    // Only contains vertex indices.
-                    vertexIndices.Add(Int32.Parse(split[0]));
-                }
-                else if (split.Length == 3)
-                {
-                    vertexIndices.Add(Int32.Parse(split[0]));
-                    if (split[1] != string.Empty)
-                    {
-                        uvIndices.Add(Int32.Parse(split[1]));
-                    }
-                    if (split[2] != string.Empty)
-                    {
-                        normalIndices.Add(Int32.Parse(split[2]));
-                    }
-                }
-                else
-                {
-                    throw new GameEngineException("could not deserialize face data");
-                }
-
-                Face face = new Face();
-                face.Vertices = vertexIndices;
-                face.Normals = normalIndices;
-                face.UVs = uvIndices;
-
-                faces.Add(face);
+                // Only contains vertex indices.
+                vertexIndices.Add(Int32.Parse(v0[0]));
+                vertexIndices.Add(Int32.Parse(v1[0]));
+                vertexIndices.Add(Int32.Parse(v2[0]));
             }
+            else if (v0.Length == 3)
+            {
+                vertexIndices.Add(Int32.Parse(v0[0]));
+                vertexIndices.Add(Int32.Parse(v1[0]));
+                vertexIndices.Add(Int32.Parse(v2[0]));
+
+                if (v0[1] != string.Empty)
+                {
+                    uvIndices.Add(Int32.Parse(v0[1]));
+                    uvIndices.Add(Int32.Parse(v1[1]));
+                    uvIndices.Add(Int32.Parse(v2[1]));
+                }
+                if (v0[2] != string.Empty)
+                {
+                    normalIndices.Add(Int32.Parse(v0[2]));
+                    normalIndices.Add(Int32.Parse(v1[2]));
+                    normalIndices.Add(Int32.Parse(v2[2]));
+                }
+            }
+            else
+            {
+                throw new GameEngineException("could not deserialize face data");
+            }
+
+            Face face = new Face();
+            face.Vertices = vertexIndices;
+            face.Normals = normalIndices;
+            face.UVs = uvIndices;
+
+            faces.Add(face);
         }
     }
 }

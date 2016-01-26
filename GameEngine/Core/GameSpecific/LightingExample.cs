@@ -40,7 +40,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
             ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
+            file.Read("Core/GameSpecific/Assets/Mesh/Monkey.obj");
 
             mesh.Indices = file.Indices;
             mesh.Normals = file.Normals;
