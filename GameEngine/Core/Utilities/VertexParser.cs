@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GameEngine.Core.Debugging;
 using OpenTK;
 
@@ -8,13 +9,13 @@ namespace GameEngine.Core.Utilities
     // v 0.123 0.234 0.345 1.0
     class VertexParser : BaseType
     {
-        public Vector3 Data { get; set; }
+        private List<Vector3> vertices;
 
         public override string Id { get { return "v"; } }
 
-        public VertexParser(string input)
+        public VertexParser(List<Vector3> vertices)
         {
-            Parse(input);
+            this.vertices = vertices;
         }
 
         public override void Parse(string input)
@@ -25,12 +26,12 @@ namespace GameEngine.Core.Utilities
                 throw new GameEngineException("could not deserialize vertex data");
             }
 
-            Data = new Vector3
+            vertices.Add(new Vector3
             {
                 X = float.Parse(vertexData[0]),
                 Y = float.Parse(vertexData[1]),
                 Z = float.Parse(vertexData[2]),
-            };
+            });
         }
     }
 }

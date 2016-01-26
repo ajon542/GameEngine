@@ -10,8 +10,8 @@ namespace GameEngine.Core.Utilities
 {
     class Face
     {
-        public List<Vertex> Vertices { get; set; }
-        public List<UV> UVs { get; set; }
-        public List<Normal> Normals { get; set; }
+        public List<int> Vertices { get; set; }
+        public List<int> UVs { get; set; }
+        public List<int> Normals { get; set; }
     }
 }

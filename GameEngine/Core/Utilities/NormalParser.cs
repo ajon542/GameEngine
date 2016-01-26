@@ -10,13 +10,13 @@ namespace GameEngine.Core.Utilities
     // vn 0.707 0.000 0.707
     class NormalParser : BaseType
     {
-        public Vector3 Data { get; set; }
+        private List<Vector3> normals;
 
         public override string Id { get { return "vn"; } }
 
-        public NormalParser(string input)
+        public NormalParser(List<Vector3> normals)
         {
-            Parse(input);
+            this.normals = normals;
         }
 
         public override void Parse(string input)
@@ -24,15 +24,15 @@ namespace GameEngine.Core.Utilities
             string[] normalData = input.Split(' ');
             if (normalData.Length != 3)
             {
-                throw new GameEngineException("could not deserialize vertex data");
+                throw new GameEngineException("could not deserialize normal data");
             }
 
-            Data = new Vector3
+            normals.Add(new Vector3
             {
                 X = float.Parse(normalData[0]),
                 Y = float.Parse(normalData[1]),
                 Z = float.Parse(normalData[2]),
-            };
+            });
         }
     }
 }

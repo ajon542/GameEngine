@@ -12,16 +12,14 @@ namespace GameEngine.Core.Utilities
     // f 6/4/1 3/5/3 7/6/5
     class FaceParser : BaseType
     {
-        public List<int> VertexIndices { get; set; }
-        public List<int> TexCoordIndices { get; set; }
-        public List<int> NormalIndices { get; set; }
+        private List<Face> faces;
 
         public override string Id { get { return "f"; } }
 
         // Vertex/TexCoord/Normal Indices
-        public FaceParser(string input)
+        public FaceParser(List<Face> faces)
         {
-            Parse(input);
+            this.faces = faces;
         }
 
         public override void Parse(string input)
@@ -33,7 +31,7 @@ namespace GameEngine.Core.Utilities
             }
 
             List<int> vertexIndices = new List<int>();
-            List<int> texCoordIndices = new List<int>();
+            List<int> uvIndices = new List<int>();
             List<int> normalIndices = new List<int>();
 
             foreach (string item in faceData)
@@ -50,7 +48,7 @@ namespace GameEngine.Core.Utilities
                     vertexIndices.Add(Int32.Parse(split[0]));
                     if (split[1] != string.Empty)
                     {
-                        texCoordIndices.Add(Int32.Parse(split[1]));
+                        uvIndices.Add(Int32.Parse(split[1]));
                     }
                     if (split[2] != string.Empty)
                     {
@@ -62,9 +60,12 @@ namespace GameEngine.Core.Utilities
                     throw new GameEngineException("could not deserialize face data");
                 }
 
-                VertexIndices = vertexIndices;
-                TexCoordIndices = texCoordIndices;
-                NormalIndices = normalIndices;
+                Face face = new Face();
+                face.Vertices = vertexIndices;
+                face.Normals = normalIndices;
+                face.UVs = uvIndices;
+
+                faces.Add(face);
             }
         }
     }
