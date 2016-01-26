@@ -11,10 +11,10 @@ namespace GameEngine.Core.Utilities
         public List<Vector3> Normals { get; set; }
         public List<int> Indices { get; set; }
 
-        private List<Vertex> vertices = new List<Vertex>();
-        private List<Normal> normals = new List<Normal>();
-        private List<TextureCoord> texCoords = new List<TextureCoord>();
-        private List<Face> faces = new List<Face>();
+        private List<VertexParser> vertices = new List<VertexParser>();
+        private List<NormalParser> normals = new List<NormalParser>();
+        private List<UVParser> texCoords = new List<UVParser>();
+        private List<FaceParser> faces = new List<FaceParser>();
 
         public void Read(string file)
         {
@@ -30,22 +30,22 @@ namespace GameEngine.Core.Utilities
                     {
                         if (split[0] == "v")
                         {
-                            Vertex type = new Vertex(split[1]);
+                            VertexParser type = new VertexParser(split[1]);
                             vertices.Add(type);
                         }
                         else if (split[0] == "vt")
                         {
-                            TextureCoord type = new TextureCoord(split[1]);
+                            UVParser type = new UVParser(split[1]);
                             texCoords.Add(type);
                         }
                         else if (split[0] == "vn")
                         {
-                            Normal type = new Normal(split[1]);
+                            NormalParser type = new NormalParser(split[1]);
                             normals.Add(type);
                         }
                         else if (split[0] == "f")
                         {
-                            Face type = new Face(split[1]);
+                            FaceParser type = new FaceParser(split[1]);
                             faces.Add(type);
                         }
                     }
@@ -57,7 +57,7 @@ namespace GameEngine.Core.Utilities
             Normals = new List<Vector3>();
             TexCoords = new List<Vector2>();
             Indices = new List<int>();
-            foreach (Face face in faces)
+            foreach (FaceParser face in faces)
             {
                 // Vertices.
                 int v0 = face.VertexIndices[0] - 1;

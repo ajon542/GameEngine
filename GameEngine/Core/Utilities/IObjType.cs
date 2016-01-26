@@ -8,7 +8,7 @@ namespace GameEngine.Core.Utilities
 {
     interface IObjType
     {
-        void Deserialize(string input);
-        string Serialize();
+        bool CanParse(string id);
+        void Parse(string input);
     }
 }

@@ -7,16 +7,18 @@ namespace GameEngine.Core.Utilities
     // List of texture coordinates, in (u, v [,w]) coordinates, these will vary between 0 and 1, w is optional and defaults to 0.
     // vt 0.500 1 [0]
     // TODO: Support the optional w
-    class TextureCoord
+    class UVParser : BaseType
     {
         public Vector2 Data { get; set; }
 
-        public TextureCoord(string input)
+        public override string Id { get { return "vt"; } }
+
+        public UVParser(string input)
         {
-            Deserialize(input);
+            Parse(input);
         }
 
-        public void Deserialize(string input)
+        public override void Parse(string input)
         {
             string[] texData = input.Split(' ');
             //if (texData.Length != 2)
@@ -30,11 +32,6 @@ namespace GameEngine.Core.Utilities
                 X = float.Parse(texData[0]),
                 Y = float.Parse(texData[1]),
             };
-        }
-
-        public string Serialize()
-        {
-            throw new NotImplementedException();
         }
     }
 }

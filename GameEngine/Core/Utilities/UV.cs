@@ -8,8 +8,8 @@ using OpenTK;
 
 namespace GameEngine.Core.Utilities
 {
-    class Normal
+    class UV
     {
-        public Vector3 Data { get; set; }
+        public Vector2 Data { get; set; }
     }
 }
