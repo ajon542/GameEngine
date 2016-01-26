@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameEngine.Core.Utilities
 {
-    public abstract class BaseType : IObjType
+    public abstract class BaseType : ITypeParser
     {
         public abstract string Id { get; }
 

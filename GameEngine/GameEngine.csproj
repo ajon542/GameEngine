@@ -128,7 +128,7 @@
     <Compile Include="Core\Utilities\BaseType.cs" />
     <Compile Include="Core\Utilities\Face.cs" />
     <Compile Include="Core\Utilities\FaceParser.cs" />
-    <Compile Include="Core\Utilities\IObjType.cs" />
+    <Compile Include="Core\Utilities\ITypeParser.cs" />
     <Compile Include="Core\Utilities\Normal.cs" />
     <Compile Include="Core\Utilities\NormalParser.cs" />
     <Compile Include="Core\Utilities\ObjFile.cs" />

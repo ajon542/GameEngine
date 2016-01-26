@@ -15,7 +15,7 @@ namespace GameEngine.Core.Utilities
         private List<Vector3> normals = new List<Vector3>();
         private List<Vector2> uvs = new List<Vector2>();
         private List<Face> faces = new List<Face>();
-        List<IObjType> parsers = new List<IObjType>();
+        List<ITypeParser> parsers = new List<ITypeParser>();
 
         public ObjFile()
         {
@@ -40,7 +40,7 @@ namespace GameEngine.Core.Utilities
                         string id = split[0].Trim();
                         string input = split[1].Trim();
 
-                        foreach(IObjType parser in parsers)
+                        foreach(ITypeParser parser in parsers)
                         {
                             if(parser.CanParse(id))
                             {
