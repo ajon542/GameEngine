@@ -4,8 +4,6 @@ using GameEngine.Core.Debugging;
 
 namespace GameEngine.Core.Utilities
 {
-    // TODO: Support face data greater than 3
-
     // Polygonal face element (see below)
     // f 1 2 3
     // f 3/1 4/2 5/3
@@ -30,6 +28,8 @@ namespace GameEngine.Core.Utilities
                 throw new GameEngineException("not enough vertices to create a face");
             }
 
+            // The faces are defined like a triangle fan around the first vertex.
+            // Reconstruct the triangles.
             for (int i = 1; i < faceData.Length - 1; ++i)
             {
                 AddFace(faceData[0].Split('/'), faceData[i].Split('/'), faceData[i+1].Split('/'));
@@ -42,20 +42,11 @@ namespace GameEngine.Core.Utilities
             List<int> uvIndices = new List<int>();
             List<int> normalIndices = new List<int>();
 
-
-            if (v0.Length == 1)
+            if (v0.Length == 1 && v1.Length == 1 && v2.Length == 1)
             {
-                // Only contains vertex indices.
-                vertexIndices.Add(Int32.Parse(v0[0]));
-                vertexIndices.Add(Int32.Parse(v1[0]));
-                vertexIndices.Add(Int32.Parse(v2[0]));
             }
-            else if (v0.Length == 3)
+            else if (v0.Length == 3 && v1.Length == 3 && v2.Length == 3)
             {
-                vertexIndices.Add(Int32.Parse(v0[0]));
-                vertexIndices.Add(Int32.Parse(v1[0]));
-                vertexIndices.Add(Int32.Parse(v2[0]));
-
                 if (v0[1] != string.Empty)
                 {
                     uvIndices.Add(Int32.Parse(v0[1]));
@@ -74,11 +65,14 @@ namespace GameEngine.Core.Utilities
                 throw new GameEngineException("could not deserialize face data");
             }
 
+            vertexIndices.Add(Int32.Parse(v0[0]));
+            vertexIndices.Add(Int32.Parse(v1[0]));
+            vertexIndices.Add(Int32.Parse(v2[0]));
+
             Face face = new Face();
             face.Vertices = vertexIndices;
             face.Normals = normalIndices;
             face.UVs = uvIndices;
-
             faces.Add(face);
         }
     }

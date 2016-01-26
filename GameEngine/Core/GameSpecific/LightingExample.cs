@@ -45,7 +45,7 @@ namespace GameEngine.Core.GameSpecific
             mesh.Indices = file.Indices;
             mesh.Normals = file.Normals;
             mesh.Vertices = file.Vertices;
-            mesh.UV = file.TexCoords;
+            mesh.UV = file.UVs;
 
             // TODO: Created a vertex attribute classs
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");

@@ -22,7 +22,6 @@ namespace GameEngine.Core.Utilities
         public override void Parse(string input)
         {
             string[] texData = input.Split(' ');
-            //if (texData.Length != 2)
             if (texData.Length < 2)
             {
                 throw new GameEngineException("could not deserialize texture coord data");

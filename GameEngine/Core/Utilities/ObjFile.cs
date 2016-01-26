@@ -7,7 +7,7 @@ namespace GameEngine.Core.Utilities
     class ObjFile
     {
         public List<Vector3> Vertices { get; set; }
-        public List<Vector2> TexCoords { get; set; }
+        public List<Vector2> UVs { get; set; }
         public List<Vector3> Normals { get; set; }
         public List<int> Indices { get; set; }
 
@@ -54,7 +54,7 @@ namespace GameEngine.Core.Utilities
             // Map the data into the Vertices, Normals, TexCoords and Indices data structures.
             Vertices = new List<Vector3>();
             Normals = new List<Vector3>();
-            TexCoords = new List<Vector2>();
+            UVs = new List<Vector2>();
             Indices = new List<int>();
             foreach (Face face in faces)
             {
@@ -77,19 +77,18 @@ namespace GameEngine.Core.Utilities
                 Normals.Add(normals[n2]);
 
                 // Texture Coords.
-                int t0 = face.UVs[0] - 1;
-                int t1 = face.UVs[1] - 1;
-                int t2 = face.UVs[2] - 1;
+                int u0 = face.UVs[0] - 1;
+                int u1 = face.UVs[1] - 1;
+                int u2 = face.UVs[2] - 1;
 
-                TexCoords.Add(uvs[t0]);
-                TexCoords.Add(uvs[t1]);
-                TexCoords.Add(uvs[t2]);
+                UVs.Add(uvs[u0]);
+                UVs.Add(uvs[u1]);
+                UVs.Add(uvs[u2]);
             }
 
-            int index = 0;
-            foreach (Vector3 vector in Vertices)
+            for (int i = 0; i < Vertices.Count; ++i)
             {
-                Indices.Add(index++);
+                Indices.Add(i);
             }
         }
     }
