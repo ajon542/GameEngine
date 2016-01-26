@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameEngine.Core.Utilities;
+using GameEngine.Core.Utilities.ObjParser;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
