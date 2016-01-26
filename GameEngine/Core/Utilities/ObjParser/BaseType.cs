@@ -1,5 +1,5 @@
 ﻿
-namespace GameEngine.Core.Utilities
+namespace GameEngine.Core.Utilities.ObjParser
 {
     /// <summary>
     /// Abstract base type class for type parsers.
@@ -24,7 +24,7 @@ namespace GameEngine.Core.Utilities
         /// <summary>
         /// Parse the input.
         /// </summary>
-        /// <param name="input">The input containing the type data.</param>
+        /// <param name="id">The input containing the type data.</param>
         public abstract void Parse(string id);
     }
 }

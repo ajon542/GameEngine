@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameEngine.Core.Debugging;
 
-namespace GameEngine.Core.Utilities
+namespace GameEngine.Core.Utilities.ObjParser
 {
     // List of vertex normals in (x,y,z) form; normals might not be unit vectors.
     // vn 0.707 0.000 0.707

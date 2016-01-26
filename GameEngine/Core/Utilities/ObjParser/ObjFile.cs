@@ -2,7 +2,7 @@
 using System.IO;
 using OpenTK;
 
-namespace GameEngine.Core.Utilities
+namespace GameEngine.Core.Utilities.ObjParser
 {
     class ObjFile
     {

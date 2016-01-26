@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameEngine.Core.Debugging;
 
-namespace GameEngine.Core.Utilities
+namespace GameEngine.Core.Utilities.ObjParser
 {
     // List of geometric vertices, with (x,y,z[,w]) coordinates, w is optional and defaults to 1.0.
     // v 0.123 0.234 0.345 1.0

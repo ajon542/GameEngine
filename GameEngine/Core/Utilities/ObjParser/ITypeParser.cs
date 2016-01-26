@@ -1,5 +1,5 @@
 ﻿
-namespace GameEngine.Core.Utilities
+namespace GameEngine.Core.Utilities.ObjParser
 {
     /// <summary>
     /// Interface for type parsers for the wavefront .obj file.

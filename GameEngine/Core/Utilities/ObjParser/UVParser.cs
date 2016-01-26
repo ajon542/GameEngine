@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameEngine.Core.Debugging;
 
-namespace GameEngine.Core.Utilities
+namespace GameEngine.Core.Utilities.ObjParser
 {
     // List of texture coordinates, in (u, v [,w]) coordinates, these will vary between 0 and 1, w is optional and defaults to 0.
     // vt 0.500 1 [0]

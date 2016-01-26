@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GameEngine.Core.Debugging;
 
-namespace GameEngine.Core.Utilities
+namespace GameEngine.Core.Utilities.ObjParser
 {
     // Polygonal face element (see below)
     // f 1 2 3
