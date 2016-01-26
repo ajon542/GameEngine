@@ -1,10 +1,16 @@
 ﻿
-using OpenTK;
-
 namespace GameEngine.Core.Utilities
 {
     class Vertex
     {
-        public Vector3 Data { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+
+        // Optional
+        public float W { get; set; }
+        public float R { get; set; }
+        public float G { get; set; }
+        public float B { get; set; }
     }
 }

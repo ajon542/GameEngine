@@ -11,9 +11,9 @@ namespace GameEngine.Core.Utilities
         public List<Vector3> Normals { get; set; }
         public List<int> Indices { get; set; }
 
-        private List<Vector3> vertices = new List<Vector3>();
-        private List<Vector3> normals = new List<Vector3>();
-        private List<Vector2> uvs = new List<Vector2>();
+        private List<Vertex> vertices = new List<Vertex>();
+        private List<Normal> normals = new List<Normal>();
+        private List<UV> uvs = new List<UV>();
         private List<Face> faces = new List<Face>();
         List<ITypeParser> parsers = new List<ITypeParser>();
 
@@ -63,27 +63,27 @@ namespace GameEngine.Core.Utilities
                 int v1 = face.Vertices[1] - 1;
                 int v2 = face.Vertices[2] - 1;
 
-                Vertices.Add(vertices[v0]);
-                Vertices.Add(vertices[v1]);
-                Vertices.Add(vertices[v2]);
+                Vertices.Add(new Vector3(vertices[v0].X, vertices[v0].Y, vertices[v0].Z));
+                Vertices.Add(new Vector3(vertices[v1].X, vertices[v1].Y, vertices[v1].Z));
+                Vertices.Add(new Vector3(vertices[v2].X, vertices[v2].Y, vertices[v2].Z));
 
                 // Normals.
                 int n0 = face.Normals[0] - 1;
                 int n1 = face.Normals[1] - 1;
                 int n2 = face.Normals[2] - 1;
 
-                Normals.Add(normals[n0]);
-                Normals.Add(normals[n1]);
-                Normals.Add(normals[n2]);
+                Normals.Add(new Vector3(normals[n0].X, normals[n0].Y, normals[n0].Z));
+                Normals.Add(new Vector3(normals[n1].X, normals[n1].Y, normals[n1].Z));
+                Normals.Add(new Vector3(normals[n2].X, normals[n2].Y, normals[n2].Z));
 
                 // Texture Coords.
                 int u0 = face.UVs[0] - 1;
                 int u1 = face.UVs[1] - 1;
                 int u2 = face.UVs[2] - 1;
 
-                UVs.Add(uvs[u0]);
-                UVs.Add(uvs[u1]);
-                UVs.Add(uvs[u2]);
+                UVs.Add(new Vector2(uvs[u0].U, uvs[u0].V));
+                UVs.Add(new Vector2(uvs[u1].U, uvs[u1].V));
+                UVs.Add(new Vector2(uvs[u2].U, uvs[u2].V));
             }
 
             for (int i = 0; i < Vertices.Count; ++i)

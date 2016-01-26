@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameEngine.Core.Debugging;
-using OpenTK;
 
 namespace GameEngine.Core.Utilities
 {
@@ -10,11 +8,11 @@ namespace GameEngine.Core.Utilities
     // TODO: Support the optional w
     class UVParser : BaseType
     {
-        private List<Vector2> uvs;
+        private List<UV> uvs;
 
         protected override string Id { get { return "vt"; } }
 
-        public UVParser(List<Vector2> uvs)
+        public UVParser(List<UV> uvs)
         {
             this.uvs = uvs;
         }
@@ -27,10 +25,10 @@ namespace GameEngine.Core.Utilities
                 throw new GameEngineException("could not deserialize texture coord data");
             }
 
-            uvs.Add(new Vector2
+            uvs.Add(new UV
             {
-                X = float.Parse(texData[0]),
-                Y = float.Parse(texData[1]),
+                U = float.Parse(texData[0]),
+                V = float.Parse(texData[1]),
             });
         }
     }

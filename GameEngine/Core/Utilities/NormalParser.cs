@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using GameEngine.Core.Debugging;
-using OpenTK;
 
 namespace GameEngine.Core.Utilities
 {
@@ -10,11 +7,11 @@ namespace GameEngine.Core.Utilities
     // vn 0.707 0.000 0.707
     class NormalParser : BaseType
     {
-        private List<Vector3> normals;
+        private List<Normal> normals;
 
         protected override string Id { get { return "vn"; } }
 
-        public NormalParser(List<Vector3> normals)
+        public NormalParser(List<Normal> normals)
         {
             this.normals = normals;
         }
@@ -27,7 +24,7 @@ namespace GameEngine.Core.Utilities
                 throw new GameEngineException("could not deserialize normal data");
             }
 
-            normals.Add(new Vector3
+            normals.Add(new Normal
             {
                 X = float.Parse(normalData[0]),
                 Y = float.Parse(normalData[1]),
