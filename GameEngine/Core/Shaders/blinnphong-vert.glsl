@@ -19,6 +19,7 @@ main()
 {
     gl_Position = MVPMatrix * vec4(VertexPosition, 1.0);
 
+    // TODO: I think this normalMatrix is constructed from the ModelViewMatrix.
     mat3 normMatrix = transpose(inverse(mat3(ModelMatrix)));
     Normal = normMatrix * VertexNormal;
     Position = (ModelMatrix * vec4(VertexPosition, 1.0)).xyz;
