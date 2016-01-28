@@ -2,16 +2,13 @@
 The purpose of this project is to create a game engine in C# utilizing some of the technologies
 found on the open source websites. Some of the technologies include WPF, OpenTK and AvalonDock.
 
-The game engine should provide a clear user interface to manipulate game objects in a scene
-hierarchy. It should be possible to save and load the scene. However, employing the latest and
-greatest rendering techniques may not be one of the highest priorities of this project.
-
 ## Current Goal
-There is much boiler-plate code that I have found in the Initialize method for each scene. I
-have made an attempt to move some of this boilerplate out into the Batch and ShaderBatch class.
-However, I have found there seem to not be a common way to do these things. Additionally, the
-Batch class is tied too closely to the particular shader being used. I think some more
-experimentation needs to be done in order to improve the amount of boilerplate code needed.
+Now that I have implemented basic .obj file loading. We need a way to switch the shader based
+on the type of data that was loaded. For example, a .obj file may contain only vertices and faces,
+while another may contain vertices, normals, uvs and faces.
+
+Material files need to be loaded along with the .obj file, so I need to figure out what will be
+needed here and pass these settings along to the shader.
 
 ## TODO
 (not in any particular order)
