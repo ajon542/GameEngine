@@ -22,6 +22,20 @@ namespace GameEngine.Core.Graphics
         public const int Count = 3;
     }
 
+    // TODO: Improve the batch class, it isn't actualyl batching anything :)
+    // In order to improve this class we are going to need to remove the shader specific
+    // stuff from the class.
+    // A shader is most often going to have vertices, colours, normals and texture coords.
+    // The vertices need to be passed to the shader so we should extend the Vbo enum to
+    // account for all the types.
+    // Currently, the ShaderProgram class handles the GenBuffer, Attribute and Uniform
+    // locations. This may present a problem when trying to separate the shader and batch.
+    // The usage we are looking for is:
+    // - Specify a shader
+    // - Render batch
+    // We currently have:
+    // - Render batch with hardcoded shader
+
     class Batch
     {
         private PrimitiveType renderType;
