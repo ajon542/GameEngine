@@ -3,12 +3,12 @@
 in VShaderOut
 {
     vec4 Color;
-} FShaderIn;
+} fShaderIn;
 
 out vec4 FragColor;
 
 void
 main()
 {
-    FragColor = FShaderIn.Color;
+    FragColor = fShaderIn.Color;
 }
