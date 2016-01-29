@@ -1,10 +1,14 @@
-﻿#version 330
+﻿#version 430 core
 
-in vec2 UV;
+in VShaderOut
+{
+    vec2 UV;
+} fShaderIn;
+
 out vec4 FragColor;
 uniform sampler2D textureSampler;
 
 void main() 
 {
-    FragColor = vec4(texture(textureSampler, UV).rgb, 1);
+    FragColor = vec4(texture(textureSampler, fShaderIn.UV).rgb, 1);
 }
