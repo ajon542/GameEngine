@@ -1,4 +1,4 @@
-﻿#version 330
+﻿#version 430
 
 in vec3 VertexNormal;
 in vec3 VertexPosition;
