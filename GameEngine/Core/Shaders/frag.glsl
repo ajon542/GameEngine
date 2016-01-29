@@ -1,10 +1,14 @@
-﻿#version 330
- 
-in vec4 Color;
+﻿#version 430 core
+
+in VShaderOut
+{
+    vec4 Color;
+} FShaderIn;
+
 out vec4 FragColor;
- 
+
 void
 main()
 {
-    FragColor = Color;
+    FragColor = FShaderIn.Color;
 }
