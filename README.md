@@ -6,6 +6,8 @@ found on the open source websites. Some of the technologies include WPF, OpenTK 
 Now that I have implemented basic .obj file loading. We need a way to switch the shader based
 on the type of data that was loaded. For example, a .obj file may contain only vertices and faces,
 while another may contain vertices, normals, uvs and faces.
+This may include switching the type of shader used based on the parameters available or
+generating things like normals.
 
 Material files need to be loaded along with the .obj file, so I need to figure out what will be
 needed here and pass these settings along to the shader.
