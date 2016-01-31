@@ -52,6 +52,28 @@ namespace GameEngine.Core
         }
 
         /// <summary>
+        /// Generate the normals for the mesh.
+        /// </summary>
+        /// <remarks>
+        /// Clears out current normals.
+        /// </remarks>
+        public void GenerateNormals()
+        {
+            Normals.Clear();
+
+            for (int i = 2; i < Vertices.Count; i += 3)
+            {
+                Vector3 v01 = Vertices[i - 1] - Vertices[i - 2];
+                Vector3 v12 = Vertices[i] - Vertices[i - 1];
+
+                Vector3 normal = Vector3.Normalize(Vector3.Cross(v01, v12));
+                Normals.Add(normal);
+                Normals.Add(normal);
+                Normals.Add(normal);
+            }
+        }
+
+        /// <summary>
         /// Clears the mesh.
         /// </summary>
         public void Clear()

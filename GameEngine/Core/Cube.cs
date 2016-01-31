@@ -114,22 +114,5 @@ namespace GameEngine.Core
                 new Vector2(0, 1),
             };
         }
-
-        /// <summary>
-        /// Generate the normals for the mesh.
-        /// </summary>
-        private void GenerateNormals()
-        {
-            for(int i = 2; i < Vertices.Count; i += 3)
-            {
-                Vector3 v01 = Vertices[i - 1] - Vertices[i - 2];
-                Vector3 v12 = Vertices[i] - Vertices[i - 1];
-
-                Vector3 normal = Vector3.Normalize(Vector3.Cross(v01, v12));
-                Normals.Add(normal);
-                Normals.Add(normal);
-                Normals.Add(normal);
-            }
-        }
     }
 }
