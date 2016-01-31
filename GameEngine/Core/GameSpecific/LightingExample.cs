@@ -42,10 +42,7 @@ namespace GameEngine.Core.GameSpecific
             ObjFile file = new ObjFile();
             file.Read("Core/GameSpecific/Assets/Mesh/Monkey.obj");
 
-            mesh.Indices = file.Indices;
-            mesh.Normals = file.Normals;
-            mesh.Vertices = file.Vertices;
-            mesh.UV = file.UVs;
+            mesh = file.Mesh;
 
             // TODO: Created a vertex attribute classs
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");
