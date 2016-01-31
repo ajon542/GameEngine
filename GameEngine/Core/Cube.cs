@@ -64,12 +64,7 @@ namespace GameEngine.Core
                 new Vector3(-0.5f, -0.5f, 0.5f),
             };
 
-            AddFaceNormals(new Vector3(0, 0, -1)); // Back
-            AddFaceNormals(new Vector3(1, 0, 0));  // Right
-            AddFaceNormals(new Vector3(0, 0, 1));  // Front
-            AddFaceNormals(new Vector3(0, 1, 0));  // Top
-            AddFaceNormals(new Vector3(-1, 0, 0)); // Left
-            AddFaceNormals(new Vector3(0, -1, 0)); // Bottom
+            GenerateNormals();
 
             Indices = new List<int>();
             Colours = new List<Vector3>();
@@ -121,13 +116,18 @@ namespace GameEngine.Core
         }
 
         /// <summary>
-        /// Helper method to add the face normals.
+        /// Generate the normals for the mesh.
         /// </summary>
-        /// <param name="normal">The normal vector.</param>
-        private void AddFaceNormals(Vector3 normal)
+        private void GenerateNormals()
         {
-            for(int i = 0; i < 6; ++i)
+            for(int i = 2; i < Vertices.Count; i += 3)
             {
+                Vector3 v01 = Vertices[i - 1] - Vertices[i - 2];
+                Vector3 v12 = Vertices[i] - Vertices[i - 1];
+
+                Vector3 normal = Vector3.Normalize(Vector3.Cross(v01, v12));
+                Normals.Add(normal);
+                Normals.Add(normal);
                 Normals.Add(normal);
             }
         }
