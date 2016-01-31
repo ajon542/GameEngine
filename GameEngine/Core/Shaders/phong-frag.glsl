@@ -21,15 +21,13 @@ uniform vec3 LightColor;
 uniform float LightAmbientIntensity;
 uniform float LightDiffuseIntensity;
 
-uniform sampler2D mainTexture;
-
 void
 main()
 {
     vec3 n = normalize(fShaderIn.Normal);
 
     // Colors
-    vec4 texcolor = Color;
+    vec4 texcolor = fShaderIn.Color;
     vec4 light_ambient = LightAmbientIntensity * vec4(LightColor, 0.0);
     vec4 light_diffuse = LightDiffuseIntensity * vec4(LightColor, 0.0);
 

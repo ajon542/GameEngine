@@ -98,7 +98,11 @@ namespace GameEngine.Core.Utilities.ObjParser
             }
             else
             {
-                Mesh.GenerateUVs();
+                // Generate the colors. This should probably come from the object file too.
+                for (int i = 0; i < Mesh.Vertices.Count; ++i)
+                {
+                    Mesh.Colours.Add(new Vector3(0.9f, 0.9f, 0.9f));
+                }
             }
 
             // Generate the indices.

@@ -28,7 +28,6 @@ namespace GameEngine.Core.GameSpecific
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         private GameObject gameObject = new GameObject();
-        //private Mesh mesh = new Sphere(1, 1, 25, 25);
         //private Mesh mesh = new Cube();
         //private Mesh mesh = new Torus(2.0f, 0.5f, 50, 50);
         //private Mesh mesh = new Sphere(6, 2);
@@ -37,22 +36,29 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            shaders.Add("default", new ShaderProgram("Core/Shaders/phong-tex-vert.glsl", "Core/Shaders/phong-tex-frag.glsl", true));
-            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
             ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/Monkey.obj");
-
+            file.Read("Core/GameSpecific/Assets/Mesh/Dragon.obj");
             mesh = file.Mesh;
 
-            // TODO: Created a vertex attribute classs
+            // Supply either uv coords or basic colors.
+            if(mesh.UV.Count != 0)
+            {
+                shaders.Add("default", new ShaderProgram("Core/Shaders/phong-tex-vert.glsl", "Core/Shaders/phong-tex-frag.glsl", true));
+                textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
+                uvBuffer = shaders["default"].GetBuffer("VertexUV");
+                uvAttr = shaders["default"].GetAttribute("VertexUV");
+            }
+            else
+            {
+                shaders.Add("default", new ShaderProgram("Core/Shaders/phong-vert.glsl", "Core/Shaders/phong-frag.glsl", true));
+                colourBuffer = shaders["default"].GetBuffer("VertexColor");
+                colourAttr = shaders["default"].GetAttribute("VertexColor");
+            }
+
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");
             positionAttr = shaders["default"].GetAttribute("VertexPosition");
-            //colourBuffer = shaders["default"].GetBuffer("VertexColor");
-            //colourAttr = shaders["default"].GetAttribute("VertexColor");
             normalBuffer = shaders["default"].GetBuffer("VertexNormal");
             normalAttr = shaders["default"].GetAttribute("VertexNormal");
-            uvBuffer = shaders["default"].GetBuffer("VertexUV");
-            uvAttr = shaders["default"].GetAttribute("VertexUV");
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -75,17 +81,23 @@ namespace GameEngine.Core.GameSpecific
             GL.BufferData(BufferTarget.ArrayBuffer, verticesLength, vertices, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(positionAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
-            //GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
-            //GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
+            // Supply either uv coords or basic colors.
+            if (mesh.UV.Count != 0)
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
+                GL.BufferData(BufferTarget.ArrayBuffer, uvsLength, uv, BufferUsageHint.StaticDraw);
+                GL.VertexAttribPointer(uvAttr, 2, VertexAttribPointerType.Float, false, 0, 0);
+            }
+            else
+            {
+                GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
+                GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
+                GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
+            }
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalBuffer);
             GL.BufferData(BufferTarget.ArrayBuffer, normalsLength, normals, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(normalAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, uvsLength, uv, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(uvAttr, 2, VertexAttribPointerType.Float, false, 0, 0);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indicesLength, indices, BufferUsageHint.StaticDraw);
@@ -126,9 +138,12 @@ namespace GameEngine.Core.GameSpecific
         {
             GL.UseProgram(shaders["default"].ProgramId);
 
-            GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2D, textureId);
-            GL.Uniform1(shaders["default"].GetUniform("mainTexture"), TextureUnit.Texture0 - TextureUnit.Texture0);
+            if (mesh.UV.Count != 0)
+            {
+                GL.ActiveTexture(TextureUnit.Texture0);
+                GL.BindTexture(TextureTarget.Texture2D, textureId);
+                GL.Uniform1(shaders["default"].GetUniform("mainTexture"), TextureUnit.Texture0 - TextureUnit.Texture0);
+            }
 
             GL.BindVertexArray(vertexArrObject);
 
