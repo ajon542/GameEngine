@@ -52,10 +52,13 @@ namespace GameEngine.Core
         }
 
         /// <summary>
-        /// Generate the normals for the mesh.
+        /// Generate the normals for the mesh per face.
         /// </summary>
         /// <remarks>
         /// Clears out current normals.
+        /// Since the normals are generated on a per face basis, it will not
+        /// give a smooth appearance for curved objects. That may be exactly
+        /// what you want, but in most cases, maybe not.
         /// </remarks>
         public void GenerateNormals()
         {
