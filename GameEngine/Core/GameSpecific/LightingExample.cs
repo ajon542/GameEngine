@@ -37,7 +37,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            shaders.Add("default", new ShaderProgram("Core/Shaders/blinnphong-vert.glsl", "Core/Shaders/blinnphong-frag.glsl", true));
+            shaders.Add("default", new ShaderProgram("Core/Shaders/phong-tex-vert.glsl", "Core/Shaders/phong-tex-frag.glsl", true));
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
             ObjFile file = new ObjFile();
             file.Read("Core/GameSpecific/Assets/Mesh/Monkey.obj");
