@@ -1,4 +1,5 @@
-﻿using OpenTK.Input;
+﻿using OpenTK;
+using OpenTK.Input;
 
 using GameEngine.Core.Graphics;
 
@@ -6,13 +7,14 @@ namespace GameEngine.Core.GameSpecific
 {
     public class GridExample : Scene
     {
+        // TODO: GridExample is broken.
         private GameObject gameObject = new GameObject();
 
-        private ShaderBatch batch;
+        private Batch batch;
 
         public override void Initialize()
         {
-            batch = new ShaderBatch(new Grid());
+            batch = new Batch(new Grid());
         }
 
         public override void Update()
@@ -26,7 +28,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Render()
         {
-            batch.Render(gameObject.ModelViewProjectionMatrix);
+            batch.Render();
         }
     }
 }
