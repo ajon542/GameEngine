@@ -22,7 +22,7 @@ namespace GameEngine.Core.Utilities.ObjParser
 
         public override void Parse(string input)
         {
-            string[] faceData = input.Split(' ');
+            string[] faceData = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (faceData.Length < 3)
             {
                 throw new GameEngineException("not enough vertices to create a face");
@@ -44,9 +44,25 @@ namespace GameEngine.Core.Utilities.ObjParser
 
             if (v0.Length == 1 && v1.Length == 1 && v2.Length == 1)
             {
+                // Only vertices.
+                vertexIndices.Add(Int32.Parse(v0[0]));
+                vertexIndices.Add(Int32.Parse(v1[0]));
+                vertexIndices.Add(Int32.Parse(v2[0]));
+            }
+            else if (v0.Length == 2 && v1.Length == 2 && v2.Length == 2)
+            {
+                // Vertices and texture coords.
+                vertexIndices.Add(Int32.Parse(v0[0]));
+                vertexIndices.Add(Int32.Parse(v1[0]));
+                vertexIndices.Add(Int32.Parse(v2[0]));
             }
             else if (v0.Length == 3 && v1.Length == 3 && v2.Length == 3)
             {
+                // Vertices and possible texture coords and normals.
+                vertexIndices.Add(Int32.Parse(v0[0]));
+                vertexIndices.Add(Int32.Parse(v1[0]));
+                vertexIndices.Add(Int32.Parse(v2[0]));
+
                 if (v0[1] != string.Empty)
                 {
                     uvIndices.Add(Int32.Parse(v0[1]));
@@ -64,10 +80,6 @@ namespace GameEngine.Core.Utilities.ObjParser
             {
                 throw new GameEngineException("could not deserialize face data");
             }
-
-            vertexIndices.Add(Int32.Parse(v0[0]));
-            vertexIndices.Add(Int32.Parse(v1[0]));
-            vertexIndices.Add(Int32.Parse(v2[0]));
 
             Face face = new Face();
             face.Vertices = vertexIndices;

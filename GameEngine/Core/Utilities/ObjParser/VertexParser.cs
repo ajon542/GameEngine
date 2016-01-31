@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿
+using System;
+using System.Collections.Generic;
 using GameEngine.Core.Debugging;
 
 namespace GameEngine.Core.Utilities.ObjParser
@@ -18,8 +20,8 @@ namespace GameEngine.Core.Utilities.ObjParser
 
         public override void Parse(string input)
         {
-            string[] vertexData = input.Split(' ');
-            if (vertexData.Length != 3)
+            string[] vertexData = input.Split(new char[]{' '} , StringSplitOptions.RemoveEmptyEntries);
+            if (vertexData.Length < 3)
             {
                 throw new GameEngineException("could not deserialize vertex data");
             }

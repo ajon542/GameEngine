@@ -6,10 +6,7 @@ namespace GameEngine.Core.Utilities.ObjParser
 {
     class ObjFile
     {
-        public List<Vector3> Vertices { get; set; }
-        public List<Vector2> UVs { get; set; }
-        public List<Vector3> Normals { get; set; }
-        public List<int> Indices { get; set; }
+        public Mesh Mesh { get; set; }
 
         private List<Vertex> vertices = new List<Vertex>();
         private List<Normal> normals = new List<Normal>();
@@ -52,10 +49,8 @@ namespace GameEngine.Core.Utilities.ObjParser
             }
 
             // Map the data into the Vertices, Normals, TexCoords and Indices data structures.
-            Vertices = new List<Vector3>();
-            Normals = new List<Vector3>();
-            UVs = new List<Vector2>();
-            Indices = new List<int>();
+            Mesh = new Mesh();
+
             foreach (Face face in faces)
             {
                 // Vertices.
@@ -63,32 +58,53 @@ namespace GameEngine.Core.Utilities.ObjParser
                 int v1 = face.Vertices[1] - 1;
                 int v2 = face.Vertices[2] - 1;
 
-                Vertices.Add(new Vector3(vertices[v0].X, vertices[v0].Y, vertices[v0].Z));
-                Vertices.Add(new Vector3(vertices[v1].X, vertices[v1].Y, vertices[v1].Z));
-                Vertices.Add(new Vector3(vertices[v2].X, vertices[v2].Y, vertices[v2].Z));
-
-                // Normals.
-                int n0 = face.Normals[0] - 1;
-                int n1 = face.Normals[1] - 1;
-                int n2 = face.Normals[2] - 1;
-
-                Normals.Add(new Vector3(normals[n0].X, normals[n0].Y, normals[n0].Z));
-                Normals.Add(new Vector3(normals[n1].X, normals[n1].Y, normals[n1].Z));
-                Normals.Add(new Vector3(normals[n2].X, normals[n2].Y, normals[n2].Z));
-
-                // Texture Coords.
-                int u0 = face.UVs[0] - 1;
-                int u1 = face.UVs[1] - 1;
-                int u2 = face.UVs[2] - 1;
-
-                UVs.Add(new Vector2(uvs[u0].U, uvs[u0].V));
-                UVs.Add(new Vector2(uvs[u1].U, uvs[u1].V));
-                UVs.Add(new Vector2(uvs[u2].U, uvs[u2].V));
+                Mesh.Vertices.Add(new Vector3(vertices[v0].X, vertices[v0].Y, vertices[v0].Z));
+                Mesh.Vertices.Add(new Vector3(vertices[v1].X, vertices[v1].Y, vertices[v1].Z));
+                Mesh.Vertices.Add(new Vector3(vertices[v2].X, vertices[v2].Y, vertices[v2].Z));
             }
 
-            for (int i = 0; i < Vertices.Count; ++i)
+            // Add the optional normals.
+            if(faces[0].Normals.Count > 0)
             {
-                Indices.Add(i);
+                foreach (Face face in faces)
+                {
+                    int n0 = face.Normals[0] - 1;
+                    int n1 = face.Normals[1] - 1;
+                    int n2 = face.Normals[2] - 1;
+
+                    Mesh.Normals.Add(new Vector3(normals[n0].X, normals[n0].Y, normals[n0].Z));
+                    Mesh.Normals.Add(new Vector3(normals[n1].X, normals[n1].Y, normals[n1].Z));
+                    Mesh.Normals.Add(new Vector3(normals[n2].X, normals[n2].Y, normals[n2].Z));
+                }
+            }
+            else
+            {
+                Mesh.GenerateNormals();
+            }
+
+            // Add the optional texture coords.
+            if (faces[0].UVs.Count > 0)
+            {
+                foreach (Face face in faces)
+                {
+                    int u0 = face.UVs[0] - 1;
+                    int u1 = face.UVs[1] - 1;
+                    int u2 = face.UVs[2] - 1;
+
+                    Mesh.UV.Add(new Vector2(uvs[u0].U, uvs[u0].V));
+                    Mesh.UV.Add(new Vector2(uvs[u1].U, uvs[u1].V));
+                    Mesh.UV.Add(new Vector2(uvs[u2].U, uvs[u2].V));
+                }
+            }
+            else
+            {
+                Mesh.GenerateUVs();
+            }
+
+            // Generate the indices.
+            for (int i = 0; i < Mesh.Vertices.Count; ++i)
+            {
+                Mesh.Indices.Add(i);
             }
         }
     }

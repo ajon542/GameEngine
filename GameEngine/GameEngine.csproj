@@ -210,6 +210,9 @@
     <Content Include="Core\GameSpecific\Assets\Mesh\Monkey.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Core\GameSpecific\Assets\Mesh\Dragon.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Core\Shaders\ambient-frag.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

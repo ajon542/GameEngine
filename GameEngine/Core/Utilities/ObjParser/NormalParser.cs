@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameEngine.Core.Debugging;
 
 namespace GameEngine.Core.Utilities.ObjParser
@@ -18,7 +19,7 @@ namespace GameEngine.Core.Utilities.ObjParser
 
         public override void Parse(string input)
         {
-            string[] normalData = input.Split(' ');
+            string[] normalData = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (normalData.Length != 3)
             {
                 throw new GameEngineException("could not deserialize normal data");

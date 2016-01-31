@@ -74,6 +74,22 @@ namespace GameEngine.Core
         }
 
         /// <summary>
+        /// Generate the texture coords for the mesh.
+        /// </summary>
+        /// <remarks>
+        /// This is a hack and sets every vertex tex coord to (0, 0).
+        /// </remarks>
+        public void GenerateUVs()
+        {
+            UV.Clear();
+
+            for (int i = 0; i < Vertices.Count; ++i)
+            {
+                UV.Add(new Vector2(0, 0));
+            }
+        }
+
+        /// <summary>
         /// Clears the mesh.
         /// </summary>
         public void Clear()
