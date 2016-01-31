@@ -2,12 +2,14 @@
 
 in vec3 VertexNormal;
 in vec3 VertexPosition;
+in vec3 VertexColor;
 in vec2 VertexUV;
 
 out VShaderOut
 {
     vec3 Normal;
     vec3 Position;
+    vec4 Color;
     vec2 UV;
 } vShaderOut;
 
@@ -24,5 +26,6 @@ main()
     mat3 normMatrix = transpose(inverse(mat3(ModelMatrix)));
     vShaderOut.Normal = normMatrix * VertexNormal;
     vShaderOut.Position = (ModelMatrix * vec4(VertexPosition, 1.0)).xyz;
+    vShaderOut.Color = vec4(VertexColor, 1.0);
     vShaderOut.UV = VertexUV;
 }
