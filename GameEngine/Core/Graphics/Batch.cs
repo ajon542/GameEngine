@@ -113,6 +113,8 @@ namespace GameEngine.Core.Graphics
             this.mesh = mesh;
             renderType = mesh.RenderType;
 
+            // TODO: Supply 1x1 pixel texture in the case where a texture not supplied.
+            // See: http://stackoverflow.com/questions/14978986/find-out-if-gl-texture-2d-is-active-in-shader
             // Supply either uv coords or basic colors.
             if (mesh.UV.Count != 0)
             {
