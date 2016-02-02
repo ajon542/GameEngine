@@ -218,10 +218,10 @@
     <None Include="Core\Shaders\ambient-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Core\Shaders\phong-tex-frag.glsl">
+    <None Include="Core\Shaders\phong-frag.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Core\Shaders\phong-tex-vert.glsl">
+    <None Include="Core\Shaders\phong-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\frag.glsl">
