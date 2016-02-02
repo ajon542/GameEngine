@@ -1,12 +1,15 @@
-﻿#version 330
+﻿#version 430 core
 
-uniform vec4 Ambient;
 in vec4 Color;
+
 out vec4 FragColor;
+
+uniform float LightIntensity;
+uniform vec3 LightColor;
  
 void
 main()
 {
-    vec4 scatteredLight = Ambient;
-    FragColor = min(Color * scatteredLight, vec4(1.0));
+    vec4 scatteredLight = vec4(LightColor, 1.0);
+    FragColor = min(Color * scatteredLight * LightIntensity, vec4(1.0));
 }

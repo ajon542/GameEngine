@@ -1,8 +1,10 @@
-﻿#version 330
+﻿#version 430 core
  
 in vec3 VertexPosition;
 in vec3 VertexColor;
+
 out vec4 Color;
+
 uniform mat4 MVPMatrix;
  
 void
