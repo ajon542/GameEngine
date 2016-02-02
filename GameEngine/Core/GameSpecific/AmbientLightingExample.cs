@@ -82,7 +82,7 @@ namespace GameEngine.Core.GameSpecific
             shaders["default"].EnableVertexAttribArrays();
 
             float lightIntensity = 1.0f;
-            Vector3 lightColor = new Vector3(0.5f, 0.5f, 0.0f);
+            Vector3 lightColor = new Vector3(0.5f, 0.5f, 0.5f);
             GL.Uniform1(shaders["default"].GetUniform("LightIntensity"), 1, ref lightIntensity);
             GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref lightColor);
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);

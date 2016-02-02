@@ -23,7 +23,7 @@ namespace GameEngine.Core.GameSpecific
         public override void Initialize()
         {
             ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
+            file.Read("Core/GameSpecific/Assets/Mesh/Dragon.obj");
             mesh = file.Mesh;
 
             batch = new ShaderBatch(mesh);

@@ -10,6 +10,7 @@ uniform vec3 LightColor;
 void
 main()
 {
-    vec4 scatteredLight = vec4(LightColor, 1.0);
-    FragColor = min(Color * scatteredLight * LightIntensity, vec4(1.0));
+    vec3 ambient = LightIntensity * LightColor;
+	vec4 result = vec4(ambient, 1.0) * Color;
+    FragColor = min(result, vec4(1.0));
 }
