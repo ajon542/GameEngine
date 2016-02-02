@@ -113,23 +113,13 @@ namespace GameEngine.Core.Graphics
             this.mesh = mesh;
             renderType = mesh.RenderType;
 
-            // TODO: Supply 1x1 pixel texture in the case where a texture not supplied.
-            // See: http://stackoverflow.com/questions/14978986/find-out-if-gl-texture-2d-is-active-in-shader
-            // Supply either uv coords or basic colors.
-            if (mesh.UV.Count != 0)
-            {
-                shaders.Add("default", new ShaderProgram("Core/Shaders/phong-tex-vert.glsl", "Core/Shaders/phong-tex-frag.glsl", true));
-                textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
-                uvBuffer = shaders["default"].GetBuffer("VertexUV");
-                uvAttr = shaders["default"].GetAttribute("VertexUV");
-            }
-            else
-            {
-                shaders.Add("default", new ShaderProgram("Core/Shaders/phong-vert.glsl", "Core/Shaders/phong-frag.glsl", true));
-                colourBuffer = shaders["default"].GetBuffer("VertexColor");
-                colourAttr = shaders["default"].GetAttribute("VertexColor");
-            }
+            shaders.Add("default", new ShaderProgram("Core/Shaders/phong-tex-vert.glsl", "Core/Shaders/phong-tex-frag.glsl", true));
+            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
 
+            uvBuffer = shaders["default"].GetBuffer("VertexUV");
+            uvAttr = shaders["default"].GetAttribute("VertexUV");
+            colourBuffer = shaders["default"].GetBuffer("VertexColor");
+            colourAttr = shaders["default"].GetAttribute("VertexColor");
             positionBuffer = shaders["default"].GetBuffer("VertexPosition");
             positionAttr = shaders["default"].GetAttribute("VertexPosition");
             normalBuffer = shaders["default"].GetBuffer("VertexNormal");
@@ -156,19 +146,13 @@ namespace GameEngine.Core.Graphics
             GL.BufferData(BufferTarget.ArrayBuffer, verticesLength, vertices, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(positionAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            // Supply either uv coords or basic colors.
-            if (mesh.UV.Count != 0)
-            {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
-                GL.BufferData(BufferTarget.ArrayBuffer, uvsLength, uv, BufferUsageHint.StaticDraw);
-                GL.VertexAttribPointer(uvAttr, 2, VertexAttribPointerType.Float, false, 0, 0);
-            }
-            else
-            {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
-                GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
-                GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
-            }
+            GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
+            GL.BufferData(BufferTarget.ArrayBuffer, uvsLength, uv, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(uvAttr, 2, VertexAttribPointerType.Float, false, 0, 0);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
+            GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
+            GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, normalBuffer);
             GL.BufferData(BufferTarget.ArrayBuffer, normalsLength, normals, BufferUsageHint.StaticDraw);
@@ -182,12 +166,9 @@ namespace GameEngine.Core.Graphics
         {
             GL.UseProgram(shaders["default"].ProgramId);
 
-            if (mesh.UV.Count != 0)
-            {
-                GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2D, textureId);
-                GL.Uniform1(shaders["default"].GetUniform("mainTexture"), TextureUnit.Texture0 - TextureUnit.Texture0);
-            }
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, textureId);
+            GL.Uniform1(shaders["default"].GetUniform("mainTexture"), TextureUnit.Texture0 - TextureUnit.Texture0);
 
             GL.BindVertexArray(vertexArrObject);
 

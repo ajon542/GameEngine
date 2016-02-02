@@ -4,6 +4,7 @@ in VShaderOut
 {
     vec3 Normal;
     vec3 Position;
+	vec4 Color;
     vec2 UV;
 } fShaderIn;
 
@@ -29,7 +30,8 @@ main()
     vec3 n = normalize(fShaderIn.Normal);
 
     // Colors
-    vec4 texcolor = vec4(texture(mainTexture, fShaderIn.UV).rgb, 1);
+	vec3 col = texture(mainTexture, fShaderIn.UV).rgb * fShaderIn.Color.rgb;
+    vec4 texcolor = vec4(col, 1);
     vec4 light_ambient = LightAmbientIntensity * vec4(LightColor, 0.0);
     vec4 light_diffuse = LightDiffuseIntensity * vec4(LightColor, 0.0);
 

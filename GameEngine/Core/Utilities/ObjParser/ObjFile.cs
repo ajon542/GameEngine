@@ -98,16 +98,18 @@ namespace GameEngine.Core.Utilities.ObjParser
             }
             else
             {
-                // Generate the colors. This should probably come from the object file too.
+                // Generate the fake UVs.
+                // See: http://stackoverflow.com/questions/14978986/find-out-if-gl-texture-2d-is-active-in-shader
                 for (int i = 0; i < Mesh.Vertices.Count; ++i)
                 {
-                    Mesh.Colours.Add(new Vector3(0.9f, 0.9f, 0.9f));
+                    Mesh.UV.Add(new Vector2(0, 0));
                 }
             }
 
-            // Generate the indices.
+            // Generate the indices and default colors.
             for (int i = 0; i < Mesh.Vertices.Count; ++i)
             {
+                Mesh.Colours.Add(new Vector3(1, 1, 1));
                 Mesh.Indices.Add(i);
             }
         }
