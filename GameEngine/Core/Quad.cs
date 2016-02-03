@@ -13,6 +13,9 @@ namespace GameEngine.Core
         /// </summary>
         public Quad()
         {
+            // TODO: Something weird going on with the rotation of this object.
+            // When I rotate it 90 around the x-axis it appears to only rotate 45 degrees.
+            // I need to investigate this further.
             Vertices = new List<Vector3>
             {
                 new Vector3(-1.0f, -1.0f, 0.0f),
