@@ -30,7 +30,7 @@ main()
     vec3 n = normalize(fShaderIn.Normal);
 
     // Colors
-	vec3 col = texture(mainTexture, fShaderIn.UV).rgb * fShaderIn.Color.rgb;
+    vec3 col = texture(mainTexture, fShaderIn.UV).rgb * fShaderIn.Color.rgb;
     vec4 texcolor = vec4(col, 1);
     vec4 light_ambient = LightAmbientIntensity * vec4(LightColor, 0.0);
     vec4 light_diffuse = LightDiffuseIntensity * vec4(LightColor, 0.0);
