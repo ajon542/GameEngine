@@ -30,7 +30,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("default", new ShaderProgram("Core/Shaders/ambient-diffuse-vert.glsl", "Core/Shaders/ambient-diffuse-frag.glsl", true));
 
             ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/Monkey.obj");
+            file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
             mesh = file.Mesh;
 
             colourBuffer = shaders["default"].GetBuffer("VertexColor");
@@ -100,10 +100,10 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["default"].EnableVertexAttribArrays();
 
-            float lightAmbientIntensity = 0.4f;
-            float lightDiffuseIntensity = 0.8f;
-            Vector3 lightColor = new Vector3(0.8f, 0.8f, 0.8f);
-            Vector3 lightDirection = new Vector3(-5, -4, -3);
+            float lightAmbientIntensity = 0.01f;
+            float lightDiffuseIntensity = 0.75f;
+            Vector3 lightColor = new Vector3(1.0f, 1.0f, 1.0f);
+            Vector3 lightDirection = new Vector3(1.0f, 0.0f, 0.0f);
             lightDirection.Normalize();
             GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), 1, ref lightAmbientIntensity);
             GL.Uniform1(shaders["default"].GetUniform("LightDiffuseIntensity"), 1, ref lightDiffuseIntensity);
