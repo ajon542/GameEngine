@@ -8,7 +8,7 @@ using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
-    class AmbientLightingExample : Scene
+    class AmbientExample : Scene
     {
         private uint vertexArrObject;
         private int indicesCount;
