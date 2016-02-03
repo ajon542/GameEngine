@@ -22,16 +22,12 @@ namespace GameEngine.Core.GameSpecific
         private int normalAttr;
 
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Mesh();
+        private Mesh mesh = new Sphere(6, 2);
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         public override void Initialize()
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/ads-vert.glsl", "Core/Shaders/ads-frag.glsl", true));
-
-            ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/Dragon.obj");
-            mesh = file.Mesh;
 
             colourBuffer = shaders["default"].GetBuffer("VertexColor");
             colourAttr = shaders["default"].GetAttribute("VertexColor");
@@ -103,10 +99,10 @@ namespace GameEngine.Core.GameSpecific
             float lightAmbientIntensity = 0.01f;
             float lightDiffuseIntensity = 0.75f;
             Vector3 lightColor = new Vector3(1.0f, 1.0f, 1.0f);
-            Vector3 lightDirection = new Vector3(1.0f, 0.0f, 0.0f);
+            Vector3 lightDirection = new Vector3(-5, -5, -5);
             lightDirection.Normalize();
-            float specularIntensity = 1;
-            float specularPower = 30;
+            float specularIntensity = 0.8f;
+            float specularPower = 100;
 
             Matrix4 eyeWorldPos = MainCamera.ViewMatrix;
             GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), 1, ref lightAmbientIntensity);
