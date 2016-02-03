@@ -4,7 +4,7 @@ in VShaderOut
 {
     vec3 Normal;
     vec3 Position;
-	vec4 Color;
+    vec4 Color;
     vec2 UV;
 } fShaderIn;
 
