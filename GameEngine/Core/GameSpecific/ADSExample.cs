@@ -30,7 +30,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("default", new ShaderProgram("Core/Shaders/ads-vert.glsl", "Core/Shaders/ads-frag.glsl", true));
 
             ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
+            file.Read("Core/GameSpecific/Assets/Mesh/Dragon.obj");
             mesh = file.Mesh;
 
             colourBuffer = shaders["default"].GetBuffer("VertexColor");
@@ -105,11 +105,19 @@ namespace GameEngine.Core.GameSpecific
             Vector3 lightColor = new Vector3(1.0f, 1.0f, 1.0f);
             Vector3 lightDirection = new Vector3(1.0f, 0.0f, 0.0f);
             lightDirection.Normalize();
+            float specularIntensity = 1;
+            float specularPower = 30;
+
+            Matrix4 eyeWorldPos = MainCamera.ViewMatrix;
             GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), 1, ref lightAmbientIntensity);
             GL.Uniform1(shaders["default"].GetUniform("LightDiffuseIntensity"), 1, ref lightDiffuseIntensity);
             GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref lightColor);
             GL.Uniform3(shaders["default"].GetUniform("LightDirection"), ref lightDirection);
 
+            GL.Uniform1(shaders["default"].GetUniform("SpecularIntensity"), 1, ref specularIntensity);
+            GL.Uniform1(shaders["default"].GetUniform("SpecularPower"), 1, ref specularPower);
+
+            GL.UniformMatrix4(shaders["default"].GetUniform("EyeWorldPos"), false, ref eyeWorldPos);
             GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref gameObject.ModelMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
 
