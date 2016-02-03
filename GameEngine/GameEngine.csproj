@@ -90,6 +90,7 @@
     <Compile Include="Core\Debugging\GameEngineException.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\GameObjectHierarchy.cs" />
+    <Compile Include="Core\GameSpecific\ADSExample.cs" />
     <Compile Include="Core\GameSpecific\AmbientExample.cs" />
     <Compile Include="Core\GameSpecific\CubeBehaviour.cs" />
     <Compile Include="Core\GameSpecific\DiffuseExample.cs" />
@@ -214,6 +215,12 @@
     <Content Include="Core\GameSpecific\Assets\Mesh\Dragon.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Core\Shaders\ads-frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Core\Shaders\ads-vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Core\Shaders\ambient-diffuse-frag.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
