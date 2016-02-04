@@ -70,25 +70,19 @@ namespace GameEngine.Core.GameSpecific
             GL.Enable(EnableCap.CullFace);
         }
 
-        public float degrees;
         public override void Update()
         {
-            var keyboard = Keyboard.GetState();
-            if (keyboard[Key.Y])
-            {
-                degrees -= 1f;
-            }
-
             MainCamera.Update();
 
             gameObject.Transform.Position = new Vector3(0, 0, 0);
-            //gameObject.Transform.Rotation = new Quaternion((float)-Math.Sqrt(0.5), 0, 0, (float)Math.Sqrt(0.5));
-            gameObject.Transform.Rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DegreesToRadians(degrees));
+            gameObject.Transform.Scale = new Vector3(40, 40, 1);
+            gameObject.Transform.Rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DegreesToRadians(-90));
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
+        // TODO: Move into a helper class.
         private float DegreesToRadians(float degrees)
         {
             return (degrees * (float)Math.PI) / 180.0f;

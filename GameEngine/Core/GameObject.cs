@@ -211,9 +211,11 @@ namespace GameEngine.Core
         {
             ModelMatrix =
                 Matrix4.CreateScale(Transform.Scale) *
-                Matrix4.CreateRotationX(Transform.Rotation.X) *
-                Matrix4.CreateRotationY(Transform.Rotation.Y) *
-                Matrix4.CreateRotationZ(Transform.Rotation.Z) *
+                // TODO: Need to make sure other examples work...
+                //Matrix4.CreateRotationX(Transform.Rotation.X) *
+                //Matrix4.CreateRotationY(Transform.Rotation.Y) *
+                //Matrix4.CreateRotationZ(Transform.Rotation.Z) *
+                Matrix4.CreateFromQuaternion(Transform.Rotation) *
                 Matrix4.CreateTranslation(Transform.Position);
         }
     }
