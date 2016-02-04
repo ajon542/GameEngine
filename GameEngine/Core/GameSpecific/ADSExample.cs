@@ -74,7 +74,7 @@ namespace GameEngine.Core.GameSpecific
         {
             MainCamera.Update();
 
-            gameObject.Transform.Position = new Vector3(0, 0, 0);
+            gameObject.Transform.Position = new Vector3(0, -10, 0);
             gameObject.Transform.Scale = new Vector3(40, 40, 1);
             gameObject.Transform.Rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DegreesToRadians(-90));
             gameObject.CalculateModelMatrix();
@@ -99,7 +99,8 @@ namespace GameEngine.Core.GameSpecific
             float lightAmbientIntensity = 0.01f;
             float lightDiffuseIntensity = 0.75f;
             Vector3 lightColor = new Vector3(1.0f, 1.0f, 1.0f);
-            Vector3 lightDirection = new Vector3(-5, -5, -5);
+            // TODO: The light needs a position.
+            Vector3 lightDirection = new Vector3(0, -5, 0);
             lightDirection.Normalize();
             float specularIntensity = 0.8f;
             float specularPower = 100;
