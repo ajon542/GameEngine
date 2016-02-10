@@ -102,10 +102,10 @@ namespace GameEngine.Core.GameSpecific
             float lightDiffuseIntensity = 0.75f;
             Vector3 lightColor = new Vector3(1.0f, 1.0f, 1.0f);
             // TODO: The light needs a position.
-            Vector3 lightDirection = new Vector3(0, -5, 0);
+            Vector3 lightDirection = new Vector3(0, -5, -5);
             lightDirection.Normalize();
-            float specularIntensity = 0.8f;
-            float specularPower = 100;
+            float specularIntensity = 0.7f;
+            float specularPower = 5;
 
             Matrix4 eyeWorldPos = MainCamera.ViewMatrix;
             GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), 1, ref lightAmbientIntensity);
