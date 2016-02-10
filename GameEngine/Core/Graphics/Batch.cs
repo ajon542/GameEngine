@@ -114,7 +114,7 @@ namespace GameEngine.Core.Graphics
             renderType = mesh.RenderType;
 
             shaders.Add("default", new ShaderProgram("Core/Shaders/phong-vert.glsl", "Core/Shaders/phong-frag.glsl", true));
-            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Chrome.png");
+            textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/White-1x1.png");
 
             uvBuffer = shaders["default"].GetBuffer("VertexUV");
             uvAttr = shaders["default"].GetAttribute("VertexUV");
