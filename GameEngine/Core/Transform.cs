@@ -26,7 +26,7 @@ namespace GameEngine.Core
         {
             Position = new Vector3();
             Scale = new Vector3(1, 1, 1);
-            Rotation = new Quaternion();
+            Rotation = Quaternion.Identity;
         }
 
         /// <summary>

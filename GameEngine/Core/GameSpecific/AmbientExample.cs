@@ -27,7 +27,7 @@ namespace GameEngine.Core.GameSpecific
             shaders.Add("default", new ShaderProgram("Core/Shaders/ambient-vert.glsl", "Core/Shaders/ambient-frag.glsl", true));
 
             ObjFile file = new ObjFile();
-            file.Read("Core/GameSpecific/Assets/Mesh/Cube.obj");
+            file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
             mesh = file.Mesh;
 
             colourBuffer = shaders["default"].GetBuffer("VertexColor");
