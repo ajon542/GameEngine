@@ -8,8 +8,7 @@ namespace GameEngine.Core.GameSpecific
     public class GridExample : Scene
     {
         // TODO: GridExample is broken.
-        private GameObject gameObject = new GameObject();
-
+        // We are adjusting the camera but we are doing nothing with it.
         private Batch batch;
 
         public override void Initialize()
@@ -20,10 +19,6 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             MainCamera.Update();
-
-            gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()
