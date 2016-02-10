@@ -174,10 +174,13 @@ namespace GameEngine.Core.Graphics
 
             shaders["default"].EnableVertexAttribArrays();
 
-            Vector3 ambientColor = new Vector3(0.1880f, 0.1880f, 0.1880f);
-            Vector3 diffuseColor = new Vector3(1.0f, 1.0f, 1.0f);
-            Vector3 specularColor = new Vector3(1.0f, 1.0f, 1.0f);
-            float specularExponent = 2.0f;
+            // TODO: Needs to be part of the game object mesh or there abouts.
+            Material material = new Material();
+
+            Vector3 ambientColor = material.Ambient;
+            Vector3 diffuseColor = material.Diffuse;
+            Vector3 specularColor = material.Specular;
+            float specularExponent = material.SpecularExponent;
 
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("ViewMatrix"), false, ref viewMatrix);
