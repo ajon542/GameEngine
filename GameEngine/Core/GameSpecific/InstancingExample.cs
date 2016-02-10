@@ -3,96 +3,91 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using GameEngine.Core.Graphics;
+
 namespace GameEngine.Core.GameSpecific
 {
     /// <summary>
     /// An example to investigate the performance enhancements acheived from instancing.
     /// </summary>
-    /// <remarks>
-    /// TODO: Complete the instancing example.
-    /// http://ogldev.atspace.co.uk/www/tutorial33/tutorial33.html
-    /// http://sol.gfxile.net/instancing.html
-    /// </remarks>
     public class InstancingExample : Scene
     {
-        /// <summary>
-        /// Vertex array object identifier.
-        /// </summary>
         uint vertexArrayId;
-
-        /// <summary>
-        /// Vertex buffer identifier.
-        /// </summary>
         uint vertexbuffer;
 
-        /// <summary>
-        /// Vertex buffer data.
-        /// </summary>
-        float[] vertexBufferData =
+        float[] square_vertices =
         {
-            -1.0f, -1.0f, -5.0f,
-             1.0f, -1.0f, -5.0f,
-             0.0f,  1.0f, -5.0f,
+            -1.0f, -1.0f, 0.0f, 1.0f,
+             1.0f, -1.0f, 0.0f, 1.0f,
+             1.0f,  1.0f, 0.0f, 1.0f,
+            -1.0f,  1.0f, 0.0f, 1.0f
+        };
+
+        float[] instance_colors =
+        {
+            1.0f, 0.0f, 0.0f, 1.0f,
+            0.0f, 1.0f, 0.0f, 1.0f,
+            0.0f, 0.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 0.0f, 1.0f
+        };
+
+        float[] instance_positions =
+        {
+            -2.0f, -2.0f, 0.0f, 0.0f,
+             2.0f, -2.0f, 0.0f, 0.0f,
+             2.0f,  2.0f, 0.0f, 0.0f,
+            -2.0f,  2.0f, 0.0f, 0.0f
         };
 
         private GameObject gameObject = new GameObject();
-        private List<Matrix4> transformMatrices = new List<Matrix4>();
+        private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
+        int offset;
         public override void Initialize()
         {
-            // Generate a VAO and set it as the current one.
+            shaders.Add("default", new ShaderProgram("Core/Shaders/instanced-vert.glsl", "Core/Shaders/instanced-frag.glsl", true));
+
             GL.GenVertexArrays(1, out vertexArrayId);
+            GL.GenBuffers(1, out vertexbuffer);
             GL.BindVertexArray(vertexArrayId);
 
-            // Generate 1 buffer, put the resulting identifier in vertexbuffer.
-            GL.GenBuffers(1, out vertexbuffer);
-
-            // The following commands will talk about our 'vertexbuffer' buffer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
 
-            // Give our vertices to OpenGL.
-            IntPtr vertexBufferSize = (IntPtr)(vertexBufferData.Length * Vector3.SizeInBytes);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertexBufferData, BufferUsageHint.StaticDraw);
+            int vertexBufferSize = (square_vertices.Length * Vector3.SizeInBytes);
+            int colorBufferSize = (instance_colors.Length * Vector3.SizeInBytes);
+            int instanceBufferSize = (instance_positions.Length * Vector3.SizeInBytes);
 
-            GL.VertexAttribPointer(
-                0,                              // attribute pointer, must match the layout in the shader.
-                3,                              // size - Vector3
-                VertexAttribPointerType.Float,  // type
-                false,                          // normalized
-                0,                              // stride
-                0                               // array buffer offset
-                );
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertexBufferSize + colorBufferSize + instanceBufferSize), IntPtr.Zero, BufferUsageHint.StaticDraw);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)vertexBufferSize, square_vertices);
+            offset += vertexBufferSize;
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)colorBufferSize, instance_colors);
+            offset += colorBufferSize;
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)instanceBufferSize, instance_positions);
+            offset += instanceBufferSize;
 
-            int count = 300;
-            // Initialize the matrices.
-            for (int x = -count; x < count; x++)
-            {
-                for (int y = -count; y < count; y++)
-                {
-                    gameObject.Transform.Position = new Vector3(x, y, -600);
-                    gameObject.CalculateModelMatrix();
-                    gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-                    gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
+            GL.VertexAttribPointer(0, 4, VertexAttribPointerType.Float, false, 0, 0);
+            GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, false, 0, vertexBufferSize);
+            GL.VertexAttribPointer(2, 4, VertexAttribPointerType.Float, false, 0, vertexBufferSize + colorBufferSize);
 
-                    transformMatrices.Add(gameObject.ModelViewProjectionMatrix);
-                }
-            }
+            GL.EnableVertexAttribArray(0);
+            GL.EnableVertexAttribArray(1);
+            GL.EnableVertexAttribArray(2);
+
+            GL.VertexAttribDivisor(1, 1);
+            GL.VertexAttribDivisor(2, 1);
         }
 
 
         public override void Render()
         {
-            GL.EnableVertexAttribArray(0);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
+            GL.UseProgram(shaders["default"].ProgramId);
+            GL.BindVertexArray(vertexArrayId);
 
-            foreach (Matrix4 matrix in transformMatrices)
-            {
-                Matrix4 m = matrix;
-                GL.LoadMatrix(ref m);
-                GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
-            }
+            shaders["default"].EnableVertexAttribArrays();
 
-            GL.DisableVertexAttribArray(0);
+            GL.DrawArraysInstanced(PrimitiveType.TriangleFan, 0, 4, 4);
+
+            shaders["default"].DisableVertexAttribArrays();
         }
     }
 }
