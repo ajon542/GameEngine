@@ -69,14 +69,9 @@ namespace GameEngine.Core.GameSpecific
             GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, false, 0, vertexBufferSize);
             GL.VertexAttribPointer(2, 4, VertexAttribPointerType.Float, false, 0, vertexBufferSize + colorBufferSize);
 
-            GL.EnableVertexAttribArray(0);
-            GL.EnableVertexAttribArray(1);
-            GL.EnableVertexAttribArray(2);
-
             GL.VertexAttribDivisor(1, 1);
             GL.VertexAttribDivisor(2, 1);
         }
-
 
         public override void Render()
         {
