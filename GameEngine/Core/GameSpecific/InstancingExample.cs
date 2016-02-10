@@ -15,7 +15,7 @@ namespace GameEngine.Core.GameSpecific
         uint vertexArrayId;
         uint vertexbuffer;
 
-        float[] square_vertices =
+        float[] vertices =
         {
             -1.0f, -1.0f, 0.0f, 1.0f,
              1.0f, -1.0f, 0.0f, 1.0f,
@@ -23,7 +23,7 @@ namespace GameEngine.Core.GameSpecific
             -1.0f,  1.0f, 0.0f, 1.0f
         };
 
-        float[] instance_colors =
+        float[] colors =
         {
             1.0f, 0.0f, 0.0f, 1.0f,
             0.0f, 1.0f, 0.0f, 1.0f,
@@ -31,7 +31,7 @@ namespace GameEngine.Core.GameSpecific
             1.0f, 1.0f, 0.0f, 1.0f
         };
 
-        float[] instance_positions =
+        float[] positions =
         {
             -2.0f, -2.0f, 0.0f, 0.0f,
              2.0f, -2.0f, 0.0f, 0.0f,
@@ -53,16 +53,16 @@ namespace GameEngine.Core.GameSpecific
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
 
-            int vertexBufferSize = (square_vertices.Length * Vector3.SizeInBytes);
-            int colorBufferSize = (instance_colors.Length * Vector3.SizeInBytes);
-            int instanceBufferSize = (instance_positions.Length * Vector3.SizeInBytes);
+            int vertexBufferSize = (vertices.Length * sizeof(float));
+            int colorBufferSize = (colors.Length * sizeof(float));
+            int instanceBufferSize = (positions.Length * sizeof(float));
 
             GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertexBufferSize + colorBufferSize + instanceBufferSize), IntPtr.Zero, BufferUsageHint.StaticDraw);
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)vertexBufferSize, square_vertices);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)vertexBufferSize, vertices);
             offset += vertexBufferSize;
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)colorBufferSize, instance_colors);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)colorBufferSize, colors);
             offset += colorBufferSize;
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)instanceBufferSize, instance_positions);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)instanceBufferSize, positions);
             offset += instanceBufferSize;
 
             GL.VertexAttribPointer(0, 4, VertexAttribPointerType.Float, false, 0, 0);
