@@ -27,6 +27,8 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
+            MainCamera.Position = new Vector3(0, 10, 100);
+
             shaders.Add("default", new ShaderProgram("Core/Shaders/ads-vert.glsl", "Core/Shaders/ads-frag.glsl", true));
 
             colourBuffer = shaders["default"].GetBuffer("VertexColor");
