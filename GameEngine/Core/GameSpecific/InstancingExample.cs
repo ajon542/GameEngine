@@ -36,14 +36,14 @@ namespace GameEngine.Core.GameSpecific
 
         float[] positions =
         {
-            -2.0f, -2.0f, 0.0f, 0.0f,
-             2.0f, -2.0f, 0.0f, 0.0f,
-             2.0f,  2.0f, 0.0f, 0.0f,
-            -2.0f,  2.0f, 0.0f, 0.0f,
-            -1.5f, -2.5f, 0.0f, 0.0f,
-             1.5f, -2.5f, 0.0f, 0.0f,
-             1.5f,  2.5f, 0.0f, 0.0f,
-            -1.5f,  2.5f, 0.0f, 0.0f
+            -2.0f, -2.0f, -5.0f, 0.0f,
+             2.0f, -2.0f, -5.0f, 0.0f,
+             2.0f,  2.0f, -5.0f, 0.0f,
+            -2.0f,  2.0f, -5.0f, 0.0f,
+            -1.5f, -2.5f, -10.0f, 0.0f,
+             1.5f, -2.5f, -10.0f, 0.0f,
+             1.5f,  2.5f, -10.0f, 0.0f,
+            -1.5f,  2.5f, -10.0f, 0.0f
         };
 
         private GameObject gameObject = new GameObject();
@@ -79,6 +79,18 @@ namespace GameEngine.Core.GameSpecific
 
             GL.VertexAttribDivisor(1, 1); // index of instance color
             GL.VertexAttribDivisor(2, 1); // index of instance position
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.CullFace);
+        }
+
+        public override void Update()
+        {
+            MainCamera.Update();
+
+            gameObject.CalculateModelMatrix();
+            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
+            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()
@@ -87,6 +99,8 @@ namespace GameEngine.Core.GameSpecific
             GL.BindVertexArray(vertexArrayId);
 
             shaders["default"].EnableVertexAttribArrays();
+
+            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
 
             int numberOfIndices = 4;
             int numberOfInstances = 8;

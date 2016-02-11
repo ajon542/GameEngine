@@ -9,8 +9,10 @@ out Fragment
     vec4 Color;
 } fragment;
 
+uniform mat4 MVPMatrix;
+
 void main(void)
 {
-    gl_Position = (VertexPosition + InstancePosition) * vec4(0.25, 0.25, 1.0, 1.0);
+    gl_Position = MVPMatrix * (VertexPosition + InstancePosition);
     fragment.Color = InstanceColor;
 }
