@@ -28,6 +28,10 @@ namespace GameEngine.Core.GameSpecific
             1.0f, 0.0f, 0.0f, 1.0f,
             0.0f, 1.0f, 0.0f, 1.0f,
             0.0f, 0.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+            0.0f, 1.0f, 0.0f, 1.0f,
+            0.0f, 0.0f, 1.0f, 1.0f,
             1.0f, 1.0f, 0.0f, 1.0f
         };
 
@@ -36,7 +40,11 @@ namespace GameEngine.Core.GameSpecific
             -2.0f, -2.0f, 0.0f, 0.0f,
              2.0f, -2.0f, 0.0f, 0.0f,
              2.0f,  2.0f, 0.0f, 0.0f,
-            -2.0f,  2.0f, 0.0f, 0.0f
+            -2.0f,  2.0f, 0.0f, 0.0f,
+            -1.5f, -2.5f, 0.0f, 0.0f,
+             1.5f, -2.5f, 0.0f, 0.0f,
+             1.5f,  2.5f, 0.0f, 0.0f,
+            -1.5f,  2.5f, 0.0f, 0.0f
         };
 
         private GameObject gameObject = new GameObject();
@@ -69,8 +77,8 @@ namespace GameEngine.Core.GameSpecific
             GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, false, 0, vertexBufferSize);
             GL.VertexAttribPointer(2, 4, VertexAttribPointerType.Float, false, 0, vertexBufferSize + colorBufferSize);
 
-            GL.VertexAttribDivisor(1, 1);
-            GL.VertexAttribDivisor(2, 1);
+            GL.VertexAttribDivisor(1, 1); // index of instance color
+            GL.VertexAttribDivisor(2, 1); // index of instance position
         }
 
         public override void Render()
@@ -80,7 +88,9 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["default"].EnableVertexAttribArrays();
 
-            GL.DrawArraysInstanced(PrimitiveType.TriangleFan, 0, 4, 4);
+            int numberOfIndices = 4;
+            int numberOfInstances = 8;
+            GL.DrawArraysInstanced(PrimitiveType.TriangleFan, 0, numberOfIndices, numberOfInstances);
 
             shaders["default"].DisableVertexAttribArrays();
         }
