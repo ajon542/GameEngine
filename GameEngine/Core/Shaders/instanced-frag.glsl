@@ -2,12 +2,12 @@
 
 in Fragment
 {
-    vec4 color;
+    vec4 Color;
 } fragment;
 
-out vec4 color;
+out vec4 FragColor;
 
 void main(void)
 {
-    color = fragment.color;
+    FragColor = fragment.Color;
 }  
