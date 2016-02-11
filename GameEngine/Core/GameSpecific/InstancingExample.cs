@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 using GameEngine.Core.Graphics;
@@ -65,7 +64,8 @@ namespace GameEngine.Core.GameSpecific
             int colorBufferSize = (colors.Length * sizeof(float));
             int instanceBufferSize = (positions.Length * sizeof(float));
 
-            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertexBufferSize + colorBufferSize + instanceBufferSize), IntPtr.Zero, BufferUsageHint.StaticDraw);
+            IntPtr totalLength = (IntPtr)(vertexBufferSize + colorBufferSize + instanceBufferSize);
+            GL.BufferData(BufferTarget.ArrayBuffer, totalLength, IntPtr.Zero, BufferUsageHint.StaticDraw);
             GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)vertexBufferSize, vertices);
             offset += vertexBufferSize;
             GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)colorBufferSize, colors);
