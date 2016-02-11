@@ -17,41 +17,35 @@ namespace GameEngine.Core.GameSpecific
 
         private List<Vector4> vertices = new List<Vector4>
         {
-            new Vector4(-1.0f, -1.0f, 0.0f, 1.0f),
-            new Vector4( 1.0f, -1.0f, 0.0f, 1.0f),
-            new Vector4( 1.0f,  1.0f, 0.0f, 1.0f),
-            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f)
+            new Vector4(-0.1f, -0.1f, 0.0f, 1.0f),
+            new Vector4( 0.1f, -0.1f, 0.0f, 1.0f),
+            new Vector4( 0.1f,  0.1f, 0.0f, 1.0f),
+            new Vector4(-0.1f,  0.1f, 0.0f, 1.0f)
         };
-
-        private List<Vector4> colors = new List<Vector4>
-        {
-            new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-            new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-            new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-            new Vector4(1.0f, 1.0f, 0.0f, 1.0f),
-            new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-            new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-            new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-            new Vector4(1.0f, 1.0f, 0.0f, 1.0f)
-        };
-
-        private List<Vector4> positions = new List<Vector4>
-        {
-            new Vector4(-2.0f, -2.0f,  -5.0f, 0.0f),
-            new Vector4( 2.0f, -2.0f,  -5.0f, 0.0f),
-            new Vector4( 2.0f,  2.0f,  -5.0f, 0.0f),
-            new Vector4(-2.0f,  2.0f,  -5.0f, 0.0f),
-            new Vector4(-1.5f, -2.5f, -10.0f, 0.0f),
-            new Vector4( 1.5f, -2.5f, -10.0f, 0.0f),
-            new Vector4( 1.5f,  2.5f, -10.0f, 0.0f),
-            new Vector4(-1.5f,  2.5f, -10.0f, 0.0f)
-        };
+        private List<Vector4> colors;
+        private List<Vector4> positions;
 
         private GameObject gameObject = new GameObject();
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
+        private int instanceCount = 100;
 
         public override void Initialize()
         {
+            colors = new List<Vector4>();
+            positions = new List<Vector4>();
+
+            for (int dep = 0; dep < instanceCount; ++dep)
+            {
+                for (int col = 0; col < instanceCount; ++col)
+                {
+                    for (int row = 0; row < instanceCount; ++row)
+                    {
+                        colors.Add(new Vector4(col % 3, row % 3, dep % 3, 1));
+                        positions.Add(new Vector4(col, row, -dep, 0));
+                    }
+                }
+            }
+
             shaders.Add("default", new ShaderProgram("Core/Shaders/instanced-vert.glsl", "Core/Shaders/instanced-frag.glsl", true));
 
             GL.GenVertexArrays(1, out vertexArrayId);
@@ -104,7 +98,7 @@ namespace GameEngine.Core.GameSpecific
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
 
             int numberOfIndices = 4;
-            int numberOfInstances = 8;
+            int numberOfInstances = instanceCount * instanceCount * instanceCount;
             GL.DrawArraysInstanced(PrimitiveType.TriangleFan, 0, numberOfIndices, numberOfInstances);
 
             shaders["default"].DisableVertexAttribArrays();
