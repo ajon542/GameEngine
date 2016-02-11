@@ -49,7 +49,6 @@ namespace GameEngine.Core.GameSpecific
         private GameObject gameObject = new GameObject();
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
-        int offset;
         public override void Initialize()
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/instanced-vert.glsl", "Core/Shaders/instanced-frag.glsl", true));
@@ -64,6 +63,7 @@ namespace GameEngine.Core.GameSpecific
             int colorBufferSize = (colors.Length * sizeof(float));
             int instanceBufferSize = (positions.Length * sizeof(float));
 
+            int offset = 0;
             IntPtr totalLength = (IntPtr)(vertexBufferSize + colorBufferSize + instanceBufferSize);
             GL.BufferData(BufferTarget.ArrayBuffer, totalLength, IntPtr.Zero, BufferUsageHint.StaticDraw);
             GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)vertexBufferSize, vertices);
