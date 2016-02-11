@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 using GameEngine.Core.Graphics;
@@ -11,39 +12,39 @@ namespace GameEngine.Core.GameSpecific
     /// </summary>
     public class InstancingExample : Scene
     {
-        uint vertexArrayId;
-        uint vertexbuffer;
+        private uint vertexArrayId;
+        private uint vertexbuffer;
 
-        float[] vertices =
+        private List<Vector4> vertices = new List<Vector4>
         {
-            -1.0f, -1.0f, 0.0f, 1.0f,
-             1.0f, -1.0f, 0.0f, 1.0f,
-             1.0f,  1.0f, 0.0f, 1.0f,
-            -1.0f,  1.0f, 0.0f, 1.0f
+            new Vector4(-1.0f, -1.0f, 0.0f, 1.0f),
+            new Vector4( 1.0f, -1.0f, 0.0f, 1.0f),
+            new Vector4( 1.0f,  1.0f, 0.0f, 1.0f),
+            new Vector4(-1.0f,  1.0f, 0.0f, 1.0f)
         };
 
-        float[] colors =
+        private List<Vector4> colors = new List<Vector4>
         {
-            1.0f, 0.0f, 0.0f, 1.0f,
-            0.0f, 1.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 0.0f, 1.0f,
-            1.0f, 0.0f, 0.0f, 1.0f,
-            0.0f, 1.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 0.0f, 1.0f
+            new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+            new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+            new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+            new Vector4(1.0f, 1.0f, 0.0f, 1.0f),
+            new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+            new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+            new Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+            new Vector4(1.0f, 1.0f, 0.0f, 1.0f)
         };
 
-        float[] positions =
+        private List<Vector4> positions = new List<Vector4>
         {
-            -2.0f, -2.0f, -5.0f, 0.0f,
-             2.0f, -2.0f, -5.0f, 0.0f,
-             2.0f,  2.0f, -5.0f, 0.0f,
-            -2.0f,  2.0f, -5.0f, 0.0f,
-            -1.5f, -2.5f, -10.0f, 0.0f,
-             1.5f, -2.5f, -10.0f, 0.0f,
-             1.5f,  2.5f, -10.0f, 0.0f,
-            -1.5f,  2.5f, -10.0f, 0.0f
+            new Vector4(-2.0f, -2.0f,  -5.0f, 0.0f),
+            new Vector4( 2.0f, -2.0f,  -5.0f, 0.0f),
+            new Vector4( 2.0f,  2.0f,  -5.0f, 0.0f),
+            new Vector4(-2.0f,  2.0f,  -5.0f, 0.0f),
+            new Vector4(-1.5f, -2.5f, -10.0f, 0.0f),
+            new Vector4( 1.5f, -2.5f, -10.0f, 0.0f),
+            new Vector4( 1.5f,  2.5f, -10.0f, 0.0f),
+            new Vector4(-1.5f,  2.5f, -10.0f, 0.0f)
         };
 
         private GameObject gameObject = new GameObject();
@@ -59,18 +60,18 @@ namespace GameEngine.Core.GameSpecific
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
 
-            int vertexBufferSize = (vertices.Length * sizeof(float));
-            int colorBufferSize = (colors.Length * sizeof(float));
-            int instanceBufferSize = (positions.Length * sizeof(float));
+            int vertexBufferSize = (vertices.Count * Vector4.SizeInBytes);
+            int colorBufferSize = (colors.Count * Vector4.SizeInBytes);
+            int instanceBufferSize = (positions.Count * Vector4.SizeInBytes);
 
             int offset = 0;
             IntPtr totalLength = (IntPtr)(vertexBufferSize + colorBufferSize + instanceBufferSize);
             GL.BufferData(BufferTarget.ArrayBuffer, totalLength, IntPtr.Zero, BufferUsageHint.StaticDraw);
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)vertexBufferSize, vertices);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)vertexBufferSize, vertices.ToArray());
             offset += vertexBufferSize;
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)colorBufferSize, colors);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)colorBufferSize, colors.ToArray());
             offset += colorBufferSize;
-            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)instanceBufferSize, positions);
+            GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)offset, (IntPtr)instanceBufferSize, positions.ToArray());
             offset += instanceBufferSize;
 
             GL.VertexAttribPointer(0, 4, VertexAttribPointerType.Float, false, 0, 0);
