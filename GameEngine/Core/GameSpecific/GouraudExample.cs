@@ -14,33 +14,26 @@ namespace GameEngine.Core.GameSpecific
     /// </summary>
     public class GouraudExample : Scene
     {
-        // TODO: Just copied code from ADSExample for now.
         private uint vertexArrObject;
         private int indicesCount;
-        private uint elementBuffer;
         private uint positionBuffer;
         private int positionAttr;
-        private uint colourBuffer;
-        private int colourAttr;
         private uint normalBuffer;
         private int normalAttr;
+        private uint elementBuffer;
 
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Quad();
+        private Mesh mesh = new Sphere(4, 2);
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         public override void Initialize()
         {
-            MainCamera.Position = new Vector3(0, 10, 100);
+            shaders.Add("default", new ShaderProgram("Core/Shaders/gouraud-vert.glsl", "Core/Shaders/gouraud-frag.glsl", true));
 
-            shaders.Add("default", new ShaderProgram("Core/Shaders/ads-vert.glsl", "Core/Shaders/ads-frag.glsl", true));
-
-            colourBuffer = shaders["default"].GetBuffer("VertexColor");
-            colourAttr = shaders["default"].GetAttribute("VertexColor");
-            positionBuffer = shaders["default"].GetBuffer("VertexPosition");
-            positionAttr = shaders["default"].GetAttribute("VertexPosition");
-            normalBuffer = shaders["default"].GetBuffer("VertexNormal");
-            normalAttr = shaders["default"].GetAttribute("VertexNormal");
+            positionBuffer = shaders["default"].GetBuffer("position");
+            positionAttr = shaders["default"].GetAttribute("position");
+            normalBuffer = shaders["default"].GetBuffer("normal");
+            normalAttr = shaders["default"].GetAttribute("normal");
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -48,12 +41,10 @@ namespace GameEngine.Core.GameSpecific
 
             Vector3[] vertices = mesh.Vertices.ToArray();
             Vector3[] normals = mesh.Normals.ToArray();
-            Vector3[] colours = mesh.Colours.ToArray();
             int[] indices = mesh.Indices.ToArray();
 
             IntPtr verticesLength = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
             IntPtr normalsLength = (IntPtr)(normals.Length * Vector3.SizeInBytes);
-            IntPtr coloursLength = (IntPtr)(colours.Length * Vector3.SizeInBytes);
             IntPtr indicesLength = (IntPtr)(indices.Length * sizeof(int));
             indicesCount = indices.Length;
 
@@ -65,10 +56,6 @@ namespace GameEngine.Core.GameSpecific
             GL.BufferData(BufferTarget.ArrayBuffer, normalsLength, normals, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(normalAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, colourBuffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, coloursLength, colours, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(colourAttr, 3, VertexAttribPointerType.Float, true, 0, 0);
-
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indicesLength, indices, BufferUsageHint.StaticDraw);
 
@@ -79,19 +66,10 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             MainCamera.Update();
-
-            gameObject.Transform.Position = new Vector3(0, -10, 0);
-            gameObject.Transform.Scale = new Vector3(40, 40, 1);
-            gameObject.Transform.Rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DegreesToRadians(-90));
+            gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.CalculateModelMatrix();
             gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
             gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
-        }
-
-        // TODO: Move into a helper class.
-        private float DegreesToRadians(float degrees)
-        {
-            return (degrees * (float)Math.PI) / 180.0f;
         }
 
         public override void Render()
@@ -102,27 +80,11 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["default"].EnableVertexAttribArrays();
 
-            float lightAmbientIntensity = 0.01f;
-            float lightDiffuseIntensity = 0.75f;
-            Vector3 lightColor = new Vector3(1.0f, 1.0f, 1.0f);
-            // TODO: The light needs a position.
-            Vector3 lightDirection = new Vector3(0, -5, -5);
-            lightDirection.Normalize();
-            float specularIntensity = 0.7f;
-            float specularPower = 5;
+            Matrix4 modelViewMatrix = gameObject.ModelMatrix * MainCamera.ViewMatrix;
+            Matrix4 projectionMatrix = MainCamera.ProjectionMatrix;
 
-            Matrix4 eyeWorldPos = MainCamera.ViewMatrix;
-            GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), 1, ref lightAmbientIntensity);
-            GL.Uniform1(shaders["default"].GetUniform("LightDiffuseIntensity"), 1, ref lightDiffuseIntensity);
-            GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref lightColor);
-            GL.Uniform3(shaders["default"].GetUniform("LightDirection"), ref lightDirection);
-
-            GL.Uniform1(shaders["default"].GetUniform("SpecularIntensity"), 1, ref specularIntensity);
-            GL.Uniform1(shaders["default"].GetUniform("SpecularPower"), 1, ref specularPower);
-
-            GL.UniformMatrix4(shaders["default"].GetUniform("EyeWorldPos"), false, ref eyeWorldPos);
-            GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref gameObject.ModelMatrix);
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("mv_matrix"), false, ref modelViewMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("proj_matrix"), false, ref projectionMatrix);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
