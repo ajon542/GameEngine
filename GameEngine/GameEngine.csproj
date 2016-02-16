@@ -138,6 +138,7 @@
     <Compile Include="Core\Utilities\ObjParser\UV.cs" />
     <Compile Include="Core\Utilities\ObjParser\Vertex.cs" />
     <Compile Include="Core\Utilities\ObjParser\VertexParser.cs" />
+    <Compile Include="Core\Utilities\VectorExtensions.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
