@@ -7,8 +7,6 @@ Fix some of the bugs and TODO's
 
 ## TODO
 (not in any particular order)
-- Lighting
-- Materials
 - Vertex attributes
 - Batching
 - Make the scene selectable through the UI
