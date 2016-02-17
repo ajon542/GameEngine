@@ -3,14 +3,7 @@ The purpose of this project is to create a game engine in C# utilizing some of t
 found on the open source websites. Some of the technologies include WPF, OpenTK and AvalonDock.
 
 ## Current Goal
-Now that I have implemented basic .obj file loading. We need a way to switch the shader based
-on the type of data that was loaded. For example, a .obj file may contain only vertices and faces,
-while another may contain vertices, normals, uvs and faces.
-This may include switching the type of shader used based on the parameters available or
-generating things like normals.
-
-Material files need to be loaded along with the .obj file, so I need to figure out what will be
-needed here and pass these settings along to the shader.
+Fix some of the bugs and TODO's
 
 ## TODO
 (not in any particular order)
@@ -18,7 +11,6 @@ needed here and pass these settings along to the shader.
 - Materials
 - Vertex attributes
 - Batching
-- Instancing
 - Make the scene selectable through the UI
 - Move the game specific stuff out of the core
 - Complete some of the examples I started
@@ -31,6 +23,16 @@ needed here and pass these settings along to the shader.
 ## Previous Goals
 
 -------------------------------------------------------------------------------------------
+Goal 4
+Now that I have implemented basic .obj file loading. We need a way to switch the shader based
+on the type of data that was loaded. For example, a .obj file may contain only vertices and faces,
+while another may contain vertices, normals, uvs and faces.
+This may include switching the type of shader used based on the parameters available or
+generating things like normals.
+
+Material files need to be loaded along with the .obj file, so I need to figure out what will be
+needed here and pass these settings along to the shader.
+
 Goal 3
 Make adding game objects to the scene more intuitive. This will most likely involve improving
 the batching of objects to be rendered and the use of the scene camera.
