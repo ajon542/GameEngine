@@ -99,6 +99,7 @@
     <Compile Include="Core\GameSpecific\InputExample.cs" />
     <Compile Include="Core\GameSpecific\InstancingExample.cs" />
     <Compile Include="Core\GameSpecific\LightingExample.cs" />
+    <Compile Include="Core\GameSpecific\PhongExample.cs" />
     <Compile Include="Core\GameSpecific\QuadBehaviour.cs" />
     <Compile Include="Core\GameSpecific\TextureBlendExample.cs" />
     <Compile Include="Core\GameSpecific\TextureExample.cs" />
@@ -256,6 +257,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Core\Shaders\phong43-frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Core\Shaders\phong43-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\texture-blend-frag.glsl">
