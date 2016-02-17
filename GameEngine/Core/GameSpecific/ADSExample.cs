@@ -116,7 +116,6 @@ namespace GameEngine.Core.GameSpecific
             GL.Uniform1(shaders["default"].GetUniform("SpecularIntensity"), 1, ref specularIntensity);
             GL.Uniform1(shaders["default"].GetUniform("SpecularPower"), 1, ref specularPower);
 
-            // TODO: EyeWorldPos is not a Matrix4 look into this.
             GL.UniformMatrix4(shaders["default"].GetUniform("EyeWorldPos"), false, ref eyeWorldPos);
             GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref gameObject.ModelMatrix);
             GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);

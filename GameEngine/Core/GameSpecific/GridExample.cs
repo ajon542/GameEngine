@@ -9,6 +9,8 @@ namespace GameEngine.Core.GameSpecific
     {
         // TODO: GridExample is broken.
         // We are adjusting the camera but we are doing nothing with it.
+        // Investigate whether this is even the best way to create a grid. It may be better implemented in a shader?
+        // The grid should really only be part of the scene for some frame of reference.
         private Batch batch;
 
         public override void Initialize()
