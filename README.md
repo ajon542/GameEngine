@@ -1,12 +1,17 @@
 # GameEngine
-The purpose of this project is to create a game engine in C# utilizing some of the technologies
-found on the open source websites. Some of the technologies include WPF, OpenTK and AvalonDock.
+The purpose of this project is to create a game engine in C# as well as exploring some of the
+rendering techniques available through OpenTK / OpenGL.
+
+## Current Status
+The game engine is under heavy development and is currently in a prototyping or experimental stage.
+It essentially contains a bunch of example scenes demonstrating different aspects of the game engine.
 
 ## Current Goal
 Fix some of the bugs and TODO's
 
 ## TODO
 (not in any particular order)
+- Selectable and movable 3D objects
 - Vertex attributes
 - Batching
 - Make the scene selectable through the UI
