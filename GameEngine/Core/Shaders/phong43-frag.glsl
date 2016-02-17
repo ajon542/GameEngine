@@ -26,10 +26,17 @@ void main(void)
     // Calculate R locally
     vec3 R = reflect(-L, N);
 
+    // Uncomment for Blinn-Phong
+    // Calculate the half vector, H
+    //vec3 H = normalize(L + V);
+
     // Compute the diffuse and specular components for each fragment
     vec3 diffuse = max(dot(N, L), 0.0) * diffuse_albedo;
-    vec3 specular = pow(max(dot(R, V), 0.0), specular_power) *
-    specular_albedo;
+    vec3 specular = pow(max(dot(R, V), 0.0), specular_power) * specular_albedo;
+
+    // Uncomment for Blinn-Phong
+    // Replace the R.V calculation (as in Phong) with N.H
+    //vec3 specular = pow(max(dot(N, H), 0.0), specular_power) * specular_albedo;
 
     // Write final color to the framebuffer
     color = vec4(diffuse + specular, 1.0);
