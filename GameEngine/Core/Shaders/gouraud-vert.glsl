@@ -28,7 +28,8 @@ void main(void)
     vec3 N = mat3(mv_matrix) * normal;
 
     // Calculate view-space light vector
-    vec3 L = light_pos - P.xyz;
+    vec3 light_viewspace = mat3(mv_matrix) * light_pos;
+    vec3 L = light_viewspace - P.xyz;
 
     // Calculate view vector (simply the negative of the view-space position)
     vec3 V = -P.xyz;

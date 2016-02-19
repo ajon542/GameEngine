@@ -26,7 +26,8 @@ void main(void)
     fragment.N = mat3(mv_matrix) * normal;
 
     // Calculate light vector
-    fragment.L = light_pos - P.xyz;
+    vec3 light_viewspace = mat3(mv_matrix) * light_pos;
+    fragment.L = light_viewspace - P.xyz;
 
     // Calculate view vector
     fragment.V = -P.xyz;
