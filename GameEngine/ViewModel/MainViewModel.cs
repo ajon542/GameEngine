@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using NLog;
 
@@ -14,7 +15,9 @@ namespace GameEngine.ViewModel
         /// <summary>
         /// Gets the collection of view-models to display in the view.
         /// </summary>
-        public ObservableCollection<ViewModelBase> Settings { get; private set; }
+        public DockManagerViewModel DockManagerViewModel { get; private set; }
+
+        public MenuViewModel MenuViewModel { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -22,11 +25,12 @@ namespace GameEngine.ViewModel
         public MainViewModel()
         {
             // Create the view-models.
-            Settings = new ObservableCollection<ViewModelBase>
-            {
-                new SceneViewModel(),
-                new GameViewModel()
-            };
+            var documents = new List<DockWindowViewModel>();
+            documents.Add(new SceneViewModel() { Title = "Scene " });
+            documents.Add(new GameViewModel() { Title = "Game " });
+
+            this.DockManagerViewModel = new DockManagerViewModel(documents);
+            this.MenuViewModel = new MenuViewModel(documents);
 
             // Setup method to handle the unhandled exceptions.
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
