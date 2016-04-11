@@ -17,7 +17,7 @@ namespace GameEngine.ViewModel
     /// Scripts should be attached to the game objects in order to update.
     /// The View should then render the scene based on the description.
     /// </remarks>
-    public class SceneViewModel : ViewModelBase
+    public class SceneViewModel : DockWindowViewModel
     {
         /// <summary>
         /// List of scenes.
@@ -46,7 +46,7 @@ namespace GameEngine.ViewModel
         public SceneViewModel()
         {
             // TODO: Need a way to change this at runtime.
-            SceneList = new List<Scene> { new Core.GameSpecific.GouraudExample() };
+            SceneList = new List<Scene> { new Core.GameSpecific.PhongExample() };
         }
 
         #region Initialized Command

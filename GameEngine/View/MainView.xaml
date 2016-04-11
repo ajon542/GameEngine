@@ -35,8 +35,54 @@
         </Border>
     </Grid>-->
     <DockPanel>
-        <ad:DockingManager x:Name="dockManager" DocumentsSource="{Binding Settings}">
 
+        <ad:DockingManager x:Name="dockManager" DocumentsSource="{Binding Settings}">
+            <ad:LayoutRoot>
+                <ad:LayoutPanel Orientation="Horizontal">
+                    <ad:LayoutDocumentPaneGroup>
+                        <ad:LayoutDocumentPane>
+                            <ad:LayoutDocument Title="Doc1">
+                                <TextBox/>
+                            </ad:LayoutDocument>
+                            <ad:LayoutDocument Title="Doc2">
+                                <TextBox/>
+                            </ad:LayoutDocument>
+                        </ad:LayoutDocumentPane>
+                        <ad:LayoutDocumentPane>
+                            <ad:LayoutDocument Title="Doc3">
+                                <TextBox/>
+                            </ad:LayoutDocument>
+                        </ad:LayoutDocumentPane>
+                    </ad:LayoutDocumentPaneGroup>
+                    <ad:LayoutAnchorablePaneGroup DockWidth="150" Orientation="Vertical">
+                        <ad:LayoutAnchorablePane>
+                            <ad:LayoutAnchorable Title="Tool 1">
+                                <TextBox/>
+                            </ad:LayoutAnchorable>
+                            <ad:LayoutAnchorable Title="Tool 2">
+                                <TextBox/>
+                            </ad:LayoutAnchorable>
+                        </ad:LayoutAnchorablePane>
+                        <ad:LayoutAnchorablePane>
+                            <ad:LayoutAnchorable Title="Tool 3">
+                                <TextBox/>
+                            </ad:LayoutAnchorable>
+                            <ad:LayoutAnchorable Title="Tool 4">
+                                <TextBox/>
+                            </ad:LayoutAnchorable>
+                        </ad:LayoutAnchorablePane>
+                    </ad:LayoutAnchorablePaneGroup>
+                </ad:LayoutPanel>
+                <ad:LayoutRoot.LeftSide>
+                    <ad:LayoutAnchorSide>
+                        <ad:LayoutAnchorGroup>
+                            <ad:LayoutAnchorable Title="Autohidden Content">
+                                <TextBox/>
+                            </ad:LayoutAnchorable>
+                        </ad:LayoutAnchorGroup>
+                    </ad:LayoutAnchorSide>
+                </ad:LayoutRoot.LeftSide>
+            </ad:LayoutRoot>
         </ad:DockingManager>
     </DockPanel>
 </UserControl>

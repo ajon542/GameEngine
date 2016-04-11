@@ -141,8 +141,13 @@
     <Compile Include="Core\Utilities\ObjParser\VertexParser.cs" />
     <Compile Include="Core\Utilities\VectorExtensions.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
+    <Compile Include="ViewModel\DockManagerViewModel.cs" />
+    <Compile Include="ViewModel\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MenuItemViewModel.cs" />
+    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="ViewModel\SampleDockWindowViewModel.cs" />
     <Compile Include="ViewModel\SceneViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\GameView.xaml.cs">
@@ -153,6 +158,9 @@
     </Compile>
     <Compile Include="View\OpenGLControl.xaml.cs">
       <DependentUpon>OpenGLControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SampleDockWindowView.xaml.cs">
+      <DependentUpon>SampleDockWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SceneView.xaml.cs">
       <DependentUpon>SceneView.xaml</DependentUpon>
@@ -178,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OpenGLControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SampleDockWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
