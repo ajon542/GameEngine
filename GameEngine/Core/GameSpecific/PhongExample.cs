@@ -7,6 +7,8 @@ using OpenTK.Input;
 
 using GameEngine.Core.Graphics;
 
+using NLog;
+
 namespace GameEngine.Core.GameSpecific
 {
     /// <summary>
@@ -14,6 +16,11 @@ namespace GameEngine.Core.GameSpecific
     /// </summary>
     public class PhongExample : Scene
     {
+        /// <summary>
+        /// Reference to the logging mechanism.
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private uint vertexArrObject;
         private int indicesCount;
         private uint positionBuffer;
@@ -28,6 +35,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
+            logger.Log(LogLevel.Info, "sample log message");
             shaders.Add("default", new ShaderProgram("Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl", true));
 
             positionBuffer = shaders["default"].GetBuffer("position");
