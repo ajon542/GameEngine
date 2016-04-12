@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using GameEngine.Core.Debugging;
 using OpenTK.Graphics.OpenGL;
+using NLog;
 
 namespace GameEngine.Core.Graphics
 {
@@ -13,6 +14,11 @@ namespace GameEngine.Core.Graphics
     /// </summary>
     public class ShaderProgram
     {
+        /// <summary>
+        /// Reference to the logging mechanism.
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Information about the shader program attributes.
         /// </summary>
@@ -53,6 +59,8 @@ namespace GameEngine.Core.Graphics
         /// <param name="fromFile">Specifies whether the shader is in a file or as a string.</param>
         public ShaderProgram(string vshader, string fshader, bool fromFile = false)
         {
+            logger.Log(LogLevel.Info, "Creating shader programs vs={0} fs={1}", vshader, fshader);
+
             // Create the shader program.
             ProgramId = GL.CreateProgram();
 
@@ -84,6 +92,8 @@ namespace GameEngine.Core.Graphics
         /// <param name="address">The address of the shader object.</param>
         private void LoadShader(string code, ShaderType type, out int address)
         {
+            logger.Log(LogLevel.Info, "Loading shader type={0}", type);
+
             address = GL.CreateShader(type);
             GL.ShaderSource(address, code);
             GL.CompileShader(address);
@@ -132,6 +142,8 @@ namespace GameEngine.Core.Graphics
         /// </summary>
         public void Link()
         {
+            logger.Log(LogLevel.Info, "Linking shader");
+
             // Link the shader program object.
             GL.LinkProgram(ProgramId);
 
@@ -139,6 +151,7 @@ namespace GameEngine.Core.Graphics
             string programLog = GL.GetProgramInfoLog(ProgramId);
             if (programLog != string.Empty)
             {
+                logger.Log(LogLevel.Error, programLog);
                 throw new GameEngineException(programLog);
             }
 
