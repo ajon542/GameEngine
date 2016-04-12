@@ -82,6 +82,8 @@ namespace GameEngine.Core.Graphics
 
             // Generate the buffers.
             GenBuffers();
+
+            logger.Log(LogLevel.Info, "Shader program creation complete");
         }
 
         /// <summary>
@@ -207,12 +209,15 @@ namespace GameEngine.Core.Graphics
         /// </summary>
         public void GenBuffers()
         {
+            logger.Log(LogLevel.Info, "Generating buffers");
+
             for (int i = 0; i < attributes.Count; i++)
             {
                 uint buffer;
                 GL.GenBuffers(1, out buffer);
 
                 buffers.Add(attributes.Values.ElementAt(i).name, buffer);
+                logger.Log(LogLevel.Info, "Att {0}", attributes.Values.ElementAt(i).name);
             }
 
             for (int i = 0; i < uniforms.Count; i++)
@@ -221,6 +226,7 @@ namespace GameEngine.Core.Graphics
                 GL.GenBuffers(1, out buffer);
 
                 buffers.Add(uniforms.Values.ElementAt(i).name, buffer);
+                logger.Log(LogLevel.Info, "Uni {0}", uniforms.Values.ElementAt(i).name);
             }
         }
 

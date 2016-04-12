@@ -7,6 +7,7 @@ using System.Windows.Input;
 
 using GameEngine.ViewModel;
 using Microsoft.Win32.SafeHandles;
+using NLog;
 
 namespace GameEngine
 {
@@ -41,6 +42,8 @@ namespace GameEngine
             StreamWriter standardOutput = new StreamWriter(fileStream, encoding);
             standardOutput.AutoFlush = true;
             Console.SetOut(standardOutput);
+
+            LogManager.GetCurrentClassLogger().Log(LogLevel.Info, "Welcome to the Game Engine");
 
             InitializeComponent();
 
