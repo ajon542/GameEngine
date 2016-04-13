@@ -14,18 +14,7 @@
     See: http://stackoverflow.com/questions/23128378/wpf-design-multiple-views-in-one-window
     -->
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
-            <view:MainView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:SceneViewModel}">
-            <view:SceneView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:GameViewModel}">
-            <view:GameView/>
-        </DataTemplate>
-
         <RoutedUICommand x:Key="Commands.Exit" />
-
     </Window.Resources>
 
     <Window.CommandBindings>
@@ -96,9 +85,14 @@
 
             <ad:DockingManager.Resources>
 
-                <!-- add views for specific ViewModels -->
-                <DataTemplate DataType="{x:Type viewModel:SampleDockWindowViewModel}">
-                    <view:SampleDockWindowView />
+                <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
+                    <view:MainView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:SceneViewModel}">
+                    <view:SceneView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModel:GameViewModel}">
+                    <view:GameView/>
                 </DataTemplate>
 
             </ad:DockingManager.Resources>

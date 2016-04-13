@@ -16,14 +16,16 @@ namespace GameEngine.ViewModel
 
         public MenuViewModel(IEnumerable<DockWindowViewModel> dockWindows)
         {
-            var view = this.ViewMenuItemViewModel = new MenuItemViewModel() { Header = "Views" };
+            var view = ViewMenuItemViewModel = new MenuItemViewModel { Header = "Views" };
 
             foreach (var dockWindow in dockWindows)
+            {
                 view.Items.Add(GetMenuItemViewModel(dockWindow));
+            }
 
             var items = new List<MenuItemViewModel>();
             items.Add(view);
-            this.Items = items;
+            Items = items;
         }
 
         private MenuItemViewModel GetMenuItemViewModel(DockWindowViewModel dockWindowViewModel)
@@ -37,13 +39,17 @@ namespace GameEngine.ViewModel
             dockWindowViewModel.PropertyChanged += (o, e) =>
             {
                 if (e.PropertyName == "IsClosed")
+                {
                     menuItemViewModel.IsChecked = !dockWindowViewModel.IsClosed;
+                }
             };
 
             menuItemViewModel.PropertyChanged += (o, e) =>
             {
                 if (e.PropertyName == "IsChecked")
+                {
                     dockWindowViewModel.IsClosed = !menuItemViewModel.IsChecked;
+                }
             };
 
             return menuItemViewModel;

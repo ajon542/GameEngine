@@ -36,7 +36,7 @@ namespace GameEngine.ViewModel
 
         public MenuItemViewModel()
         {
-            this.Items = new List<MenuItemViewModel>();
+            Items = new List<MenuItemViewModel>();
         }
     }
 }

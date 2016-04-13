@@ -29,8 +29,8 @@ namespace GameEngine.ViewModel
             documents.Add(new SceneViewModel() { Title = "Scene " });
             documents.Add(new GameViewModel() { Title = "Game " });
 
-            this.DockManagerViewModel = new DockManagerViewModel(documents);
-            this.MenuViewModel = new MenuViewModel(documents);
+            DockManagerViewModel = new DockManagerViewModel(documents);
+            MenuViewModel = new MenuViewModel(documents);
 
             // Setup method to handle the unhandled exceptions.
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;

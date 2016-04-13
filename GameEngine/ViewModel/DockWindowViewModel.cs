@@ -71,13 +71,13 @@ namespace GameEngine.ViewModel
 
         public DockWindowViewModel()
         {
-            this.CanClose = true;
-            this.IsClosed = false;
+            CanClose = true;
+            IsClosed = false;
         }
 
         public void Close()
         {
-            this.IsClosed = true;
+            IsClosed = true;
         }
     }
 }

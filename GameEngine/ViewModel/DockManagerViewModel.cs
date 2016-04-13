@@ -13,14 +13,16 @@ namespace GameEngine.ViewModel
 
         public DockManagerViewModel(IEnumerable<DockWindowViewModel> dockWindowViewModels)
         {
-            this.Documents = new ObservableCollection<DockWindowViewModel>();
-            this.Anchorables = new ObservableCollection<object>();
+            Documents = new ObservableCollection<DockWindowViewModel>();
+            Anchorables = new ObservableCollection<object>();
 
             foreach (var document in dockWindowViewModels)
             {
                 document.PropertyChanged += DockWindowViewModel_PropertyChanged;
                 if (!document.IsClosed)
-                    this.Documents.Add(document);
+                {
+                    Documents.Add(document);
+                }
             }
         }
 
@@ -31,9 +33,13 @@ namespace GameEngine.ViewModel
             if (e.PropertyName == "IsClosed")
             {
                 if (!document.IsClosed)
-                    this.Documents.Add(document);
+                {
+                    Documents.Add(document);
+                }
                 else
-                    this.Documents.Remove(document);
+                {
+                    Documents.Remove(document);
+                }
             }
         }
     }
