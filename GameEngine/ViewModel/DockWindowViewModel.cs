@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace GameEngine.ViewModel
 {
@@ -12,28 +7,28 @@ namespace GameEngine.ViewModel
         #region Properties
 
         #region CloseCommand
-        private ICommand _CloseCommand;
+        private ICommand closeCommand;
         public ICommand CloseCommand
         {
             get
             {
-                if (_CloseCommand == null)
-                    _CloseCommand = new DelegateCommand(call => Close());
-                return _CloseCommand;
+                if (closeCommand == null)
+                    closeCommand = new DelegateCommand(call => Close());
+                return closeCommand;
             }
         }
         #endregion
 
         #region IsClosed
-        private bool _IsClosed;
+        private bool isClosed;
         public bool IsClosed
         {
-            get { return _IsClosed; }
+            get { return isClosed; }
             set
             {
-                if (_IsClosed != value)
+                if (isClosed != value)
                 {
-                    _IsClosed = value;
+                    isClosed = value;
                     OnPropertyChanged("IsClosed");
                 }
             }
@@ -41,15 +36,15 @@ namespace GameEngine.ViewModel
         #endregion
 
         #region CanClose
-        private bool _CanClose;
+        private bool canClose;
         public bool CanClose
         {
-            get { return _CanClose; }
+            get { return canClose; }
             set
             {
-                if (_CanClose != value)
+                if (canClose != value)
                 {
-                    _CanClose = value;
+                    canClose = value;
                     OnPropertyChanged("CanClose");
                 }
             }
@@ -57,15 +52,15 @@ namespace GameEngine.ViewModel
         #endregion
 
         #region Title
-        private string _Title;
+        private string title;
         public string Title
         {
-            get { return _Title; }
+            get { return title; }
             set
             {
-                if (_Title != value)
+                if (title != value)
                 {
-                    _Title = value;
+                    title = value;
                     OnPropertyChanged("Title");
                 }
             }

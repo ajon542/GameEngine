@@ -17,15 +17,15 @@ namespace GameEngine.ViewModel
         public ICommand Command { get; private set; }
 
         #region IsChecked
-        private bool _IsChecked;
+        private bool isChecked;
         public bool IsChecked
         {
-            get { return _IsChecked; }
+            get { return isChecked; }
             set
             {
-                if (_IsChecked != value)
+                if (isChecked != value)
                 {
-                    _IsChecked = value;
+                    isChecked = value;
                     OnPropertyChanged("IsChecked");
                 }
             }
