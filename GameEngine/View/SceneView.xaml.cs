@@ -9,6 +9,8 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using NLog;
+
 namespace GameEngine.View
 {
     /// <summary>
@@ -16,8 +18,15 @@ namespace GameEngine.View
     /// </summary>
     public partial class SceneView : System.Windows.Controls.UserControl
     {
+        /// <summary>
+        /// Reference to the logging mechanism.
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public SceneView()
         {
+            logger.Log(LogLevel.Info, "Creating scene view");
+
             InitializeComponent();
         }
     }

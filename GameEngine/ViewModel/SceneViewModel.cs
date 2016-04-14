@@ -7,6 +7,8 @@ using GameEngine.Core.Graphics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using NLog;
+
 namespace GameEngine.ViewModel
 {
     /// <summary>
@@ -19,6 +21,11 @@ namespace GameEngine.ViewModel
     /// </remarks>
     public class SceneViewModel : DockWindowViewModel
     {
+        /// <summary>
+        /// Reference to the logging mechanism.
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// List of scenes.
         /// </summary>
@@ -45,6 +52,8 @@ namespace GameEngine.ViewModel
         /// </summary>
         public SceneViewModel()
         {
+            logger.Log(LogLevel.Info, "Creating scene view model");
+
             // TODO: Need a way to change this at runtime.
             SceneList = new List<Scene> { new Core.GameSpecific.PhongExample() };
         }
@@ -86,6 +95,8 @@ namespace GameEngine.ViewModel
         /// </summary>
         private void Initialized(object sender)
         {
+            logger.Log(LogLevel.Info, "Initializing scene view model [loaded={0}]", loaded);
+
             // Each time we switch from GameView to SceneView, the SceneView is loaded again.
             // We don't want to be initializing each scene every time. Only do this once.
             if (!loaded)

@@ -11,6 +11,8 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using NLog;
+
 namespace GameEngine.View
 {
     /// <summary>
@@ -18,6 +20,11 @@ namespace GameEngine.View
     /// </summary>
     public partial class OpenGLControl : System.Windows.Controls.UserControl
     {
+        /// <summary>
+        /// Reference to the logging mechanism.
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Reference to the OpenGL control.
         /// </summary>
@@ -135,6 +142,8 @@ namespace GameEngine.View
         /// </summary>
         public OpenGLControl()
         {
+            logger.Log(LogLevel.Info, "Creating open gl control view");
+
             InitializeComponent();
 
             // In design view, there is an error due to memory access permissions.
@@ -154,6 +163,8 @@ namespace GameEngine.View
         /// </summary>
         private void SetupTimer()
         {
+            logger.Log(LogLevel.Info, "");
+
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1);
             timer.Tick += OnTimerOnTick;
@@ -171,6 +182,8 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            logger.Log(LogLevel.Info, "");
+
             if (SceneInitialized != null)
             {
                 SceneInitialized.Execute(new GraphicsProperties(glControl.Width, glControl.Height));
@@ -184,6 +197,8 @@ namespace GameEngine.View
         /// <param name="e">The event arguments.</param>
         private void OnHostInitialized(object sender, EventArgs e)
         {
+            logger.Log(LogLevel.Info, "");
+
             // In design view, there is an error due to memory access permissions.
             // Prevent any GL calls during this time.
             if (DesignerProperties.GetIsInDesignMode(this))
