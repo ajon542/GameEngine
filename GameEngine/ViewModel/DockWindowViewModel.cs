@@ -75,7 +75,7 @@ namespace GameEngine.ViewModel
             IsClosed = false;
         }
 
-        public void Close()
+        protected virtual void Close()
         {
             IsClosed = true;
         }

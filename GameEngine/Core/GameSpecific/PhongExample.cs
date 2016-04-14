@@ -26,6 +26,11 @@ namespace GameEngine.Core.GameSpecific
         private Mesh mesh = new Sphere(4, 2);
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
+        public override void Shutdown()
+        {
+            shaders = new Dictionary<string, ShaderProgram>();
+        }
+
         public override void Initialize()
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl", true));

@@ -4,9 +4,6 @@ using System.Windows.Input;
 using GameEngine.Core;
 using GameEngine.Core.Graphics;
 
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-
 using NLog;
 
 namespace GameEngine.ViewModel
@@ -56,6 +53,25 @@ namespace GameEngine.ViewModel
 
             // TODO: Need a way to change this at runtime.
             SceneList = new List<Scene> { new Core.GameSpecific.PhongExample() };
+        }
+
+        /// <summary>
+        /// Called when the dockable window is closed.
+        /// </summary>
+        protected override void Close()
+        {
+            logger.Log(LogLevel.Info, "Dockable window closing");
+            base.Close();
+
+            // Notify each scene to perform correct shutdown and unload assets.
+            foreach (Scene scene in SceneList)
+            {
+                scene.Shutdown();
+            }
+
+            // Mark flag as false. When the dockable window is opened, we need to
+            // initialize all scenes.
+            loaded = false;
         }
 
         #region Initialized Command
@@ -115,6 +131,8 @@ namespace GameEngine.ViewModel
 
         #endregion
 
+        #region Render Command
+
         /// <summary>
         /// The render command.
         /// </summary>
@@ -147,6 +165,10 @@ namespace GameEngine.ViewModel
             }
         }
 
+        #endregion
+
+        #region Update Command
+
         /// <summary>
         /// The update command.
         /// </summary>
@@ -178,6 +200,10 @@ namespace GameEngine.ViewModel
                 scene.Update();
             }
         }
+
+        #endregion
+
+        #region Resize Command
 
         /// <summary>
         /// The resized command.
@@ -212,5 +238,7 @@ namespace GameEngine.ViewModel
                 scene.SetupViewPort(properties.Width, properties.Height);
             }
         }
+
+        #endregion
     }
 }
