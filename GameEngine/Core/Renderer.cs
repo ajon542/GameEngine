@@ -61,18 +61,18 @@ namespace GameEngine.Core
 
         public void Render(Matrix4 modelViewMatrix, Matrix4 projectionMatrix)
         {
-            GL.UseProgram(material.shaderProgram.ProgramId);
+            material.UseProgram();
 
             GL.BindVertexArray(vertexArrObject);
 
-            material.shaderProgram.EnableVertexAttribArrays();
+            material.EnableVertexAttribArrays();
 
-            GL.UniformMatrix4(material.GetUniform("mv_matrix"), false, ref modelViewMatrix);
-            GL.UniformMatrix4(material.GetUniform("proj_matrix"), false, ref projectionMatrix);
+            material.SetMatrix4("mv_matrix", modelViewMatrix);
+            material.SetMatrix4("proj_matrix", projectionMatrix);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
-            material.shaderProgram.DisableVertexAttribArrays();
+            material.DisableVertexAttribArrays();
         }
     }
 }

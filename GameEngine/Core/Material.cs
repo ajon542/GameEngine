@@ -1,5 +1,9 @@
-﻿using OpenTK;
+﻿using System;
+using System.Collections.Generic;
 using GameEngine.Core.Graphics;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 
 namespace GameEngine.Core
 {
@@ -10,7 +14,7 @@ namespace GameEngine.Core
         public Vector3 Specular { get; set; }
         public float SpecularExponent { get; set; }
 
-        public ShaderProgram shaderProgram;
+        private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         public Material()
         {
@@ -20,19 +24,44 @@ namespace GameEngine.Core
             SpecularExponent = 2.0f;
         }
 
+        public void SetShaders(string identifier, string vShader, string fShader)
+        {
+            shaders.Add(identifier, new ShaderProgram(vShader, fShader, true));
+        }
+
+        public void UseProgram()
+        {
+            GL.UseProgram(shaders["default"].ProgramId);
+        }
+
+        public void EnableVertexAttribArrays()
+        {
+            shaders["default"].EnableVertexAttribArrays();
+        }
+
+        public void DisableVertexAttribArrays()
+        {
+            shaders["default"].DisableVertexAttribArrays();
+        }
+
         public uint GetBuffer(string name)
         {
-            return shaderProgram.GetBuffer(name);
+            return shaders["default"].GetBuffer(name);
         }
 
         public int GetAttribute(string name)
         {
-            return shaderProgram.GetAttribute(name);
+            return shaders["default"].GetAttribute(name);
         }
 
         public int GetUniform(string name)
         {
-            return shaderProgram.GetUniform(name);
+            return shaders["default"].GetUniform(name);
+        }
+
+        public void SetMatrix4(string name, Matrix4 matrix)
+        {
+            GL.UniformMatrix4(shaders["default"].GetUniform(name), false, ref matrix);
         }
     }
 }

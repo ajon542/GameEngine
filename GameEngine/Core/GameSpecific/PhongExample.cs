@@ -15,25 +15,16 @@ namespace GameEngine.Core.GameSpecific
     public class PhongExample : Scene
     {
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Sphere(4, 2);
-        private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
         private Renderer renderer;
-
-        public override void Shutdown()
-        {
-            shaders = new Dictionary<string, ShaderProgram>();
-        }
 
         public override void Initialize()
         {
-            shaders.Add("default", new ShaderProgram("Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl", true));
-
             Material material = new Material();
-            material.shaderProgram = shaders["default"];
+            material.SetShaders("default", "Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl");
 
             renderer = new Renderer();
             renderer.material = material;
-            renderer.mesh = mesh;
+            renderer.mesh = new Sphere(4, 2);
 
             renderer.Initialize();
         }
@@ -54,6 +45,12 @@ namespace GameEngine.Core.GameSpecific
             Matrix4 modelViewMatrix = gameObject.ModelMatrix * MainCamera.ViewMatrix;
             Matrix4 projectionMatrix = MainCamera.ProjectionMatrix;
             renderer.Render(modelViewMatrix, projectionMatrix);
+        }
+
+        public override void Shutdown()
+        {
+            // TODO: Handle this cleanup
+            //shaders = new Dictionary<string, ShaderProgram>();
         }
     }
 }
