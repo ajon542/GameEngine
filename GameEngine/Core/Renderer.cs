@@ -9,14 +9,6 @@ namespace GameEngine.Core
 {
     public class Renderer : Component
     {
-        private uint vertexArrObject;
-        private int indicesCount;
-        private uint positionBuffer;
-        private int positionAttr;
-        private uint normalBuffer;
-        private int normalAttr;
-        private uint elementBuffer;
-
         public Material material;
         public Mesh mesh;
 
@@ -26,35 +18,10 @@ namespace GameEngine.Core
 
         public void Initialize()
         {
-            positionBuffer = material.GetBuffer("position");
-            positionAttr = material.GetAttribute("position");
-            normalBuffer = material.GetBuffer("normal");
-            normalAttr = material.GetAttribute("normal");
-
-            // Send OpenGL our vertex data.
-            GL.GenVertexArrays(1, out vertexArrObject);
-            GL.BindVertexArray(vertexArrObject);
-            GL.GenBuffers(1, out elementBuffer);
-
-            Vector3[] vertices = mesh.Vertices.ToArray();
-            Vector3[] normals = mesh.Normals.ToArray();
-            int[] indices = mesh.Indices.ToArray();
-
-            IntPtr verticesLength = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
-            IntPtr normalsLength = (IntPtr)(normals.Length * Vector3.SizeInBytes);
-            IntPtr indicesLength = (IntPtr)(indices.Length * sizeof(int));
-            indicesCount = indices.Length;
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, positionBuffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, verticesLength, vertices, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(positionAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, normalBuffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, normalsLength, normals, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(normalAttr, 3, VertexAttribPointerType.Float, false, 0, 0);
-
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, indicesLength, indices, BufferUsageHint.StaticDraw);
+            material.Initialize();
+            material.SetPositionBuffer(mesh.Vertices.ToArray());
+            material.SetNormalBuffer(mesh.Normals.ToArray());
+            material.SetElementBuffer(mesh.Indices.ToArray());
 
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
@@ -64,14 +31,14 @@ namespace GameEngine.Core
         {
             material.UseProgram();
 
-            GL.BindVertexArray(vertexArrObject);
+            material.BindVertexArray();
 
             material.EnableVertexAttribArrays();
 
             material.SetMatrix4("mv_matrix", modelViewMatrix);
             material.SetMatrix4("proj_matrix", projectionMatrix);
 
-            GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(mesh.RenderType, mesh.Indices.Count, DrawElementsType.UnsignedInt, 0);
 
             material.DisableVertexAttribArrays();
         }
