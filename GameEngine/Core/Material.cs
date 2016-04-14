@@ -24,9 +24,9 @@ namespace GameEngine.Core
             SpecularExponent = 2.0f;
         }
 
-        public void SetShaders(string identifier, string vShader, string fShader)
+        public void SetShaders(string vShader, string fShader)
         {
-            shaders.Add(identifier, new ShaderProgram(vShader, fShader, true));
+            shaders.Add("default", new ShaderProgram(vShader, fShader, true));
         }
 
         public void UseProgram()

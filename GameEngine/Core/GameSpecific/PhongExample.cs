@@ -20,7 +20,7 @@ namespace GameEngine.Core.GameSpecific
         public override void Initialize()
         {
             Material material = new Material();
-            material.SetShaders("default", "Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl");
+            material.SetShaders("Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl");
 
             renderer = new Renderer();
             renderer.material = material;

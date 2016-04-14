@@ -31,6 +31,7 @@ namespace GameEngine.Core
             normalBuffer = material.GetBuffer("normal");
             normalAttr = material.GetAttribute("normal");
 
+            // Send OpenGL our vertex data.
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
             GL.GenBuffers(1, out elementBuffer);
