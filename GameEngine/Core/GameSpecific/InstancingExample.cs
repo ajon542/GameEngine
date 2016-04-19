@@ -84,18 +84,18 @@ namespace GameEngine.Core.GameSpecific
             MainCamera.Update();
 
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()
         {
+            Matrix4 modelViewProjectionMatrix = gameObject.ModelMatrix * (MainCamera.ViewMatrix * MainCamera.ProjectionMatrix);
+
             GL.UseProgram(shaders["default"].ProgramId);
             GL.BindVertexArray(vertexArrayId);
 
             shaders["default"].EnableVertexAttribArrays();
 
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
 
             int numberOfIndices = 4;
             int numberOfInstances = instanceCount * instanceCount * instanceCount;

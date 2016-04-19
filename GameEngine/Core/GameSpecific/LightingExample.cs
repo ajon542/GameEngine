@@ -35,13 +35,13 @@ namespace GameEngine.Core.GameSpecific
             gameObject.Transform.Scale = new Vector3(40, 40, 1);
             gameObject.Transform.Rotation = Quaternion.FromAxisAngle(new Vector3(1, 0, 0), DegreesToRadians(-90));
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()
         {
-            batch.Render(gameObject.ModelViewProjectionMatrix, MainCamera.ViewMatrix, gameObject.ModelMatrix, activeLight);
+            Matrix4 modelViewProjectionMatrix = gameObject.ModelMatrix * (MainCamera.ViewMatrix * MainCamera.ProjectionMatrix);
+
+            batch.Render(modelViewProjectionMatrix, MainCamera.ViewMatrix, gameObject.ModelMatrix, activeLight);
         }
 
         // TODO: Move into a helper class.

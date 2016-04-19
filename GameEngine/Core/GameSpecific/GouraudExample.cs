@@ -68,8 +68,6 @@ namespace GameEngine.Core.GameSpecific
             MainCamera.Update();
             gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()

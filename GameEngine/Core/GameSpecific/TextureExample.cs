@@ -103,12 +103,12 @@ namespace GameEngine.Core.GameSpecific
             }
 
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()
         {
+            Matrix4 modelViewProjectionMatrix = gameObject.ModelMatrix * (MainCamera.ViewMatrix * MainCamera.ProjectionMatrix);
+
             GL.UseProgram(shaders["texture"].ProgramId);
 
             // Bind our texture in Texture Unit 0
@@ -119,7 +119,7 @@ namespace GameEngine.Core.GameSpecific
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
-            GL.UniformMatrix4(mvpUniform, false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(mvpUniform, false, ref modelViewProjectionMatrix);
 
             // Draw the arrays.
             shaders["texture"].EnableVertexAttribArrays();

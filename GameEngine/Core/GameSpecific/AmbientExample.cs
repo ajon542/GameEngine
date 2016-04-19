@@ -69,12 +69,12 @@ namespace GameEngine.Core.GameSpecific
 
             gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()
         {
+            Matrix4 modelViewProjectionMatrix = gameObject.ModelMatrix * (MainCamera.ViewMatrix * MainCamera.ProjectionMatrix);
+
             GL.UseProgram(shaders["default"].ProgramId);
 
             GL.BindVertexArray(vertexArrObject);
@@ -85,7 +85,7 @@ namespace GameEngine.Core.GameSpecific
             Vector3 lightColor = new Vector3(0.5f, 0.5f, 0.5f);
             GL.Uniform1(shaders["default"].GetUniform("LightIntensity"), 1, ref lightIntensity);
             GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref lightColor);
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref gameObject.ModelViewProjectionMatrix);
+            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 

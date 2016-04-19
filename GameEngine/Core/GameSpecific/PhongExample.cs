@@ -31,17 +31,17 @@ namespace GameEngine.Core.GameSpecific
         public override void Update()
         {
             MainCamera.Update();
-            // TODO: I could almost argue that these belong in the Renderer class.
             gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.CalculateModelMatrix();
         }
 
         public override void Render()
         {
-            // TODO: Since this is the game object renderer there should be no need to pass in the matrices...
             Matrix4 modelViewMatrix = gameObject.ModelMatrix * MainCamera.ViewMatrix;
             Matrix4 projectionMatrix = MainCamera.ProjectionMatrix;
             renderer.Render(modelViewMatrix, projectionMatrix);
+
+            // TODO: camera.Render(rootGameObject/scene);
         }
 
         public override void Shutdown()
