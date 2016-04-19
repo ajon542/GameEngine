@@ -21,6 +21,12 @@ namespace GameEngine.Core
 
         public Material()
         {
+            throw new NotImplementedException("this ctor should be removed, can't use a material without a shader");
+        }
+
+        public Material(string vShader, string fShader)
+        {
+            shaders.Add("default", new ShaderProgram(vShader, fShader, true));
             Ambient = new Vector3(0.2f, 0.2f, 0.2f);
             Diffuse = new Vector3(1.0f, 1.0f, 1.0f);
             Specular = new Vector3(1.0f, 1.0f, 1.0f);
@@ -33,11 +39,6 @@ namespace GameEngine.Core
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
             GL.GenBuffers(1, out elementBuffer);
-        }
-
-        public void SetShaders(string vShader, string fShader)
-        {
-            shaders.Add("default", new ShaderProgram(vShader, fShader, true));
         }
 
         public void UseProgram()
