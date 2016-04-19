@@ -34,8 +34,6 @@ namespace GameEngine.Core.GameSpecific
             // TODO: I could almost argue that these belong in the Renderer class.
             gameObject.Transform.Position = new Vector3(0, 0, -10);
             gameObject.CalculateModelMatrix();
-            gameObject.ViewProjectionMatrix = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            gameObject.ModelViewProjectionMatrix = gameObject.ModelMatrix * gameObject.ViewProjectionMatrix;
         }
 
         public override void Render()

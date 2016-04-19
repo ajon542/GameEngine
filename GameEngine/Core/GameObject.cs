@@ -202,8 +202,12 @@ namespace GameEngine.Core
         // TODO: Address these for serialization
         [JsonIgnore]
         public Matrix4 ModelMatrix = Matrix4.Identity;
+
+        [Obsolete("ViewProjectionMatrix is deprecated, please see https://github.com/ajon542/GameEngine/issues/17")]
         [JsonIgnore]
         public Matrix4 ViewProjectionMatrix = Matrix4.Identity;
+
+        [Obsolete("ModelViewProjectionMatrix is deprecated, please see https://github.com/ajon542/GameEngine/issues/17")]
         [JsonIgnore]
         public Matrix4 ModelViewProjectionMatrix = Matrix4.Identity;
 
