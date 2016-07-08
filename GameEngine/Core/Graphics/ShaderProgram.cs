@@ -293,5 +293,18 @@ namespace GameEngine.Core.Graphics
             }
             return buffers[name];
         }
+
+        public void Cleanup()
+        {
+            // http://www.opentk.com/node/3693
+            // GL.CreateProgram     -> GL.DeleteProgram
+            // GL.ShaderSource      ->
+            // GL.CompileShader     ->
+            // GL.AttachShader      -> GL.DeleteShader
+            // GL.LinkProgram       ->
+            // GL.GetProgram        ->
+            // GL.GenBuffers        -> GL.DeleteBuffers
+
+        }
     }
 }
