@@ -99,7 +99,21 @@ namespace GameEngine.Core.Graphics
             address = GL.CreateShader(type);
             GL.ShaderSource(address, code);
             GL.CompileShader(address);
+
+            // TODO: Decide what we are going to do here if an error occurs on one shader only.
+            // Do we clean up all the shaders in this program?
+            int statusCode = 0;
+            GL.GetShader(address, ShaderParameter.CompileStatus, out statusCode);
+
+            if (statusCode != 1)
+            {
+                GL.DeleteShader(address);
+                GL.DeleteProgram(ProgramId);
+                throw new GameEngineException("Compiling {0} failed with error code {1}", type, statusCode);
+            }
+
             GL.AttachShader(ProgramId, address);
+            GL.DeleteShader(address);
         }
 
         /// <summary>
@@ -149,11 +163,14 @@ namespace GameEngine.Core.Graphics
             // Link the shader program object.
             GL.LinkProgram(ProgramId);
 
-            // Check for errors.
-            string programLog = GL.GetProgramInfoLog(ProgramId);
-            if (programLog != string.Empty)
+            // Check for errors during program linking.
+            int statusCode = 0;
+            GL.GetProgram(ProgramId, GetProgramParameterName.LinkStatus, out statusCode);
+
+            if (statusCode != 1)
             {
-                logger.Log(LogLevel.Error, programLog);
+                string programLog = GL.GetProgramInfoLog(ProgramId);
+                GL.DeleteProgram(ProgramId);
                 throw new GameEngineException(programLog);
             }
 
@@ -178,7 +195,7 @@ namespace GameEngine.Core.Graphics
                 info.name = name.ToString();
                 info.type = type;
                 info.address = GL.GetAttribLocation(ProgramId, info.name);
-                
+
                 attributes.Add(name.ToString(), info);
             }
 
@@ -297,14 +314,15 @@ namespace GameEngine.Core.Graphics
         public void Cleanup()
         {
             // http://www.opentk.com/node/3693
-            // GL.CreateProgram     -> GL.DeleteProgram
-            // GL.ShaderSource      ->
-            // GL.CompileShader     ->
-            // GL.AttachShader      -> GL.DeleteShader
-            // GL.LinkProgram       ->
-            // GL.GetProgram        ->
-            // GL.GenBuffers        -> GL.DeleteBuffers
+            foreach (KeyValuePair<string, uint> kv in buffers)
+            {
+                uint bufferId = kv.Value;
+                GL.DeleteBuffers(1, ref bufferId);
+            }
 
+            GL.DeleteShader(vShaderId);
+            GL.DeleteShader(fShaderId);
+            GL.DeleteProgram(ProgramId);
         }
     }
 }
