@@ -196,6 +196,8 @@ namespace GameEngine.Core.Graphics
                 info.type = type;
                 info.address = GL.GetAttribLocation(ProgramId, info.name);
 
+                logger.Log(LogLevel.Info, "Att {0} location {1}", info.name, info.address);
+
                 attributes.Add(name.ToString(), info);
             }
 
@@ -217,6 +219,8 @@ namespace GameEngine.Core.Graphics
                 info.type = type;
                 info.address = GL.GetUniformLocation(ProgramId, info.name);
 
+                logger.Log(LogLevel.Info, "Uni {0} location {1}", info.name, info.address);
+
                 uniforms.Add(name.ToString(), info);
             }
         }
@@ -234,7 +238,8 @@ namespace GameEngine.Core.Graphics
                 GL.GenBuffers(1, out buffer);
 
                 buffers.Add(attributes.Values.ElementAt(i).name, buffer);
-                logger.Log(LogLevel.Info, "Att {0}", attributes.Values.ElementAt(i).name);
+
+                logger.Log(LogLevel.Info, "Att {0} location {1}", attributes.Values.ElementAt(i).name, buffer);
             }
 
             for (int i = 0; i < uniforms.Count; i++)
@@ -243,7 +248,8 @@ namespace GameEngine.Core.Graphics
                 GL.GenBuffers(1, out buffer);
 
                 buffers.Add(uniforms.Values.ElementAt(i).name, buffer);
-                logger.Log(LogLevel.Info, "Uni {0}", uniforms.Values.ElementAt(i).name);
+
+                logger.Log(LogLevel.Info, "Uni {0} location {1}", uniforms.Values.ElementAt(i).name, buffer);
             }
         }
 
@@ -311,11 +317,14 @@ namespace GameEngine.Core.Graphics
             return buffers[name];
         }
 
+        // The context used to create the resources is not available in the finalizer thread!
+        // http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl
         public void Cleanup()
         {
             // http://www.opentk.com/node/3693
             foreach (KeyValuePair<string, uint> kv in buffers)
             {
+                logger.Log(LogLevel.Info, "Deleting buffer {0} location {1}", kv.Key, kv.Value);
                 uint bufferId = kv.Value;
                 GL.DeleteBuffers(1, ref bufferId);
             }
