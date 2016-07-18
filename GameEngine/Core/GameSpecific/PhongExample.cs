@@ -20,7 +20,6 @@ namespace GameEngine.Core.GameSpecific
         public override void Initialize()
         {
             Material material = new Material("Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl");
-
             renderer = new Renderer();
             renderer.material = material;
             renderer.mesh = new Sphere(4, 2);
@@ -46,8 +45,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Shutdown()
         {
-            // TODO: Handle this cleanup
-            //shaders = new Dictionary<string, ShaderProgram>();
+            renderer.Destroy();
         }
     }
 }

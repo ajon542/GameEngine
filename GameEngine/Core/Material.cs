@@ -103,5 +103,19 @@ namespace GameEngine.Core
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBuffer);
             GL.BufferData(BufferTarget.ElementArrayBuffer, bufferLength, buffer, BufferUsageHint.StaticDraw);
         }
+
+        /// <summary>
+        /// Cleanup any material resources.
+        /// </summary>
+        public void Destroy()
+        {
+            foreach (KeyValuePair<string, ShaderProgram> kv in shaders)
+            {
+                kv.Value.Destroy();
+            }
+
+            GL.DeleteVertexArray(vertexArrObject);
+            GL.DeleteBuffer(elementBuffer);
+        }
     }
 }

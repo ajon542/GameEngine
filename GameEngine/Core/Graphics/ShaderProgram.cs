@@ -317,9 +317,10 @@ namespace GameEngine.Core.Graphics
             return buffers[name];
         }
 
-        // The context used to create the resources is not available in the finalizer thread!
-        // http://www.opentk.com/doc/advanced/garbage-collectors-and-opengl
-        public void Cleanup()
+        /// <summary>
+        /// Cleanup the unmanaged shader resources.
+        /// </summary>
+        public void Destroy()
         {
             // http://www.opentk.com/node/3693
             foreach (KeyValuePair<string, uint> kv in buffers)

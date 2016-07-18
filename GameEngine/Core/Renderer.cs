@@ -42,5 +42,13 @@ namespace GameEngine.Core
 
             material.DisableVertexAttribArrays();
         }
+
+        /// <summary>
+        /// Cleanup any renderer resources.
+        /// </summary>
+        public void Destroy()
+        {
+            material.Destroy();
+        }
     }
 }
