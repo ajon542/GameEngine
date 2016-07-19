@@ -320,6 +320,11 @@ namespace GameEngine.Core.Graphics
         /// <summary>
         /// Cleanup the unmanaged shader resources.
         /// </summary>
+        /// <remarks>
+        /// IDisposable cannot be used since the GC is performed on a different
+        /// thread to what the OpenGL context is on. Not entirely sure if there
+        /// is a way around this.
+        /// </remarks>
         public void Destroy()
         {
             // http://www.opentk.com/node/3693

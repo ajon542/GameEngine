@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GameEngine.Core.Utilities.ObjParser;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
-
-using GameEngine.Core.Graphics;
+﻿using OpenTK;
 
 namespace GameEngine.Core.GameSpecific
 {
