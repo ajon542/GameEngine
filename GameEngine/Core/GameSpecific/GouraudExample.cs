@@ -30,10 +30,10 @@ namespace GameEngine.Core.GameSpecific
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/gouraud-vert.glsl", "Core/Shaders/gouraud-frag.glsl", true));
 
-            positionBuffer = shaders["default"].GetBuffer("position");
-            positionAttr = shaders["default"].GetAttribute("position");
-            normalBuffer = shaders["default"].GetBuffer("normal");
-            normalAttr = shaders["default"].GetAttribute("normal");
+            shaders["default"].GetBuffer("position", out positionBuffer);
+            shaders["default"].GetAttribute("position", out positionAttr);
+            shaders["default"].GetBuffer("normal", out normalBuffer);
+            shaders["default"].GetAttribute("normal", out normalAttr);
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -81,8 +81,14 @@ namespace GameEngine.Core.GameSpecific
             Matrix4 modelViewMatrix = gameObject.ModelMatrix * MainCamera.ViewMatrix;
             Matrix4 projectionMatrix = MainCamera.ProjectionMatrix;
 
-            GL.UniformMatrix4(shaders["default"].GetUniform("mv_matrix"), false, ref modelViewMatrix);
-            GL.UniformMatrix4(shaders["default"].GetUniform("proj_matrix"), false, ref projectionMatrix);
+            int mvMatrixId;
+            int projMatrixId;
+
+            shaders["default"].GetUniform("mv_matrix", out mvMatrixId);
+            shaders["default"].GetUniform("proj_matrix", out projMatrixId);
+
+            GL.UniformMatrix4(mvMatrixId, false, ref modelViewMatrix);
+            GL.UniformMatrix4(projMatrixId, false, ref projectionMatrix);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 

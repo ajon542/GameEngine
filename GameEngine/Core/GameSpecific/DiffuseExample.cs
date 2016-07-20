@@ -29,12 +29,12 @@ namespace GameEngine.Core.GameSpecific
         {
             shaders.Add("default", new ShaderProgram("Core/Shaders/ambient-diffuse-vert.glsl", "Core/Shaders/ambient-diffuse-frag.glsl", true));
 
-            colourBuffer = shaders["default"].GetBuffer("VertexColor");
-            colourAttr = shaders["default"].GetAttribute("VertexColor");
-            positionBuffer = shaders["default"].GetBuffer("VertexPosition");
-            positionAttr = shaders["default"].GetAttribute("VertexPosition");
-            normalBuffer = shaders["default"].GetBuffer("VertexNormal");
-            normalAttr = shaders["default"].GetAttribute("VertexNormal");
+            shaders["default"].GetBuffer("VertexColor", out colourBuffer);
+            shaders["default"].GetAttribute("VertexColor", out colourAttr);
+            shaders["default"].GetBuffer("VertexPosition", out positionBuffer);
+            shaders["default"].GetAttribute("VertexPosition", out positionAttr);
+            shaders["default"].GetBuffer("VertexNormal", out normalBuffer);
+            shaders["default"].GetAttribute("VertexNormal", out normalAttr);
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -102,13 +102,29 @@ namespace GameEngine.Core.GameSpecific
             Vector3 lightDirection = new Vector3(1.0f, 0.0f, 0.0f);
 
             lightDirection.Normalize();
-            GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), 1, ref lightAmbientIntensity);
-            GL.Uniform1(shaders["default"].GetUniform("LightDiffuseIntensity"), 1, ref lightDiffuseIntensity);
-            GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref lightColor);
-            GL.Uniform3(shaders["default"].GetUniform("LightDirection"), ref lightDirection);
 
-            GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref gameObject.ModelMatrix);
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
+            int lightAmbientIntensityId;
+            int lightDiffuseIntensityId;
+            int lightColorId;
+            int lightDirectionId;
+            int modelMatrixId;
+            int mVPMatrixId;
+
+            shaders["default"].GetUniform("LightAmbientIntensity", out lightAmbientIntensityId);
+            shaders["default"].GetUniform("LightDiffuseIntensity", out lightDiffuseIntensityId);
+            shaders["default"].GetUniform("LightColor", out lightColorId);
+            shaders["default"].GetUniform("LightDirection", out lightDirectionId);
+
+            shaders["default"].GetUniform("ModelMatrix", out modelMatrixId);
+            shaders["default"].GetUniform("MVPMatrix", out mVPMatrixId);
+
+            GL.Uniform1(lightAmbientIntensityId, 1, ref lightAmbientIntensity);
+            GL.Uniform1(lightDiffuseIntensityId, 1, ref lightDiffuseIntensity);
+            GL.Uniform3(lightColorId, ref lightColor);
+            GL.Uniform3(lightDirectionId, ref lightDirection);
+
+            GL.UniformMatrix4(modelMatrixId, false, ref gameObject.ModelMatrix);
+            GL.UniformMatrix4(mVPMatrixId, false, ref modelViewProjectionMatrix);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 

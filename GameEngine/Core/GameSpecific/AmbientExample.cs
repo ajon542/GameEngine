@@ -30,10 +30,10 @@ namespace GameEngine.Core.GameSpecific
             file.Read("Core/GameSpecific/Assets/Mesh/IcoSphere.obj");
             mesh = file.Mesh;
 
-            colourBuffer = shaders["default"].GetBuffer("VertexColor");
-            colourAttr = shaders["default"].GetAttribute("VertexColor");
-            positionBuffer = shaders["default"].GetBuffer("VertexPosition");
-            positionAttr = shaders["default"].GetAttribute("VertexPosition");
+            shaders["default"].GetBuffer("VertexColor", out colourBuffer);
+            shaders["default"].GetAttribute("VertexColor", out colourAttr);
+            shaders["default"].GetBuffer("VertexPosition", out positionBuffer);
+            shaders["default"].GetAttribute("VertexPosition", out positionAttr);
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -83,9 +83,19 @@ namespace GameEngine.Core.GameSpecific
 
             float lightIntensity = 1.0f;
             Vector3 lightColor = new Vector3(0.5f, 0.5f, 0.5f);
-            GL.Uniform1(shaders["default"].GetUniform("LightIntensity"), 1, ref lightIntensity);
-            GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref lightColor);
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
+
+            int lightIntensityId;
+            shaders["default"].GetUniform("LightIntensity", out lightIntensityId);
+
+            int lightColorId;
+            shaders["default"].GetUniform("LightColor", out lightColorId);
+
+            int matrixId;
+            shaders["default"].GetUniform("MVPMatrix", out matrixId);
+
+            GL.Uniform1(lightIntensityId, 1, ref lightIntensity);
+            GL.Uniform3(lightColorId, ref lightColor);
+            GL.UniformMatrix4(matrixId, false, ref modelViewProjectionMatrix);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 

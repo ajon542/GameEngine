@@ -116,14 +116,14 @@ namespace GameEngine.Core.Graphics
             shaders.Add("default", new ShaderProgram("Core/Shaders/phong-vert.glsl", "Core/Shaders/phong-frag.glsl", true));
             textureId = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/White-1x1.png");
 
-            uvBuffer = shaders["default"].GetBuffer("VertexUV");
-            uvAttr = shaders["default"].GetAttribute("VertexUV");
-            colourBuffer = shaders["default"].GetBuffer("VertexColor");
-            colourAttr = shaders["default"].GetAttribute("VertexColor");
-            positionBuffer = shaders["default"].GetBuffer("VertexPosition");
-            positionAttr = shaders["default"].GetAttribute("VertexPosition");
-            normalBuffer = shaders["default"].GetBuffer("VertexNormal");
-            normalAttr = shaders["default"].GetAttribute("VertexNormal");
+            shaders["default"].GetBuffer("VertexUV", out uvBuffer);
+            shaders["default"].GetAttribute("VertexUV", out uvAttr);
+            shaders["default"].GetBuffer("VertexColor", out colourBuffer);
+            shaders["default"].GetAttribute("VertexColor", out colourAttr);
+            shaders["default"].GetBuffer("VertexPosition", out positionBuffer);
+            shaders["default"].GetAttribute("VertexPosition", out positionAttr);
+            shaders["default"].GetBuffer("VertexNormal", out normalBuffer);
+            shaders["default"].GetAttribute("VertexNormal", out normalAttr);
 
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -168,7 +168,10 @@ namespace GameEngine.Core.Graphics
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, textureId);
-            GL.Uniform1(shaders["default"].GetUniform("mainTexture"), TextureUnit.Texture0 - TextureUnit.Texture0);
+            
+            int mainTextureId;
+            shaders["default"].GetUniform("mainTexture", out mainTextureId);
+            GL.Uniform1(mainTextureId, TextureUnit.Texture0 - TextureUnit.Texture0);
 
             GL.BindVertexArray(vertexArrObject);
 
@@ -182,21 +185,23 @@ namespace GameEngine.Core.Graphics
             Vector3 specularColor = material.Specular;
             float specularExponent = material.SpecularExponent;
 
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
-            GL.UniformMatrix4(shaders["default"].GetUniform("ViewMatrix"), false, ref viewMatrix);
-            GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref modelMatrix);
-            GL.Uniform3(shaders["default"].GetUniform("MaterialAmbient"), ref ambientColor);
-            GL.Uniform3(shaders["default"].GetUniform("MaterialDiffuse"), ref diffuseColor);
-            GL.Uniform3(shaders["default"].GetUniform("MaterialSpecular"), ref specularColor);
-            GL.Uniform1(shaders["default"].GetUniform("MaterialSpecExponent"), specularExponent);
-            GL.Uniform3(shaders["default"].GetUniform("LightPosition"), ref activeLight.Position);
-            GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref activeLight.Color);
-            GL.Uniform1(shaders["default"].GetUniform("LightDiffuseIntensity"), activeLight.DiffuseIntensity);
-            GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), activeLight.AmbientIntensity);
+            // TODO:
+            //GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
+            //GL.UniformMatrix4(shaders["default"].GetUniform("ViewMatrix"), false, ref viewMatrix);
+            //GL.UniformMatrix4(shaders["default"].GetUniform("ModelMatrix"), false, ref modelMatrix);
+            //GL.Uniform3(shaders["default"].GetUniform("MaterialAmbient"), ref ambientColor);
+            //GL.Uniform3(shaders["default"].GetUniform("MaterialDiffuse"), ref diffuseColor);
+            //GL.Uniform3(shaders["default"].GetUniform("MaterialSpecular"), ref specularColor);
+            //GL.Uniform1(shaders["default"].GetUniform("MaterialSpecExponent"), specularExponent);
+            //GL.Uniform3(shaders["default"].GetUniform("LightPosition"), ref activeLight.Position);
+            //GL.Uniform3(shaders["default"].GetUniform("LightColor"), ref activeLight.Color);
+            //GL.Uniform1(shaders["default"].GetUniform("LightDiffuseIntensity"), activeLight.DiffuseIntensity);
+            //GL.Uniform1(shaders["default"].GetUniform("LightAmbientIntensity"), activeLight.AmbientIntensity);
 
             GL.DrawElements(mesh.RenderType, indicesCount, DrawElementsType.UnsignedInt, 0);
 
             shaders["default"].DisableVertexAttribArrays();
+            throw new Exception("change uncomment these");
         }
     }
 }

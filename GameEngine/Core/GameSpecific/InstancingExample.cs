@@ -95,7 +95,9 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["default"].EnableVertexAttribArrays();
 
-            GL.UniformMatrix4(shaders["default"].GetUniform("MVPMatrix"), false, ref modelViewProjectionMatrix);
+            int mvpMatrixId;
+            shaders["default"].GetUniform("MVPMatrix", out mvpMatrixId);
+            GL.UniformMatrix4(mvpMatrixId, false, ref modelViewProjectionMatrix);
 
             int numberOfIndices = 4;
             int numberOfInstances = instanceCount * instanceCount * instanceCount;

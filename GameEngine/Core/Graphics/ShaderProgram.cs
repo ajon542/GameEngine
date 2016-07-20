@@ -280,13 +280,15 @@ namespace GameEngine.Core.Graphics
         /// </summary>
         /// <param name="name">The name of the attribute variable.</param>
         /// <returns>The location of the variable.</returns>
-        public int GetAttribute(string name)
+        public bool GetAttribute(string name, out int attribute)
         {
             if (!attributes.ContainsKey(name))
             {
-                throw new GameEngineException("The attribute " + name + " does not exist");
+                attribute = -1;
+                return false;
             }
-            return attributes[name].address;
+            attribute = attributes[name].address;
+            return true;
         }
 
         /// <summary>
@@ -294,13 +296,15 @@ namespace GameEngine.Core.Graphics
         /// </summary>
         /// <param name="name">The name of the uniform variable.</param>
         /// <returns>The location of the variable.</returns>
-        public int GetUniform(string name)
+        public bool GetUniform(string name, out int uniform)
         {
             if (!uniforms.ContainsKey(name))
             {
-                throw new GameEngineException("The uniform variable " + name + " does not exist");
+                uniform = -1;
+                return false;
             }
-            return uniforms[name].address;
+            uniform = uniforms[name].address;
+            return true;
         }
 
         /// <summary>
@@ -308,13 +312,15 @@ namespace GameEngine.Core.Graphics
         /// </summary>
         /// <param name="name">The name of the buffer object.</param>
         /// <returns>The location of the buffer object.</returns>
-        public uint GetBuffer(string name)
+        public bool GetBuffer(string name, out uint buffer)
         {
             if (!buffers.ContainsKey(name))
             {
-                throw new GameEngineException("The buffer " + name + " does not exist");
+                buffer = 0;
+                return false;
             }
-            return buffers[name];
+            buffer = buffers[name];
+            return true;
         }
 
         /// <summary>

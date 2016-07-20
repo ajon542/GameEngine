@@ -37,6 +37,7 @@ namespace GameEngine.Core
 
             material.SetMatrix4("MATRIX_P", projectionMatrix);
             material.SetMatrix4("MATRIX_MV", modelViewMatrix);
+            material.SetMatrix4("MATRIX_MVP", modelViewMatrix);
 
             GL.DrawElements(mesh.RenderType, mesh.Indices.Count, DrawElementsType.UnsignedInt, 0);
 

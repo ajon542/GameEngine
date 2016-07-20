@@ -70,22 +70,22 @@ namespace GameEngine.Core.GameSpecific
             GL.BindVertexArray(vertexArrayId);
 
             // Get the texture sampler uniform location from the fragment shader.
-            textureSamplerUniform = shaders["texture"].GetUniform("textureSampler");
+            shaders["texture"].GetUniform("textureSampler", out textureSamplerUniform);
 
             // Get the model-view-projection matrix uniform.
-            mvpUniform = shaders["texture"].GetUniform("MVPMatrix");
+            shaders["texture"].GetUniform("MVPMatrix", out mvpUniform);
 
             // Setup the vertices.
-            vertexBuffer = shaders["texture"].GetBuffer("VertexPosition");
-            vertexAttribute = shaders["texture"].GetAttribute("VertexPosition");
+            shaders["texture"].GetBuffer("VertexPosition", out vertexBuffer);
+            shaders["texture"].GetAttribute("VertexPosition", out vertexAttribute);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
             IntPtr vertexBufferSize = (IntPtr)(vertices.Length * Vector3.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, vertexBufferSize, vertices, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(vertexAttribute, 3, VertexAttribPointerType.Float, false, 0, 0);
 
             // Setup the texture coords.
-            uvBuffer = shaders["texture"].GetBuffer("VertexUV");
-            uvAttribute = shaders["texture"].GetAttribute("VertexUV");
+            shaders["texture"].GetBuffer("VertexUV", out uvBuffer);
+            shaders["texture"].GetAttribute("VertexUV", out uvAttribute);
             GL.BindBuffer(BufferTarget.ArrayBuffer, uvBuffer);
             IntPtr uvBufferSize = (IntPtr)(uv.Length * Vector2.SizeInBytes);
             GL.BufferData(BufferTarget.ArrayBuffer, uvBufferSize, uv, BufferUsageHint.StaticDraw);
