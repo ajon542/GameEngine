@@ -33,7 +33,7 @@ namespace GameEngine.ViewModel
             MenuViewModel = new MenuViewModel(documents);
 
             // Setup method to handle the unhandled exceptions.
-            //AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace GameEngine.ViewModel
         /// </summary>
         /// <param name="sender">The sender of the event.</param>
         /// <param name="e">The event arguments.</param>
-        //private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        //{
-        //    logger.Log(LogLevel.Fatal, e.ExceptionObject as Exception, e.ExceptionObject.ToString());
-        //}
+        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            logger.Log(LogLevel.Fatal, e.ExceptionObject as Exception, e.ExceptionObject.ToString());
+        }
     }
 }

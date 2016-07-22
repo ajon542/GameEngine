@@ -111,10 +111,8 @@ namespace GameEngine.Core.Graphics
                 GL.GetShaderInfoLog(address, out shaderLog);
                 GL.DeleteShader(address);
                 GL.DeleteProgram(ProgramId);
-                logger.Log(LogLevel.Error, shaderLog);
 
-                // TODO: Program keeps running after this point...
-                throw new GameEngineException("Compiling {0} failed with error code {1}", type, statusCode);
+                throw new GameEngineException("Compiling {0} failed {1}", type, shaderLog);
             }
 
             GL.AttachShader(ProgramId, address);

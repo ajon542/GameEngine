@@ -32,18 +32,9 @@ namespace GameEngine.Core.GameSpecific
             // Set the program object for the current rendering state.
             renderer.material.UseProgram();
 
-            // Construct the default shader input parameters.
-            DefaultShaderInput shaderInput = new DefaultShaderInput();
-            shaderInput.MatrixMVP = gameObject.ModelMatrix * MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            shaderInput.MatrixMV = gameObject.ModelMatrix * MainCamera.ViewMatrix;
-            shaderInput.MatrixV = MainCamera.ViewMatrix;
-            shaderInput.MatrixP = MainCamera.ProjectionMatrix;
-            shaderInput.MatrixVP = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
-            shaderInput.Object2World = gameObject.ModelMatrix;
-            shaderInput.World2Object = gameObject.ModelMatrix.Inverted();
-            shaderInput.WorldCameraPos = MainCamera.Position;
-            shaderInput.LightPosition = light.Position;
-            shaderInput.LightColor = light.Color;
+            // Set the default shader variables.
+            DefaultShaderInput shaderInput;
+            SetDefaultShaderVariables(out shaderInput, gameObject, MainCamera, light);
 
             // Set the user specific variables.
             renderer.material.SetVector4("_Color", new Vector4(1, 1, 0, 0));
@@ -58,6 +49,21 @@ namespace GameEngine.Core.GameSpecific
         public override void Shutdown()
         {
             renderer.Destroy();
+        }
+
+        private void SetDefaultShaderVariables(out DefaultShaderInput shaderInput, GameObject gameObject, Camera mainCamera, Light light)
+        {
+            shaderInput = new DefaultShaderInput();
+            shaderInput.MatrixMVP = gameObject.ModelMatrix * MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
+            shaderInput.MatrixMV = gameObject.ModelMatrix * MainCamera.ViewMatrix;
+            shaderInput.MatrixV = MainCamera.ViewMatrix;
+            shaderInput.MatrixP = MainCamera.ProjectionMatrix;
+            shaderInput.MatrixVP = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
+            shaderInput.Object2World = gameObject.ModelMatrix;
+            shaderInput.World2Object = gameObject.ModelMatrix.Inverted();
+            shaderInput.WorldCameraPos = MainCamera.Position;
+            shaderInput.LightPosition = light.Position;
+            shaderInput.LightColor = light.Color;
         }
     }
 }
