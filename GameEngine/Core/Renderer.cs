@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.Core.Graphics;
 using GameEngine.Core.Utilities.ObjParser;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -27,7 +28,7 @@ namespace GameEngine.Core
             GL.Enable(EnableCap.CullFace);
         }
 
-        public void Render(Matrix4 modelViewMatrix, Matrix4 projectionMatrix)
+        public void Render(DefaultShaderInput shaderInput)
         {
             material.UseProgram();
 
@@ -35,9 +36,14 @@ namespace GameEngine.Core
 
             material.EnableVertexAttribArrays();
 
-            material.SetMatrix4("MATRIX_P", projectionMatrix);
-            material.SetMatrix4("MATRIX_MV", modelViewMatrix);
-            material.SetMatrix4("MATRIX_MVP", modelViewMatrix);
+            material.SetMatrix4("MATRIX_MVP", shaderInput.MatrixMVP);
+            material.SetMatrix4("MATRIX_MV", shaderInput.MatrixMV);
+            material.SetMatrix4("MATRIX_V", shaderInput.MatrixV);
+            material.SetMatrix4("MATRIX_P", shaderInput.MatrixP);
+            material.SetMatrix4("MATRIX_VP", shaderInput.MatrixVP);
+            material.SetMatrix4("Object2World", shaderInput.Object2World);
+            material.SetMatrix4("World2Object", shaderInput.World2Object);
+            material.SetVector3("WorldCameraPos", shaderInput.WorldCameraPos);
 
             GL.DrawElements(mesh.RenderType, mesh.Indices.Count, DrawElementsType.UnsignedInt, 0);
 

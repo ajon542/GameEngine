@@ -76,6 +76,15 @@ namespace GameEngine.Core
             return shaders["default"].GetUniform(name, out uniform);
         }
 
+        public void SetVector3(string name, Vector3 vector)
+        {
+            int uniform;
+            if (shaders["default"].GetUniform(name, out uniform))
+            {
+                GL.Uniform3(uniform, ref vector);
+            }
+        }
+
         public void SetMatrix4(string name, Matrix4 matrix)
         {
             int uniform;

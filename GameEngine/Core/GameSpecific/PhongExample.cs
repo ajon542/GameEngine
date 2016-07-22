@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
@@ -8,11 +9,10 @@ namespace GameEngine.Core.GameSpecific
     public class PhongExample : Scene
     {
         private GameObject gameObject = new GameObject();
-        private Renderer renderer;
+        private Renderer renderer = new Renderer();
 
         public override void Initialize()
         {
-            renderer = new Renderer();
             renderer.material = new Material("Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl");
             renderer.mesh = new Sphere(4, 2);
 
@@ -28,9 +28,18 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Render()
         {
-            Matrix4 modelViewMatrix = gameObject.ModelMatrix * MainCamera.ViewMatrix;
-            Matrix4 projectionMatrix = MainCamera.ProjectionMatrix;
-            renderer.Render(modelViewMatrix, projectionMatrix);
+            // Construct the default shader input parameters.
+            DefaultShaderInput shaderInput = new DefaultShaderInput();
+            shaderInput.MatrixMVP = gameObject.ModelMatrix * MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
+            shaderInput.MatrixMV = gameObject.ModelMatrix * MainCamera.ViewMatrix;
+            shaderInput.MatrixV = MainCamera.ViewMatrix;
+            shaderInput.MatrixP = MainCamera.ProjectionMatrix;
+            shaderInput.MatrixVP = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
+            shaderInput.Object2World = gameObject.ModelMatrix;
+            shaderInput.World2Object = gameObject.ModelMatrix.Inverted();
+            shaderInput.WorldCameraPos = MainCamera.Position;
+
+            renderer.Render(shaderInput);
 
             // TODO: camera.Render(rootGameObject/scene);
         }
