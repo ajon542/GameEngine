@@ -47,7 +47,8 @@ namespace GameEngine.Core
             material.SetVector3("WorldCameraPos", shaderInput.WorldCameraPos);
 
             // Set default lights.
-            material.SetVector3("LightPos", shaderInput.LightPos);
+            material.SetVector3("LightPosition", shaderInput.LightPosition);
+            material.SetVector4("LightColor", shaderInput.LightColor);
 
             GL.DrawElements(mesh.RenderType, mesh.Indices.Count, DrawElementsType.UnsignedInt, 0);
 

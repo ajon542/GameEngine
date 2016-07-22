@@ -14,6 +14,7 @@ namespace GameEngine.Core.Graphics
         public Vector3 WorldCameraPos { get; set; }
 
         // TODO: Might be worth separating out.
-        public Vector3 LightPos { get; set; }
+        public Vector3 LightPosition { get; set; }
+        public Vector4 LightColor { get; set; }
     }
 }

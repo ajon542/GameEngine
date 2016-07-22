@@ -85,6 +85,15 @@ namespace GameEngine.Core
             }
         }
 
+        public void SetVector4(string name, Vector4 vector)
+        {
+            int uniform;
+            if (shaders["default"].GetUniform(name, out uniform))
+            {
+                GL.Uniform4(uniform, ref vector);
+            }
+        }
+
         public void SetMatrix4(string name, Matrix4 matrix)
         {
             int uniform;

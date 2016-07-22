@@ -13,7 +13,7 @@ namespace GameEngine.Core.GameSpecific
     {
         private GameObject gameObject = new GameObject();
         private Mesh mesh = new Quad();
-        Light activeLight = new Light(new Vector3(0, -5, 0), new Vector3(1.0f, 1.0f, 1.0f));
+        Light activeLight = new Light(new Vector3(0, -5, 0), new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
         ShaderBatch batch;
 

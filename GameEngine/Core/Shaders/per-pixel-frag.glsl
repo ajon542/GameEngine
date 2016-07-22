@@ -12,14 +12,13 @@ uniform mat4 Object2World;
 uniform mat4 World2Object;
 uniform vec3 WorldCameraPos;
 
-uniform vec3 LightPos;
+uniform vec3 LightPosition = vec3(10, 10, 10);
+uniform vec4 LightColor = vec4(1, 1, 1, 1);
 
-uniform vec4 _LightColor0;
- 
 // User-specified properties
-uniform vec4 _Color;
-uniform vec4 _SpecColor;
-uniform float _Shininess;
+uniform vec4 _Color = vec4(1, 1, 1, 1);     // Diffuse material color
+uniform vec4 _SpecColor = vec4(1, 1, 1, 1); // Specular material color
+uniform float _Shininess = 100.0f;           // Shininess
 
 // Input from vertex shader
 in Fragment
@@ -39,13 +38,13 @@ void main(void)
     float attenuation;
 
     attenuation = 1.0; // no attenuation
-    lightDirection = normalize(LightPos);
+    lightDirection = normalize(LightPosition);
 
     vec4 lightmodel_ambient = vec4(0.1, 0.1, 0.1, 1);
     vec3 ambientLighting = lightmodel_ambient.rgb * _Color.rgb;
 
     vec3 diffuseReflection = 
-        attenuation * _LightColor0.rgb * _Color.rgb
+        attenuation * LightColor.rgb * _Color.rgb
         * max(0.0, dot(normalDirection, lightDirection));
 
     vec3 specularReflection;
@@ -57,7 +56,7 @@ void main(void)
     }
     else // light source on the right side
     {
-        specularReflection = attenuation * _LightColor0.rgb
+        specularReflection = attenuation * LightColor.rgb
             * _SpecColor.rgb * pow(max(0.0, dot(
             reflect(-lightDirection, normalDirection),
             viewDirection)), _Shininess);
