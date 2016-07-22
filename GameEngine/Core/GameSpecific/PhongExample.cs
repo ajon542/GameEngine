@@ -14,7 +14,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Initialize()
         {
-            renderer.material = new Material("Core/Shaders/phong43-vert.glsl", "Core/Shaders/phong43-frag.glsl");
+            renderer.material = new Material("Core/Shaders/per-pixel-vert.glsl", "Core/Shaders/per-pixel-frag.glsl");
             renderer.mesh = new Sphere(4, 2);
 
             renderer.Initialize();
