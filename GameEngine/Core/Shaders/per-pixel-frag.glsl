@@ -40,26 +40,32 @@ void main(void)
     attenuation = 1.0; // no attenuation
     lightDirection = normalize(LightPosition);
 
+    // Calculate the ambient light.
     vec4 lightmodel_ambient = vec4(0.1, 0.1, 0.1, 1);
     vec3 ambientLighting = lightmodel_ambient.rgb * _Color.rgb;
 
+    // Calculate the diffuse light.
     vec3 diffuseReflection = 
         attenuation * LightColor.rgb * _Color.rgb
         * max(0.0, dot(normalDirection, lightDirection));
 
+    // Calculate the specular light.
     vec3 specularReflection;
+
     if (dot(normalDirection, lightDirection) < 0.0) 
-        // light source on the wrong side?
     {
-        specularReflection = vec3(0.0, 0.0, 0.0); 
-            // no specular reflection
+        // Light source on the wrong side? No specular reflection.
+        specularReflection = vec3(0.0, 0.0, 0.0);
     }
-    else // light source on the right side
+    else
     {
-        specularReflection = attenuation * LightColor.rgb
-            * _SpecColor.rgb * pow(max(0.0, dot(
-            reflect(-lightDirection, normalDirection),
-            viewDirection)), _Shininess);
+        // Light source on the correct side. 
+        vec3 reflectDirection = reflect(-lightDirection, normalDirection);
+        specularReflection = 
+            attenuation *
+            LightColor.rgb *
+            _SpecColor.rgb *
+            pow(max(0.0, dot(reflectDirection, viewDirection)), _Shininess);
     }
 
     // Write final color to the framebuffer
