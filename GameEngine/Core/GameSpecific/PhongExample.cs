@@ -10,7 +10,7 @@ namespace GameEngine.Core.GameSpecific
     {
         private GameObject gameObject = new GameObject();
         private Renderer renderer = new Renderer();
-        private Light light = new Light(new Vector3(10, 0, 0), new Vector3());
+        private Light light = new Light(new Vector3(-10, 0, 0), new Vector3());
 
         public override void Initialize()
         {

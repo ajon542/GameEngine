@@ -12,14 +12,14 @@ uniform mat4 Object2World;
 uniform mat4 World2Object;
 uniform vec3 WorldCameraPos;
 
-uniform vec3 LightPos;
+uniform vec3 LightPos = vec3(10, 10, 0);
 
-uniform vec4 _LightColor0;
+uniform vec4 _LightColor0 = vec4(1, 1, 1, 1);
  
 // User-specified properties
-uniform vec4 _Color;
-uniform vec4 _SpecColor;
-uniform float _Shininess;
+uniform vec4 _Color = vec4(1, 1, 1, 1);     // Diffuse material color
+uniform vec4 _SpecColor = vec4(1, 1, 1, 1); // Specular material color
+uniform float _Shininess = 100.0f;           // Shininess
 
 // Outputs to the fragment shader
 out Fragment
