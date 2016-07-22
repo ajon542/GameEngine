@@ -12,7 +12,7 @@ uniform mat4 Object2World;
 uniform mat4 World2Object;
 uniform vec3 WorldCameraPos;
 
-uniform vec3 LightPosition = vec3(10, 10, 10);
+uniform vec3 LightPosition = vec3(10, 0, 0);
 uniform vec4 LightColor = vec4(1, 1, 1, 1);
 
 // User-specified properties

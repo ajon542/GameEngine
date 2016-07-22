@@ -85,6 +85,15 @@ namespace GameEngine.Core
             }
         }
 
+        public void SetFloat(string name, float value)
+        {
+            int uniform;
+            if (shaders["default"].GetUniform(name, out uniform))
+            {
+                GL.Uniform1(uniform, value);
+            }
+        }
+
         public void SetVector4(string name, Vector4 vector)
         {
             int uniform;

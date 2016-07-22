@@ -10,7 +10,7 @@ namespace GameEngine.Core.GameSpecific
     {
         private GameObject gameObject = new GameObject();
         private Renderer renderer = new Renderer();
-        private Light light = new Light(new Vector3(10, 0, 0), new Vector4(0, 1, 0, 1));
+        private Light light = new Light(new Vector3(10, 0, 0), new Vector4(1, 1, 1, 1));
 
         public override void Initialize()
         {
@@ -29,6 +29,9 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Render()
         {
+            // Set the program object for the current rendering state.
+            renderer.material.UseProgram();
+
             // Construct the default shader input parameters.
             DefaultShaderInput shaderInput = new DefaultShaderInput();
             shaderInput.MatrixMVP = gameObject.ModelMatrix * MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
@@ -41,6 +44,11 @@ namespace GameEngine.Core.GameSpecific
             shaderInput.WorldCameraPos = MainCamera.Position;
             shaderInput.LightPosition = light.Position;
             shaderInput.LightColor = light.Color;
+
+            // Set the user specific variables.
+            renderer.material.SetVector4("_Color", new Vector4(1, 1, 0, 0));
+            renderer.material.SetVector4("_SpecColor", new Vector4(1, 1, 1, 0));
+            renderer.material.SetFloat("_Shininess", 100);
 
             renderer.Render(shaderInput);
 

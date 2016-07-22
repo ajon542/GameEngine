@@ -30,12 +30,6 @@ namespace GameEngine.Core
 
         public void Render(DefaultShaderInput shaderInput)
         {
-            material.UseProgram();
-
-            material.BindVertexArray();
-
-            material.EnableVertexAttribArrays();
-
             // Set default matrices.
             material.SetMatrix4("MATRIX_MVP", shaderInput.MatrixMVP);
             material.SetMatrix4("MATRIX_MV", shaderInput.MatrixMV);
@@ -49,6 +43,10 @@ namespace GameEngine.Core
             // Set default lights.
             material.SetVector3("LightPosition", shaderInput.LightPosition);
             material.SetVector4("LightColor", shaderInput.LightColor);
+
+            material.BindVertexArray();
+
+            material.EnableVertexAttribArrays();
 
             GL.DrawElements(mesh.RenderType, mesh.Indices.Count, DrawElementsType.UnsignedInt, 0);
 
