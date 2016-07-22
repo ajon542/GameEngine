@@ -12,5 +12,8 @@ namespace GameEngine.Core.Graphics
         public Matrix4 Object2World { get; set; }
         public Matrix4 World2Object { get; set; }
         public Vector3 WorldCameraPos { get; set; }
+
+        // TODO: Might be worth separating out.
+        public Vector3 LightPos { get; set; }
     }
 }

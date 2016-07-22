@@ -10,6 +10,7 @@ namespace GameEngine.Core.GameSpecific
     {
         private GameObject gameObject = new GameObject();
         private Renderer renderer = new Renderer();
+        private Light light = new Light(new Vector3(10, 0, 0), new Vector3());
 
         public override void Initialize()
         {
@@ -38,6 +39,7 @@ namespace GameEngine.Core.GameSpecific
             shaderInput.Object2World = gameObject.ModelMatrix;
             shaderInput.World2Object = gameObject.ModelMatrix.Inverted();
             shaderInput.WorldCameraPos = MainCamera.Position;
+            shaderInput.LightPos = light.Position;
 
             renderer.Render(shaderInput);
 

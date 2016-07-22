@@ -36,6 +36,7 @@ namespace GameEngine.Core
 
             material.EnableVertexAttribArrays();
 
+            // Set default matrices.
             material.SetMatrix4("MATRIX_MVP", shaderInput.MatrixMVP);
             material.SetMatrix4("MATRIX_MV", shaderInput.MatrixMV);
             material.SetMatrix4("MATRIX_V", shaderInput.MatrixV);
@@ -44,6 +45,9 @@ namespace GameEngine.Core
             material.SetMatrix4("Object2World", shaderInput.Object2World);
             material.SetMatrix4("World2Object", shaderInput.World2Object);
             material.SetVector3("WorldCameraPos", shaderInput.WorldCameraPos);
+
+            // Set default lights.
+            material.SetVector3("LightPos", shaderInput.LightPos);
 
             GL.DrawElements(mesh.RenderType, mesh.Indices.Count, DrawElementsType.UnsignedInt, 0);
 
