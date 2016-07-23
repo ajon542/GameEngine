@@ -1,6 +1,8 @@
 ﻿using OpenTK;
 using GameEngine.Core.Graphics;
 
+using NLog;
+
 namespace GameEngine.Core.GameSpecific
 {
     /// <summary>
@@ -8,13 +10,24 @@ namespace GameEngine.Core.GameSpecific
     /// </summary>
     public class PhongExample : Scene
     {
-        private GameObject gameObject = new GameObject();
-        private Renderer renderer = new Renderer();
-        private Light light = new Light(new Vector3(10, 0, 0), new Vector4(1, 1, 1, 1));
+        protected static Logger logger = LogManager.GetCurrentClassLogger();
+
+        private GameObject gameObject;
+        private Renderer renderer;
+        private Light light;
 
         public override void Initialize()
         {
-            renderer.material = new Material("Core/Shaders/per-pixel-vert.glsl", "Core/Shaders/per-pixel-frag.glsl");
+            logger.Log(LogLevel.Info, "");
+
+            // Create the objects here as the contructor runs quite early on before the GL context has been created.
+            // This actually highlights some issues with the intialization procedure. I should be able to use common
+            // construction patterns and not be limited to calling these constructors in the Initialize method.
+            gameObject = new GameObject();
+            renderer = new Renderer();
+            light = new Light(new Vector3(10, 0, 0), new Vector4(1, 1, 1, 1));
+
+            renderer.material = new Material("PerPixelMat", "Core/Shaders/per-pixel-vert.glsl", "Core/Shaders/per-pixel-frag.glsl");
             renderer.mesh = new Sphere(4, 2);
 
             renderer.Initialize();
@@ -48,6 +61,7 @@ namespace GameEngine.Core.GameSpecific
 
         public override void Shutdown()
         {
+            logger.Log(LogLevel.Info, "");
             renderer.Destroy();
         }
 

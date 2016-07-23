@@ -5,10 +5,16 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
+using NLog;
+
 namespace GameEngine.Core
 {
     public class Material
     {
+        public string Name { get; private set; }
+
+        protected static Logger logger = LogManager.GetCurrentClassLogger();
+
         private uint vertexArrObject;
         private uint elementBuffer;
 
@@ -24,8 +30,11 @@ namespace GameEngine.Core
             throw new NotImplementedException("this ctor should be removed, can't use a material without a shader");
         }
 
-        public Material(string vShader, string fShader)
+        public Material(string name, string vShader, string fShader)
         {
+            Name = name;
+            logger.Log(LogLevel.Info, Name);
+
             shaders.Add("default", new ShaderProgram(vShader, fShader, true));
             Ambient = new Vector3(0.2f, 0.2f, 0.2f);
             Diffuse = new Vector3(1.0f, 1.0f, 1.0f);
@@ -35,6 +44,8 @@ namespace GameEngine.Core
 
         public void Initialize()
         {
+            logger.Log(LogLevel.Info, "");
+
             // Send OpenGL our vertex data.
             GL.GenVertexArrays(1, out vertexArrObject);
             GL.BindVertexArray(vertexArrObject);
@@ -154,6 +165,8 @@ namespace GameEngine.Core
         /// </summary>
         public void Destroy()
         {
+            logger.Log(LogLevel.Info, "");
+
             foreach (KeyValuePair<string, ShaderProgram> kv in shaders)
             {
                 kv.Value.Destroy();

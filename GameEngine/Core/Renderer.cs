@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using GameEngine.Core.Graphics;
-using GameEngine.Core.Utilities.ObjParser;
-using OpenTK;
+﻿using GameEngine.Core.Graphics;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
+
+using NLog;
 
 namespace GameEngine.Core
 {
     public class Renderer : Component
     {
+        protected static Logger logger = LogManager.GetCurrentClassLogger();
+
         public Material material;
         public Mesh mesh;
 
         public Renderer()
         {
+            logger.Log(LogLevel.Info, "");
         }
 
         public void Initialize()
         {
+            logger.Log(LogLevel.Info, "");
+
             material.Initialize();
             material.SetPositionBuffer(mesh.Vertices.ToArray());
             material.SetNormalBuffer(mesh.Normals.ToArray());
@@ -58,6 +60,8 @@ namespace GameEngine.Core
         /// </summary>
         public void Destroy()
         {
+            logger.Log(LogLevel.Info, "");
+
             material.Destroy();
         }
     }

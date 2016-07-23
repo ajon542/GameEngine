@@ -344,8 +344,11 @@ namespace GameEngine.Core.Graphics
                 GL.DeleteBuffers(1, ref bufferId);
             }
 
+            logger.Log(LogLevel.Info, "Deleting vertex shader {0} and fragment shader {1}", vShaderId, fShaderId);
             GL.DeleteShader(vShaderId);
             GL.DeleteShader(fShaderId);
+
+            logger.Log(LogLevel.Info, "Deleting shader program {0}", ProgramId);
             GL.DeleteProgram(ProgramId);
         }
     }
