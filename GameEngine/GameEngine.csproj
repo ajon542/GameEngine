@@ -100,6 +100,7 @@
     <Compile Include="Core\GameSpecific\LightingExample.cs" />
     <Compile Include="Core\GameSpecific\PhongExample.cs" />
     <Compile Include="Core\GameSpecific\QuadBehaviour.cs" />
+    <Compile Include="Core\GameSpecific\SkyBoxExample.cs" />
     <Compile Include="Core\GameSpecific\TextureBlendExample.cs" />
     <Compile Include="Core\GameSpecific\TextureExample.cs" />
     <Compile Include="Core\GameSpecific\Tutorial2.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Core\Serialization\Vector3Converter.cs" />
     <Compile Include="Core\Serialization\Vector4Converter.cs" />
     <Compile Include="Core\Graphics\ShaderProgram.cs" />
+    <Compile Include="Core\SkyBox.cs" />
     <Compile Include="Core\Sphere.cs" />
     <Compile Include="Core\Texture.cs" />
     <Compile Include="Core\Timer.cs" />
@@ -275,6 +277,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\phong43-vert.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Core\Shaders\skybox-frag.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Core\Shaders\skybox-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\texture-blend-frag.glsl">

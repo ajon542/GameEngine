@@ -4,6 +4,8 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using GameEngine.Core.Graphics;
+
 namespace GameEngine.Core
 {
     /// <summary>
@@ -59,6 +61,21 @@ namespace GameEngine.Core
             //glDeleteProgram(programID);
             //glDeleteTextures(1, &TextureID);
             //glDeleteVertexArrays(1, &VertexArrayID);
+        }
+
+        protected void SetDefaultShaderVariables(out DefaultShaderInput shaderInput, GameObject gameObject, Camera mainCamera, Light light)
+        {
+            shaderInput = new DefaultShaderInput();
+            shaderInput.MatrixMVP = gameObject.ModelMatrix * MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
+            shaderInput.MatrixMV = gameObject.ModelMatrix * MainCamera.ViewMatrix;
+            shaderInput.MatrixV = MainCamera.ViewMatrix;
+            shaderInput.MatrixP = MainCamera.ProjectionMatrix;
+            shaderInput.MatrixVP = MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
+            shaderInput.Object2World = gameObject.ModelMatrix;
+            shaderInput.World2Object = gameObject.ModelMatrix.Inverted();
+            shaderInput.WorldCameraPos = MainCamera.Position;
+            shaderInput.LightPosition = light.Position;
+            shaderInput.LightColor = light.Color;
         }
     }
 }

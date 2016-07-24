@@ -2,7 +2,7 @@
 
 namespace GameEngine.Core
 {
-    class Light
+    public class Light
     {
         public Light(Vector3 position, Vector4 color, float diffuseintensity = 0.75f, float ambientintensity = 0.01f)
         {

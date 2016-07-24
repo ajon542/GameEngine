@@ -70,7 +70,7 @@ namespace GameEngine.Core
             WorldUp = new Vector3(0.0f, 1.0f, 0.0f);
 
             FieldOfView = (float)ConvertToRadians(45);
-            NearPlane = 1.0f;
+            NearPlane = 0.1f;
             FarPlane = 1000.0f;
             AspectRatio = 4 / (float)3;
         }
