@@ -128,5 +128,10 @@ namespace GameEngine.Core.GameSpecific
 
             shaders["texture"].DisableVertexAttribArrays();
         }
+
+        public override void Shutdown()
+        {
+            GL.DeleteTexture(textureId);
+        }
     }
 }
