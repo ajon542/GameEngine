@@ -10,6 +10,8 @@ namespace GameEngine.Core.GameSpecific
     /// <summary>
     /// Example to demonstrate Phong shading.
     /// </summary>
+    // TODO: There is an optimization that needs to be compeleted:
+    // http://learnopengl.com/#!Advanced-OpenGL/Cubemaps
     public class SkyBoxExample : Scene
     {
         protected static Logger logger = LogManager.GetCurrentClassLogger();
@@ -26,12 +28,12 @@ namespace GameEngine.Core.GameSpecific
 
             List<string> filenames = new List<string>
             {
-                @"C:\development\GitHub\GameEngine\GameEngine\Core\GameSpecific\Assets\Textures\CubeMap\Right.png",
-                @"C:\development\GitHub\GameEngine\GameEngine\Core\GameSpecific\Assets\Textures\CubeMap\Left.png",
-                @"C:\development\GitHub\GameEngine\GameEngine\Core\GameSpecific\Assets\Textures\CubeMap\Top.png",
-                @"C:\development\GitHub\GameEngine\GameEngine\Core\GameSpecific\Assets\Textures\CubeMap\Bottom.png",
-                @"C:\development\GitHub\GameEngine\GameEngine\Core\GameSpecific\Assets\Textures\CubeMap\Back.png",
-                @"C:\development\GitHub\GameEngine\GameEngine\Core\GameSpecific\Assets\Textures\CubeMap\Front.png",
+                "Core/GameSpecific/Assets/Textures/CubeMap/Right.png",
+                "Core/GameSpecific/Assets/Textures/CubeMap/Left.png",
+                "Core/GameSpecific/Assets/Textures/CubeMap/Top.png",
+                "Core/GameSpecific/Assets/Textures/CubeMap/Bottom.png",
+                "Core/GameSpecific/Assets/Textures/CubeMap/Back.png",
+                "Core/GameSpecific/Assets/Textures/CubeMap/Front.png",
             };
             cubeMapId = Texture.LoadCubeMap(filenames);
 
