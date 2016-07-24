@@ -23,6 +23,7 @@ out Fragment
 
 void main(void)
 {
-    gl_Position = _SkyBoxMatrix_VP * vec4(position, 1.0);
+    vec4 pos = _SkyBoxMatrix_VP * vec4(position, 1.0);
+    gl_Position = vec4(pos.x, pos.y, pos.w, pos.w);
     fragment.texCoords = position;
 }

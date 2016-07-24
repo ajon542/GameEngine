@@ -8,7 +8,7 @@ using NLog;
 namespace GameEngine.Core.GameSpecific
 {
     /// <summary>
-    /// Example to demonstrate Phong shading.
+    /// Example to demonstrate a skybox.
     /// </summary>
     // TODO: There is an optimization that needs to be compeleted:
     // http://learnopengl.com/#!Advanced-OpenGL/Cubemaps
@@ -16,8 +16,11 @@ namespace GameEngine.Core.GameSpecific
     {
         protected static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private GameObject gameObject;
-        private Renderer renderer;
+        private GameObject skyboxGameObject;
+        private Renderer skyboxRenderer;
+
+        private GameObject sphereGameObject;
+        private Renderer sphereRenderer;
         private Light light;
 
         int cubeMapId;
@@ -26,6 +29,17 @@ namespace GameEngine.Core.GameSpecific
         {
             logger.Log(LogLevel.Info, "");
 
+            // Create the sphere game object.
+            sphereGameObject = new GameObject();
+            sphereRenderer = new Renderer();
+            light = new Light(new Vector3(10, 0, 0), new Vector4(1, 1, 1, 1));
+
+            sphereRenderer.material = new Material("PerPixelMat", "Core/Shaders/per-pixel-vert.glsl", "Core/Shaders/per-pixel-frag.glsl");
+            sphereRenderer.mesh = new Sphere(4, 2);
+
+            sphereRenderer.Initialize();
+
+            // Create the skybox game object.
             List<string> filenames = new List<string>
             {
                 "Core/GameSpecific/Assets/Textures/CubeMap/Right.png",
@@ -37,37 +51,44 @@ namespace GameEngine.Core.GameSpecific
             };
             cubeMapId = Texture.LoadCubeMap(filenames);
 
-            // Create the objects here as the contructor runs quite early on before the GL context has been created.
-            // This actually highlights some issues with the intialization procedure. I should be able to use common
-            // construction patterns and not be limited to calling these constructors in the Initialize method.
-            gameObject = new GameObject();
-            renderer = new Renderer();
-            light = new Light(new Vector3(10, 0, 0), new Vector4(1, 1, 1, 1));
+            skyboxGameObject = new GameObject();
+            skyboxRenderer = new Renderer();
 
-            renderer.material = new Material("PerPixelMat", "Core/Shaders/skybox-vert.glsl", "Core/Shaders/skybox-frag.glsl");
-            renderer.mesh = new SkyBox();
+            skyboxRenderer.material = new Material("PerPixelMat", "Core/Shaders/skybox-vert.glsl", "Core/Shaders/skybox-frag.glsl");
+            skyboxRenderer.mesh = new SkyBox();
 
-            renderer.Initialize();
+            skyboxRenderer.Initialize();
         }
 
         public override void Update()
         {
             MainCamera.Update();
-            gameObject.CalculateModelMatrix();
+            skyboxGameObject.CalculateModelMatrix();
+
+            sphereGameObject.Transform.Position = new Vector3(0, 0, -10);
+            sphereGameObject.CalculateModelMatrix();
         }
 
         public override void Render()
         {
+            // Render the sphere.
+            DefaultShaderInput shaderInput;
+            SetDefaultShaderVariables(out shaderInput, sphereGameObject, MainCamera, light);
+            sphereRenderer.material.UseProgram();
+
+            sphereRenderer.material.SetVector4("_Color", new Vector4(1, 1, 0, 0));
+            sphereRenderer.material.SetVector4("_SpecColor", new Vector4(1, 1, 1, 0));
+            sphereRenderer.material.SetFloat("_Shininess", 100);
+
+            sphereRenderer.Render(shaderInput);
+
+            // Render the skybox.
+            SetDefaultShaderVariables(out shaderInput, skyboxGameObject, MainCamera, light);
+            skyboxRenderer.material.UseProgram();
+            GL.DepthFunc(DepthFunction.Lequal);
             GL.DepthMask(false);
 
-            // Set the program object for the current rendering state.
-            renderer.material.UseProgram();
-
             GL.BindTexture(TextureTarget.TextureCubeMap, cubeMapId);
-
-            // Set the default shader variables.
-            DefaultShaderInput shaderInput;
-            SetDefaultShaderVariables(out shaderInput, gameObject, MainCamera, light);
 
             // Remove the translation from the view matrix.
             Matrix3 tmp = new Matrix3(MainCamera.ViewMatrix);
@@ -76,10 +97,11 @@ namespace GameEngine.Core.GameSpecific
                 new Vector4(tmp.Row1, 0),
                 new Vector4(tmp.Row2, 0),
                 new Vector4(0, 0, 0, 1));
-            renderer.material.SetMatrix4("_SkyBoxMatrix_VP", view * MainCamera.ProjectionMatrix);
+            skyboxRenderer.material.SetMatrix4("_SkyBoxMatrix_VP", view * MainCamera.ProjectionMatrix);
 
-            renderer.Render(shaderInput);
+            skyboxRenderer.Render(shaderInput);
 
+            GL.DepthFunc(DepthFunction.Less);
             GL.DepthMask(true);
 
             // TODO: camera.Render(rootGameObject/scene);
@@ -88,7 +110,7 @@ namespace GameEngine.Core.GameSpecific
         public override void Shutdown()
         {
             logger.Log(LogLevel.Info, "");
-            renderer.Destroy();
+            skyboxRenderer.Destroy();
         }
     }
 }
