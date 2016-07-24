@@ -42,15 +42,23 @@ namespace GameEngine.Core
             return id;
         }
 
-        // http://learnopengl.com/#!Advanced-OpenGL/Cubemaps
-
-        // GL_TEXTURE_CUBE_MAP_POSITIVE_X   Right
-        // GL_TEXTURE_CUBE_MAP_NEGATIVE_X   Left
-        // GL_TEXTURE_CUBE_MAP_POSITIVE_Y   Top
-        // GL_TEXTURE_CUBE_MAP_NEGATIVE_Y   Bottom
-        // GL_TEXTURE_CUBE_MAP_POSITIVE_Z   Back
-        // GL_TEXTURE_CUBE_MAP_NEGATIVE_Z   Front
-
+        /// <summary>
+        /// Load a cubemap.
+        /// </summary>
+        /// <param name="filenames">The list of texture filenames.</param>
+        /// <remarks>
+        /// http://learnopengl.com/#!Advanced-OpenGL/Cubemaps
+        /// The textures used for a cubemap need to be the same size.
+        ///
+        /// POSITIVE_X   Right
+        /// NEGATIVE_X   Left
+        /// POSITIVE_Y   Top
+        /// NEGATIVE_Y   Bottom
+        /// POSITIVE_Z   Back
+        /// NEGATIVE_Z   Front
+        ///
+        /// </remarks>
+        /// <returns>The generated texture id.</returns>
         public static int LoadCubeMap(List<string> filenames)
         {
             if (filenames.Count != 6)
