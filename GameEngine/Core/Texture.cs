@@ -38,7 +38,7 @@ namespace GameEngine.Core
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmpData.Scan0);
 
             bmp.UnlockBits(bmpData);
-
+            bmp.Dispose();
             return id;
         }
 
@@ -87,6 +87,7 @@ namespace GameEngine.Core
                     OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmpData.Scan0);
 
                 bmp.UnlockBits(bmpData);
+                bmp.Dispose();
             }
 
             return id;

@@ -23,7 +23,7 @@ namespace GameEngine.Core.GameSpecific
         private Renderer sphereRenderer;
         private Light light;
 
-        int cubeMapId;
+        private int cubeMapId;
 
         public override void Initialize()
         {
@@ -39,7 +39,6 @@ namespace GameEngine.Core.GameSpecific
 
             sphereRenderer.Initialize();
 
-            // Create the skybox game object.
             List<string> filenames = new List<string>
             {
                 "Core/GameSpecific/Assets/Textures/CubeMap/Right.png",
@@ -110,6 +109,8 @@ namespace GameEngine.Core.GameSpecific
         public override void Shutdown()
         {
             logger.Log(LogLevel.Info, "");
+            // TODO: Probably could be done by the material.
+            GL.DeleteTexture(cubeMapId);
             skyboxRenderer.Destroy();
         }
     }
