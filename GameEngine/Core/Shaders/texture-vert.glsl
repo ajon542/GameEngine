@@ -18,8 +18,6 @@ out Fragment
     vec2 texcoords;
 } fragment;
 
-uniform mat4 MVPMatrix;
-
 void main() 
 {
     gl_Position = MATRIX_MVP * vec4(position, 1);
