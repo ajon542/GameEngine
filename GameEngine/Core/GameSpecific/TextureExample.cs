@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 using GameEngine.Core.Graphics;
 
 namespace GameEngine.Core.GameSpecific
 {
-    // TODO: Find somewhere to put the sample assets. For now they are in the GameSpecific/Assets/Textures
     class TextureExample : Scene
     {
         private int textureId;
