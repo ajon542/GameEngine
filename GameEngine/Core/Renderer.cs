@@ -79,6 +79,7 @@ namespace GameEngine.Core
             logger.Log(LogLevel.Info, "");
 
             material.Destroy();
+            mesh.Destroy();
         }
     }
 }

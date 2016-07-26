@@ -93,10 +93,8 @@
     <Compile Include="Core\GameSpecific\CubeBehaviour.cs" />
     <Compile Include="Core\GameSpecific\DiffuseExample.cs" />
     <Compile Include="Core\GameSpecific\GouraudExample.cs" />
-    <Compile Include="Core\GameSpecific\GridExample.cs" />
     <Compile Include="Core\GameSpecific\InputExample.cs" />
     <Compile Include="Core\GameSpecific\InstancingExample.cs" />
-    <Compile Include="Core\GameSpecific\LightingExample.cs" />
     <Compile Include="Core\GameSpecific\PhongExample.cs" />
     <Compile Include="Core\GameSpecific\QuadBehaviour.cs" />
     <Compile Include="Core\GameSpecific\SkyBoxExample.cs" />
@@ -273,12 +271,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\per-pixel-vert.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Core\Shaders\phong-frag.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Core\Shaders\phong-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\frag.glsl">

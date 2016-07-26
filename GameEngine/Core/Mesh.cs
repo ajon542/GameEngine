@@ -79,7 +79,7 @@ namespace GameEngine.Core
         /// <summary>
         /// Clears the mesh.
         /// </summary>
-        public void Clear()
+        public void Destroy()
         {
             Vertices.Clear();
             Indices.Clear();
