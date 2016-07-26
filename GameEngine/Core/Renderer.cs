@@ -3,6 +3,8 @@ using OpenTK.Graphics.OpenGL;
 
 using NLog;
 
+using GameEngine.Core.Debugging;
+
 namespace GameEngine.Core
 {
     public class Renderer : Component
@@ -20,6 +22,16 @@ namespace GameEngine.Core
         public void Initialize()
         {
             logger.Log(LogLevel.Info, "");
+
+            if (material == null)
+            {
+                throw new GameEngineException("material cannot be null");
+            }
+
+            if (mesh == null)
+            {
+                throw new GameEngineException("mesh cannot be null");
+            }
 
             material.Initialize();
             material.SetPositionBuffer(mesh.Vertices.ToArray());
