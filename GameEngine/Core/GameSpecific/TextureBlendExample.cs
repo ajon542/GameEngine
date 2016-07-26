@@ -24,10 +24,9 @@ namespace GameEngine.Core.GameSpecific
             light = new Light(new Vector3(10, 0, 0), new Vector4(1, 1, 1, 1));
 
             renderer.material = new Material("TextureBlend", "Core/Shaders/texture-blend-vert.glsl", "Core/Shaders/texture-blend-frag.glsl");
+            renderer.material.SetTexture("textureSampler1", "Core/GameSpecific/Assets/Textures/UV-Template.bmp");
+            renderer.material.SetTexture("textureSampler2", "Core/GameSpecific/Assets/Textures/Nuclear-Symbol.bmp");
             renderer.mesh = new Quad();
-
-            textureId1 = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/UV-Template.bmp");
-            textureId2 = Texture.LoadTexture("Core/GameSpecific/Assets/Textures/Nuclear-Symbol.bmp");
 
             renderer.Initialize();
         }
@@ -45,21 +44,12 @@ namespace GameEngine.Core.GameSpecific
             SetDefaultShaderVariables(out shaderInput, gameObject, MainCamera, light);
             renderer.material.UseProgram();
 
-            GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2D, textureId1);
-            renderer.material.SetUniform1("textureSampler1", TextureUnit.Texture0 - TextureUnit.Texture0);
-
-            GL.ActiveTexture(TextureUnit.Texture1);
-            GL.BindTexture(TextureTarget.Texture2D, textureId2);
-            renderer.material.SetUniform1("textureSampler2", TextureUnit.Texture1 - TextureUnit.Texture0);
-
             renderer.Render(shaderInput);
         }
 
         public override void Shutdown()
         {
-            GL.DeleteTexture(textureId1);
-            GL.DeleteTexture(textureId2);
+            renderer.Destroy();
         }
     }
 }

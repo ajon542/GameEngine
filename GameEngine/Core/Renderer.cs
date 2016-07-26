@@ -59,6 +59,9 @@ namespace GameEngine.Core
             material.SetVector3("LightPosition", shaderInput.LightPosition);
             material.SetVector4("LightColor", shaderInput.LightColor);
 
+            // Bind all textures for the material.
+            material.BindTextures();
+
             material.BindVertexArray();
 
             material.EnableVertexAttribArrays();

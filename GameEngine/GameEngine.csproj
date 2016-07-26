@@ -90,7 +90,6 @@
     <Compile Include="Core\Debugging\GameEngineException.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\GameObjectHierarchy.cs" />
-    <Compile Include="Core\GameSpecific\AmbientExample.cs" />
     <Compile Include="Core\GameSpecific\CubeBehaviour.cs" />
     <Compile Include="Core\GameSpecific\DiffuseExample.cs" />
     <Compile Include="Core\GameSpecific\GouraudExample.cs" />
@@ -256,12 +255,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\ambient-diffuse-vert.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Core\Shaders\ambient-frag.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Core\Shaders\ambient-vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Core\Shaders\gouraud-frag.glsl">

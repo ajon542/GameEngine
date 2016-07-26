@@ -87,6 +87,31 @@ namespace GameEngine.Core
             return shaders["default"].GetUniform(name, out uniform);
         }
 
+        public void BindTextures()
+        {
+            int textureCount = 0;
+            foreach (KeyValuePair<string, int> kv in textures)
+            {
+                TextureUnit currentUnit = (TextureUnit)(TextureUnit.Texture0 + textureCount);
+                GL.ActiveTexture(currentUnit);
+                GL.BindTexture(TextureTarget.Texture2D, kv.Value);
+                SetUniform1(kv.Key, (int)(currentUnit - TextureUnit.Texture0));
+                textureCount++;
+            }
+        }
+
+        private Dictionary<string, int> textures = new Dictionary<string, int>();
+        public void SetTexture(string name, string textureFilename)
+        {
+            if (textures.ContainsKey(name))
+            {
+                return;
+            }
+
+            int textureId = Texture.LoadTexture(textureFilename);
+            textures.Add(name, textureId);
+        }
+
         public void SetUniform1(string name, int value)
         {
             int uniform;
@@ -203,6 +228,13 @@ namespace GameEngine.Core
             {
                 kv.Value.Destroy();
             }
+            shaders.Clear();
+
+            foreach (KeyValuePair<string, int> kv in textures)
+            {
+                GL.DeleteTexture(kv.Value);
+            }
+            textures.Clear();
 
             GL.DeleteVertexArray(vertexArrObject);
             GL.DeleteBuffer(elementBuffer);
