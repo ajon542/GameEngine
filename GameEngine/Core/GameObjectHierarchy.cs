@@ -92,9 +92,7 @@ namespace GameEngine.Core
         /// Find the closest common parent of two game objects.
         /// </summary>
         /// <remarks>
-        /// If the game objects do not have a common root or one of the
-        /// game objects is already root, this method returns null as it
-        /// does not make any sense.
+        /// If the game objects do not have a common root the method returns null.
         /// </remarks>
         /// <param name="gameObject1">The first game object.</param>
         /// <param name="gameObject2">The second game object.</param>
@@ -109,52 +107,31 @@ namespace GameEngine.Core
                 return null;
             }
 
-            // If one of the game objects are already root, calling this
-            // method makes no sense.
-            if(GetRoot(gameObject1).Guid == gameObject1.Guid ||
-               GetRoot(gameObject2).Guid == gameObject2.Guid)
-            {
-                logger.Log(LogLevel.Info, "one of the game objects is already root");
-                return null;
-            }
-
             // Get the levels of the objects.
             int level1 = GetLevel(gameObject1);
             int level2 = GetLevel(gameObject2);
 
-            // Get each object to the same level.
-            int diff = Math.Abs(level1 - level2);
-
-            if(level2 > level1)
+            while (level1 >= 0 && gameObject1.Guid != gameObject2.Guid)
             {
-                while(level2 > level1)
-                {
-                    gameObject2 = gameObject2.GetParent();
-                    level2--;
-                }
-            }
-            else if (level1 > level2)
-            {
-                while(level1 > level2)
+                if(level1 > level2)
                 {
                     gameObject1 = gameObject1.GetParent();
                     level1--;
                 }
+                else if(level2 > level1)
+                {
+                    gameObject2 = gameObject2.GetParent();
+                    level2--;
+                }
+                else
+                {
+                    gameObject1 = gameObject1.GetParent();
+                    gameObject2 = gameObject2.GetParent();
+                    level1--;
+                }
             }
 
-            // Get the parent of the game objects.
-            GameObject p1 = gameObject1.GetParent();
-            GameObject p2 = gameObject2.GetParent();
-
-            // Iterate through the parents until they match or we reach the root.
-            while(level1 > 0 && p1.Guid != p2.Guid)
-            {
-                p1 = p1.GetParent();
-                p2 = p2.GetParent();
-                level1--;
-            }
-
-            return p1;
+            return gameObject1;
         }
     }
 }

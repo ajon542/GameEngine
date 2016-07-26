@@ -175,12 +175,11 @@ namespace UnitTests
         [TestMethod]
         public void TestClosestCommonParentWithGameObjectRoot()
         {
-            GameObject go = new GameObject();
-            GameObject c1 = new GameObject();
+            GameObject go = new GameObject("go");
+            GameObject c1 = new GameObject("c1");
             go.AddChild(c1);
 
-            // One of the game objects is already root, null expected.
-            Assert.IsNull(GameObjectHierarchy.FindClosestCommonParent(go, c1));
+            Assert.AreEqual("go", GameObjectHierarchy.FindClosestCommonParent(go, c1).Name);
         }
 
         [TestMethod]
@@ -210,7 +209,7 @@ namespace UnitTests
             Assert.AreEqual("go", GameObjectHierarchy.FindClosestCommonParent(c1, c2).Name);
             Assert.AreEqual("c1", GameObjectHierarchy.FindClosestCommonParent(cc1, cc2).Name);
             Assert.AreEqual("c1", GameObjectHierarchy.FindClosestCommonParent(cc3, cc2).Name);
-            Assert.AreEqual("cc3", GameObjectHierarchy.FindClosestCommonParent(cc5, cc4).Name);
+            Assert.AreEqual("cc4", GameObjectHierarchy.FindClosestCommonParent(cc5, cc4).Name);
         }
     }
 }

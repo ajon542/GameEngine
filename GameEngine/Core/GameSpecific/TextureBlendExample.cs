@@ -10,9 +10,6 @@ namespace GameEngine.Core.GameSpecific
         private Renderer renderer;
         private Light light;
 
-        private int textureId1;
-        private int textureId2;
-
         public override void Initialize()
         {
             gameObject = new GameObject();
