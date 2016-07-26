@@ -87,7 +87,9 @@ namespace GameEngine.Core.GameSpecific
             GL.DepthFunc(DepthFunction.Lequal);
             GL.DepthMask(false);
 
+            GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, cubeMapId);
+            skyboxRenderer.material.SetUniform1("skybox", TextureUnit.Texture0 - TextureUnit.Texture0);
 
             // Remove the translation from the view matrix.
             Matrix3 tmp = new Matrix3(MainCamera.ViewMatrix);

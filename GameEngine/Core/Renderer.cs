@@ -24,6 +24,7 @@ namespace GameEngine.Core
             material.Initialize();
             material.SetPositionBuffer(mesh.Vertices.ToArray());
             material.SetNormalBuffer(mesh.Normals.ToArray());
+            material.SetTexCoordBuffer(mesh.UV.ToArray());
             material.SetElementBuffer(mesh.Indices.ToArray());
 
             GL.Enable(EnableCap.DepthTest);

@@ -1,14 +1,28 @@
 ﻿#version 430 core
 
-in VShaderOut
-{
-    vec2 UV;
-} fShaderIn;
+// Output
+layout (location = 0) out vec4 color;
 
-out vec4 FragColor;
+uniform mat4 MATRIX_MVP;
+uniform mat4 MATRIX_MV;
+uniform mat4 MATRIX_V;
+uniform mat4 MATRIX_P;
+uniform mat4 MATRIX_VP;
+uniform mat4 Object2World;
+uniform mat4 World2Object;
+uniform vec3 WorldCameraPos;
+
+uniform vec3 LightPosition = vec3(10, 0, 0);
+uniform vec4 LightColor = vec4(1, 1, 1, 1);
+
+in Fragment
+{
+    vec2 texcoords;
+} fragment;
+
 uniform sampler2D textureSampler;
 
 void main() 
 {
-    FragColor = vec4(texture(textureSampler, fShaderIn.UV).rgb, 1);
+    color = vec4(texture(textureSampler, fragment.texcoords).rgb, 1);
 }

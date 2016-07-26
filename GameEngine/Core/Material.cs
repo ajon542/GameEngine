@@ -87,6 +87,15 @@ namespace GameEngine.Core
             return shaders["default"].GetUniform(name, out uniform);
         }
 
+        public void SetUniform1(string name, int value)
+        {
+            int uniform;
+            if (shaders["default"].GetUniform(name, out uniform))
+            {
+                GL.Uniform1(uniform, value);
+            }
+        }
+
         public void SetVector3(string name, Vector3 vector)
         {
             int uniform;
@@ -123,6 +132,24 @@ namespace GameEngine.Core
             }
         }
 
+        public void SetTexCoordBuffer(Vector2[] buffer)
+        {
+            uint bufferId;
+            int attributeId;
+
+            GetBuffer("texcoords", out bufferId);
+            GetAttribute("texcoords", out attributeId);
+
+            if (attributeId != -1)
+            {
+                IntPtr bufferLength = (IntPtr)(buffer.Length * Vector2.SizeInBytes);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, bufferId);
+                GL.BufferData(BufferTarget.ArrayBuffer, bufferLength, buffer, BufferUsageHint.StaticDraw);
+
+                GL.VertexAttribPointer(attributeId, 2, VertexAttribPointerType.Float, false, 0, 0);
+            }
+        }
+
         public void SetPositionBuffer(Vector3[] buffer)
         {
             uint bufferId;
@@ -131,12 +158,14 @@ namespace GameEngine.Core
             GetBuffer("position", out bufferId);
             GetAttribute("position", out attributeId);
 
-            IntPtr bufferLength = (IntPtr)(buffer.Length * Vector3.SizeInBytes);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, bufferId);
-            GL.BufferData(BufferTarget.ArrayBuffer, bufferLength, buffer, BufferUsageHint.StaticDraw);
+            if (attributeId != -1)
+            {
+                IntPtr bufferLength = (IntPtr)(buffer.Length * Vector3.SizeInBytes);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, bufferId);
+                GL.BufferData(BufferTarget.ArrayBuffer, bufferLength, buffer, BufferUsageHint.StaticDraw);
 
-
-            GL.VertexAttribPointer(attributeId, 3, VertexAttribPointerType.Float, false, 0, 0);
+                GL.VertexAttribPointer(attributeId, 3, VertexAttribPointerType.Float, false, 0, 0);
+            }
         }
 
         public void SetNormalBuffer(Vector3[] buffer)
@@ -147,10 +176,13 @@ namespace GameEngine.Core
             GetBuffer("normal", out bufferId);
             GetAttribute("normal", out attributeId);
 
-            IntPtr bufferLength = (IntPtr)(buffer.Length * Vector3.SizeInBytes);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, bufferId);
-            GL.BufferData(BufferTarget.ArrayBuffer, bufferLength, buffer, BufferUsageHint.StaticDraw);
-            GL.VertexAttribPointer(attributeId, 3, VertexAttribPointerType.Float, false, 0, 0);
+            if (attributeId != -1)
+            {
+                IntPtr bufferLength = (IntPtr)(buffer.Length * Vector3.SizeInBytes);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, bufferId);
+                GL.BufferData(BufferTarget.ArrayBuffer, bufferLength, buffer, BufferUsageHint.StaticDraw);
+                GL.VertexAttribPointer(attributeId, 3, VertexAttribPointerType.Float, false, 0, 0);
+            }
         }
 
         public void SetElementBuffer(int[] buffer)
