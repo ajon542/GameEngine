@@ -9,6 +9,13 @@ namespace UnitTests
     public class GameObjectTests
     {
         [TestMethod]
+        public void TestGameObjectName()
+        {
+            GameObject go = new GameObject("go");
+            Assert.AreEqual("go", go.Name);
+        }
+
+        [TestMethod]
         public void TestComponentAddition()
         {
             Component mesh = new Mesh();
