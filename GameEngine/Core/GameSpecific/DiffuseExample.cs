@@ -22,7 +22,7 @@ namespace GameEngine.Core.GameSpecific
         private int normalAttr;
 
         private GameObject gameObject = new GameObject();
-        private Mesh mesh = new Sphere(6, 2);
+        private Mesh mesh = new Torus(1, 0.3f, 20, 20);
         private Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();
 
         public override void Initialize()
@@ -82,7 +82,7 @@ namespace GameEngine.Core.GameSpecific
             MainCamera.Update();
 
             gameObject.Transform.Position = new Vector3(0, 0, -10);
-            gameObject.Transform.Rotation = new Quaternion(0, yRot, 0, 1);
+            gameObject.Transform.Rotation = Quaternion.FromAxisAngle(Vector3.UnitY, yRot);
             gameObject.CalculateModelMatrix();
         }
 
