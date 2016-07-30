@@ -55,16 +55,11 @@ namespace GameEngine.Core
 
         public virtual void Shutdown()
         {
-            // TODO: Cleanup / shutdown
-            //glDeleteBuffers(1, &vertexbuffer);
-            //glDeleteBuffers(1, &uvbuffer);
-            //glDeleteProgram(programID);
-            //glDeleteTextures(1, &TextureID);
-            //glDeleteVertexArrays(1, &VertexArrayID);
         }
 
         protected void SetDefaultShaderVariables(out DefaultShaderInput shaderInput, GameObject gameObject, Camera mainCamera, Light light)
         {
+            // OpenTK matrices are transposed, hence the multiplication order.
             shaderInput = new DefaultShaderInput();
             shaderInput.MatrixMVP = gameObject.ModelMatrix * MainCamera.ViewMatrix * MainCamera.ProjectionMatrix;
             shaderInput.MatrixMV = gameObject.ModelMatrix * MainCamera.ViewMatrix;
