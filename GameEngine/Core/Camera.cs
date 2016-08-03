@@ -2,6 +2,8 @@
 using OpenTK;
 using OpenTK.Input;
 
+using NLog;
+
 namespace GameEngine.Core
 {
     // http://learnopengl.com/#!Getting-started/Camera
@@ -10,16 +12,19 @@ namespace GameEngine.Core
         // Eular Angles
         private float Yaw = -90.0f;
         private float Pitch = 0.0f;
+
         // Camera options
         private float MovementSpeed = 1.0f;
         private float MouseSensitivity = 0.15f;
 
+        // Mouse state.
+        private int mouseWheelIndex;
         private int prevX;
         private int prevY;
         private bool mouseLeftDown;
         private float xoffset;
         private float yoffset;
-        
+
         // Camera Attributes
         public Vector3 Position { get; set; }
         public Vector3 Front { get; set; }
@@ -95,7 +100,6 @@ namespace GameEngine.Core
             Up = Vector3.Normalize(Vector3.Cross(Right, Front));
         }
 
-        //private int mouseWheelIndex;
         public void Update()
         {
             var mouse = Mouse.GetState();
@@ -121,19 +125,21 @@ namespace GameEngine.Core
             prevX = mouse.X;
             prevY = mouse.Y;
 
-            //if (mouseWheelIndex != mouse.Wheel)
-            //{
-            //}
-
-            if (mouse[MouseButton.Right])
+            // Move camera back or forward based on the scroll wheel state.
+            if (mouseWheelIndex != mouse.Wheel)
             {
+                if (mouseWheelIndex > mouse.Wheel)
+                {
+                    Position -= Front * MovementSpeed;
+                }
+                if (mouseWheelIndex < mouse.Wheel)
+                {
+                    Position += Front * MovementSpeed;
+                }
+                mouseWheelIndex = mouse.Wheel;
             }
 
             var keyboard = Keyboard.GetState();
-            if (keyboard[Key.W])
-                Position += Front * MovementSpeed;
-            if (keyboard[Key.S])
-                Position -= Front * MovementSpeed;
             if (keyboard[Key.A])
                 Position -= Right * MovementSpeed;
             if (keyboard[Key.D])
