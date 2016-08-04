@@ -12,11 +12,17 @@ namespace GameEngine.ViewModel
     {
         public IEnumerable<MenuItemViewModel> Items { get; private set; }
 
-        private readonly MenuItemViewModel ViewMenuItemViewModel;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MenuViewModel"/> class.
+        /// </summary>
+        /// <param name="dockWindows">The list of dock windows.</param>
         public MenuViewModel(IEnumerable<DockWindowViewModel> dockWindows)
         {
-            var view = ViewMenuItemViewModel = new MenuItemViewModel { Header = "Views" };
+            MenuItemViewModel file = new MenuItemViewModel { Header = "File" };
+            MenuItemViewModel edit = new MenuItemViewModel { Header = "Edit" };
+            MenuItemViewModel view = new MenuItemViewModel { Header = "View" };
+            MenuItemViewModel gameObject = new MenuItemViewModel { Header = "GameObject" };
+            MenuItemViewModel help = new MenuItemViewModel { Header = "Help" };
 
             foreach (var dockWindow in dockWindows)
             {
@@ -24,7 +30,11 @@ namespace GameEngine.ViewModel
             }
 
             var items = new List<MenuItemViewModel>();
+            items.Add(file);
+            items.Add(edit);
             items.Add(view);
+            items.Add(gameObject);
+            items.Add(help);
             Items = items;
         }
 
