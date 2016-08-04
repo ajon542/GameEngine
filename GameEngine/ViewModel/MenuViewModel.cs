@@ -24,9 +24,38 @@ namespace GameEngine.ViewModel
             MenuItemViewModel gameObject = new MenuItemViewModel { Header = "GameObject" };
             MenuItemViewModel help = new MenuItemViewModel { Header = "Help" };
 
+            // Setup the file menu.
+            List<string> fileMenuItems = new List<string> { "New Scene", "Open Scene", "Exit" };
+            foreach (string itemName in fileMenuItems)
+            {
+                file.Items.Add(new MenuItemViewModel { Header = itemName });
+            }
+
+            // Setup the edit menu.
+            List<string> editMenuItems = new List<string> { "Preferences" };
+            foreach (string itemName in editMenuItems)
+            {
+                edit.Items.Add(new MenuItemViewModel { Header = itemName });
+            }
+
+            // Setup the different views e.g. Scene and Game.
             foreach (var dockWindow in dockWindows)
             {
                 view.Items.Add(GetMenuItemViewModel(dockWindow));
+            }
+
+            // Setup the game object menu.
+            List<string> gameObjectMenuItems = new List<string> { "Create Empty", "3D Object", "2D Object", "Light", "Camera" };
+            foreach (string itemName in gameObjectMenuItems)
+            {
+                gameObject.Items.Add(new MenuItemViewModel { Header = itemName });
+            }
+
+            // Setup the help menu.
+            List<string> helpMenuItems = new List<string> { "About" };
+            foreach (string itemName in helpMenuItems)
+            {
+                help.Items.Add(new MenuItemViewModel { Header = itemName });
             }
 
             var items = new List<MenuItemViewModel>();
