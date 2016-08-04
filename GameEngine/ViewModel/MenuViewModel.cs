@@ -51,11 +51,13 @@ namespace GameEngine.ViewModel
                 gameObject.Items.Add(new MenuItemViewModel { Header = itemName });
             }
 
-            // Setup the help menu.
+            // Setup the help menu with a sub-item;
             List<string> helpMenuItems = new List<string> { "About" };
             foreach (string itemName in helpMenuItems)
             {
-                help.Items.Add(new MenuItemViewModel { Header = itemName });
+                MenuItemViewModel about = new MenuItemViewModel { Header = itemName };
+                about.Items.Add(new MenuItemViewModel { Header = "Help SubItem" });
+                help.Items.Add(about);
             }
 
             var items = new List<MenuItemViewModel>();
