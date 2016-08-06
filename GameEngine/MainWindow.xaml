@@ -5,7 +5,7 @@
         xmlns:view="clr-namespace:GameEngine.View"
         xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:dockctrl="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
-        Title="MainWindow" Height="800" Width="1400">
+        Title="GameEngine" Height="800" Width="1400">
 
     <!--
     This demonstrates a way to switch between views dynamically.

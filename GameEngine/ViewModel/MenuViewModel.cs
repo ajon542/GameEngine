@@ -35,7 +35,7 @@ namespace GameEngine.ViewModel
             List<string> editMenuItems = new List<string> { "Preferences" };
             foreach (string itemName in editMenuItems)
             {
-                edit.Items.Add(new MenuItemViewModel { Header = itemName });
+                edit.Items.Add(new PreferencesMenuItemViewModel { Header = itemName });
             }
 
             // Setup the different views e.g. Scene and Game.

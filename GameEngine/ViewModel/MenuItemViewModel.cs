@@ -18,16 +18,43 @@ namespace GameEngine.ViewModel
             {
                 if (command == null)
                 {
-                    command = new DelegateCommand(OpenHelpWindow);
+                    command = new DelegateCommand(OpenWindow);
                 }
 
                 return command;
             }
         }
 
-        private void OpenHelpWindow(object sender)
+        private void OpenWindow(object sender)
         {
             HelpWindow window = new HelpWindow();
+            window.Show();
+        }
+    }
+
+    /// <summary>
+    /// Preferences menu view model to open the help window.
+    /// </summary>
+    public class PreferencesMenuItemViewModel : MenuItemViewModel
+    {
+        private DelegateCommand command;
+
+        public override ICommand Command
+        {
+            get
+            {
+                if (command == null)
+                {
+                    command = new DelegateCommand(OpenWindow);
+                }
+
+                return command;
+            }
+        }
+
+        private void OpenWindow(object sender)
+        {
+            PreferencesWindow window = new PreferencesWindow();
             window.Show();
         }
     }
