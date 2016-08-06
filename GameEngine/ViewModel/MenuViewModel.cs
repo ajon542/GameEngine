@@ -48,7 +48,14 @@ namespace GameEngine.ViewModel
             List<string> gameObjectMenuItems = new List<string> { "Create Empty", "3D Object", "2D Object", "Light", "Camera" };
             foreach (string itemName in gameObjectMenuItems)
             {
-                gameObject.Items.Add(new MenuItemViewModel { Header = itemName });
+                if (itemName == "Create Empty")
+                {
+                    gameObject.Items.Add(new CreateGameObjectMenuItemViewModel { Header = itemName });
+                }
+                else
+                {
+                    gameObject.Items.Add(new MenuItemViewModel { Header = itemName });
+                }
             }
 
             // Setup the help menu with a sub-item;

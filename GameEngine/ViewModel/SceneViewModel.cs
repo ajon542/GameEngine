@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
 
+using GalaSoft.MvvmLight.Messaging;
 using GameEngine.Core;
 using GameEngine.Core.Graphics;
+using GameEngine.ViewModel.Messages;
 
 using NLog;
 
@@ -51,8 +53,19 @@ namespace GameEngine.ViewModel
         {
             logger.Log(LogLevel.Info, "Creating scene view model");
 
+            // Register for messages.
+            Messenger.Default.Register<SampleMessage>(this, ReceiveSampleMessage);
+
             // TODO: Need a way to change this at runtime.
-            SceneList = new List<Scene> { new Core.GameSpecific.PhongExample() };
+            SceneList = new List<Scene> { 
+                new Core.GameSpecific.TransformExample(),
+            };
+            //SceneList = new List<Scene>();
+        }
+
+        private void ReceiveSampleMessage(SampleMessage msg)
+        {
+            logger.Log(LogLevel.Info, "");
         }
 
         /// <summary>

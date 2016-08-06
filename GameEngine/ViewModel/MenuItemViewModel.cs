@@ -3,8 +3,38 @@ using System.Windows.Input;
 
 using NLog;
 
+using GalaSoft.MvvmLight.Messaging;
+using GameEngine.ViewModel.Messages;
+
 namespace GameEngine.ViewModel
 {
+    /// <summary>
+    /// Create game object from the menu.
+    /// </summary>
+    public class CreateGameObjectMenuItemViewModel : MenuItemViewModel
+    {
+        private DelegateCommand command;
+
+        public override ICommand Command
+        {
+            get
+            {
+                if (command == null)
+                {
+                    command = new DelegateCommand(CreateGameObject);
+                }
+
+                return command;
+            }
+        }
+
+        private void CreateGameObject(object sender)
+        {
+            Messenger.Default.Send(new SampleMessage());
+        }
+    }
+
+
     /// <summary>
     /// Help menu view model to open the help window.
     /// </summary>

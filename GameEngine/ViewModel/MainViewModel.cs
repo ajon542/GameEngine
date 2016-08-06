@@ -5,7 +5,7 @@ using NLog;
 
 namespace GameEngine.ViewModel
 {
-    class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         /// <summary>
         /// The logger instance.
