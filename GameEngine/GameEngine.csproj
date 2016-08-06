@@ -139,6 +139,9 @@
     <Compile Include="Core\Utilities\ObjParser\Vertex.cs" />
     <Compile Include="Core\Utilities\ObjParser\VertexParser.cs" />
     <Compile Include="Core\Utilities\VectorExtensions.cs" />
+    <Compile Include="HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\DockManagerViewModel.cs" />
     <Compile Include="ViewModel\DockWindowViewModel.cs" />
@@ -164,6 +167,10 @@
     <Compile Include="View\SceneView.xaml.cs">
       <DependentUpon>SceneView.xaml</DependentUpon>
     </Compile>
+    <Page Include="HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
