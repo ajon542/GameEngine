@@ -6,6 +6,4 @@ rendering techniques available through OpenTK / OpenGL.
 The game engine is under heavy development and is currently in a prototyping or experimental stage.
 It essentially contains a bunch of example scenes demonstrating different aspects of the game engine.
 
-I am additionally looking into Unity ShaderLab and how the Cg shader language is utilized. Gaining
-a better understanding of this as well as how it integrates into a game engine such as Unity will
-give me some interesting ideas for this project.
+Now that a large chunk of the shader improvements are out of the way (it is by no means finished), the work on the UI improvements is underway. The plan is to get the UI to a point where, objects can be added and deleted using the Hierarchy View, and have their properties modifyable in an Inspector View. Additionally, the ability to save and load scenes will be very beneficial.
