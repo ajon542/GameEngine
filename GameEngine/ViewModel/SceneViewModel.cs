@@ -53,19 +53,23 @@ namespace GameEngine.ViewModel
         {
             logger.Log(LogLevel.Info, "Creating scene view model");
 
-            // Register for messages.
-            Messenger.Default.Register<SampleMessage>(this, ReceiveSampleMessage);
-
             // TODO: Need a way to change this at runtime.
-            SceneList = new List<Scene> { 
-                new Core.GameSpecific.TransformExample(),
-            };
-            //SceneList = new List<Scene>();
+            SceneList = new List<Scene> { new Core.GameSpecific.TransformExample() };
+
+            // TODO: This might need to be done when the scenes are initialized.
+            RegisterMessageHandlers();
         }
 
-        private void ReceiveSampleMessage(SampleMessage msg)
+        /// <summary>
+        /// Register the message handlers for the view model.
+        /// </summary>
+        /// <remarks>
+        /// Messages are going to be sent from the other view models. For example, some
+        /// menu view models are going to send messages to create game objects etc.
+        /// </remarks>
+        private void RegisterMessageHandlers()
         {
-            logger.Log(LogLevel.Info, "");
+            Messenger.Default.Register<CreateGameObjectMessage>(this, ReceiveCreateGameObjectMessage);
         }
 
         /// <summary>
@@ -249,6 +253,24 @@ namespace GameEngine.ViewModel
             foreach (Scene scene in SceneList)
             {
                 scene.SetupViewPort(properties.Width, properties.Height);
+            }
+        }
+
+        #endregion
+
+        #region Message Handlers
+
+        /// <summary>
+        /// Handle the CreateGameObjectMessage.
+        /// </summary>
+        /// <param name="msg">The message containin the type of game object to create in the scene.</param>
+        private void ReceiveCreateGameObjectMessage(CreateGameObjectMessage msg)
+        {
+            logger.Log(LogLevel.Info, msg.Type);
+
+            foreach (Scene scene in SceneList)
+            {
+                scene.AddGameObject(msg.Type);
             }
         }
 

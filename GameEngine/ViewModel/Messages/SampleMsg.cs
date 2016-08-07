@@ -15,4 +15,15 @@ namespace GameEngine.ViewModel.Messages
         {
         }
     }
+
+    internal class CreateGameObjectMessage : MessageBase
+    {
+        public string Type { get; private set; }
+
+        public CreateGameObjectMessage(string type)
+            : base()
+        {
+            Type = type;
+        }
+    }
 }

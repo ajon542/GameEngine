@@ -30,7 +30,7 @@ namespace GameEngine.ViewModel
 
         private void CreateGameObject(object sender)
         {
-            Messenger.Default.Send(new SampleMessage());
+            Messenger.Default.Send(new CreateGameObjectMessage("cube"));
         }
     }
 

@@ -72,5 +72,9 @@ namespace GameEngine.Core
             shaderInput.LightPosition = light.Position;
             shaderInput.LightColor = light.Color;
         }
+
+        public virtual void AddGameObject(string type)
+        {
+        }
     }
 }
