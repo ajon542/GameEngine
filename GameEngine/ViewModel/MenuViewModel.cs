@@ -46,17 +46,36 @@ namespace GameEngine.ViewModel
 
             // Setup the game object menu.
             List<string> gameObjectMenuItems = new List<string> { "Create Empty", "3D Object", "2D Object", "Light", "Camera" };
-            foreach (string itemName in gameObjectMenuItems)
-            {
-                if (itemName == "Create Empty")
-                {
-                    gameObject.Items.Add(new CreateGameObjectMenuItemViewModel { Header = itemName });
-                }
-                else
-                {
-                    gameObject.Items.Add(new MenuItemViewModel { Header = itemName });
-                }
-            }
+
+            // Create Empty.
+            var viewModel = new MenuItemViewModel { Header = "Create Empty" };
+            gameObject.Items.Add(viewModel);
+
+            // 3D Object.
+            viewModel = new MenuItemViewModel { Header = "3D Object" };
+            gameObject.Items.Add(viewModel);
+
+            // 3D Object -> Sphere.
+            viewModel.Items.Add(new CreateGameObjectMenuItemViewModel("Sphere") { Header = "Sphere" });
+
+            // 3D Object -> Cube.
+            viewModel.Items.Add(new CreateGameObjectMenuItemViewModel("Cube") { Header = "Cube" });
+
+            // 3D Object -> Torus.
+            viewModel.Items.Add(new CreateGameObjectMenuItemViewModel("Torus") { Header = "Torus" });
+
+            // 2D Object.
+            viewModel = new MenuItemViewModel { Header = "2D Object" };
+            gameObject.Items.Add(viewModel);
+
+            // Light.
+            viewModel = new MenuItemViewModel { Header = "Light" };
+            gameObject.Items.Add(viewModel);
+
+            // Camera.
+            viewModel = new MenuItemViewModel { Header = "Camera" };
+            gameObject.Items.Add(viewModel);
+
 
             // Setup the help menu with a sub-item;
             List<string> helpMenuItems = new List<string> { "About" };

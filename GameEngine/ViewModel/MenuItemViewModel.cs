@@ -14,6 +14,12 @@ namespace GameEngine.ViewModel
     public class CreateGameObjectMenuItemViewModel : MenuItemViewModel
     {
         private DelegateCommand command;
+        private string gameObjectType;
+
+        public CreateGameObjectMenuItemViewModel(string gameObjectType)
+        {
+            this.gameObjectType = gameObjectType;
+        }
 
         public override ICommand Command
         {
@@ -30,7 +36,7 @@ namespace GameEngine.ViewModel
 
         private void CreateGameObject(object sender)
         {
-            Messenger.Default.Send(new CreateGameObjectMessage("cube"));
+            Messenger.Default.Send(new CreateGameObjectMessage(gameObjectType));
         }
     }
 
