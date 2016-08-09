@@ -27,6 +27,16 @@ namespace GameEngine
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Load the URL in the default browser.
+        /// </summary>
+        /// <remarks>
+        /// The help window is not going to be very complex so this was
+        /// added to the code behind for simplicity. There is no need to
+        /// have an MVVM setup here.
+        /// </remarks>
+        /// <param name="sender">The sender i.e. the Helpwindow.xaml.</param>
+        /// <param name="e">The request navigate arguments.</param>
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));

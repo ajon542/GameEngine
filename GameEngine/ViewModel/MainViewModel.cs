@@ -28,6 +28,7 @@ namespace GameEngine.ViewModel
             var documents = new List<DockWindowViewModel>();
             documents.Add(new SceneViewModel() { Title = "Scene " });
             documents.Add(new GameViewModel() { Title = "Game " });
+            documents.Add(new HierarchyViewModel() { Title = "Hierarchy " });
 
             DockManagerViewModel = new DockManagerViewModel(documents);
             MenuViewModel = new MenuViewModel(documents);
