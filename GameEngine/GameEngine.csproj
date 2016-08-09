@@ -111,6 +111,7 @@
     <Compile Include="Core\GameObjectHierarchy.cs" />
     <Compile Include="Core\GameSpecific\CubeBehaviour.cs" />
     <Compile Include="Core\GameSpecific\DiffuseExample.cs" />
+    <Compile Include="Core\GameSpecific\GameObjectUIExample.cs" />
     <Compile Include="Core\GameSpecific\GouraudExample.cs" />
     <Compile Include="Core\GameSpecific\InputExample.cs" />
     <Compile Include="Core\GameSpecific\InstancingExample.cs" />
