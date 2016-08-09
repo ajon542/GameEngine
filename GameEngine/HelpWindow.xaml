@@ -3,6 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="About Game Engine" Height="400" Width="700">
     <Grid>
-        
+        <TextBlock Margin="10, 10, 10, 10">
+            Please visit the github repo at
+        <Hyperlink NavigateUri="https://github.com/ajon542/GameEngine" RequestNavigate="Hyperlink_RequestNavigate">
+            https://github.com/ajon542/GameEngine
+        </Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>

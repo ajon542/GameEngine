@@ -44,7 +44,7 @@ namespace GameEngine.ViewModel
     /// <summary>
     /// Help menu view model to open the help window.
     /// </summary>
-    public class HelpMenuItemViewModel : MenuItemViewModel
+    public class AboutMenuItemViewModel : MenuItemViewModel
     {
         private DelegateCommand command;
 

@@ -81,9 +81,7 @@ namespace GameEngine.ViewModel
             List<string> helpMenuItems = new List<string> { "About" };
             foreach (string itemName in helpMenuItems)
             {
-                MenuItemViewModel about = new MenuItemViewModel { Header = itemName };
-
-                about.Items.Add(new HelpMenuItemViewModel { Header = "Help SubItem" });
+                MenuItemViewModel about = new AboutMenuItemViewModel { Header = itemName };
                 help.Items.Add(about);
             }
 
