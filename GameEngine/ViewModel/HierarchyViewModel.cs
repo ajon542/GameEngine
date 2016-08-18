@@ -24,54 +24,42 @@ namespace GameEngine.ViewModel
     /// <summary>
     /// A UI-friendly wrapper around a Person object.
     /// </summary>
-    public class PersonViewModel : INotifyPropertyChanged
+    public class GameObjectViewModel : ViewModelBase
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        #region Data
+        private readonly ReadOnlyCollection<GameObjectViewModel> children;
+        private readonly GameObjectViewModel parent;
+        private readonly Person person;
 
-        readonly ReadOnlyCollection<PersonViewModel> _children;
-        readonly PersonViewModel _parent;
-        readonly Person _person;
+        private bool isExpanded;
+        private bool isSelected;
 
-        bool _isExpanded;
-        bool _isSelected;
-
-        #endregion // Data
-
-        #region Constructors
-
-        public PersonViewModel(Person person)
-            : this(person, null)
+        public ReadOnlyCollection<GameObjectViewModel> Children
         {
-        }
-
-        private PersonViewModel(Person person, PersonViewModel parent)
-        {
-            _person = person;
-            _parent = parent;
-
-            _children = new ReadOnlyCollection<PersonViewModel>(
-                    (from child in _person.Children
-                     select new PersonViewModel(child, this))
-                     .ToList<PersonViewModel>());
-        }
-
-        #endregion // Constructors
-
-        #region Person Properties
-
-        public ReadOnlyCollection<PersonViewModel> Children
-        {
-            get { return _children; }
+            get { return children; }
         }
 
         public string Name
         {
-            get { return _person.Name; }
+            get { return person.Name; }
         }
 
-        #endregion // Person Properties
+        public GameObjectViewModel(Person person)
+            : this(person, null)
+        {
+        }
+
+        private GameObjectViewModel(Person person, GameObjectViewModel parent)
+        {
+            this.person = person;
+            this.parent = parent;
+
+            children = new ReadOnlyCollection<GameObjectViewModel>(
+                    (from child in person.Children
+                     select new GameObjectViewModel(child, this))
+                     .ToList<GameObjectViewModel>());
+        }
 
         #region Presentation Members
 
@@ -83,18 +71,18 @@ namespace GameEngine.ViewModel
         /// </summary>
         public bool IsExpanded
         {
-            get { return _isExpanded; }
+            get { return isExpanded; }
             set
             {
-                if (value != _isExpanded)
+                if (value != isExpanded)
                 {
-                    _isExpanded = value;
+                    isExpanded = value;
                     this.OnPropertyChanged("IsExpanded");
                 }
 
                 // Expand all the way up to the root.
-                if (_isExpanded && _parent != null)
-                    _parent.IsExpanded = true;
+                if (isExpanded && parent != null)
+                    parent.IsExpanded = true;
             }
         }
 
@@ -108,14 +96,14 @@ namespace GameEngine.ViewModel
         /// </summary>
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get { return isSelected; }
             set
             {
-                if (value != _isSelected)
+                if (value != isSelected)
                 {
-                    logger.Log(LogLevel.Info, "{0} isSelected {1}", _person.Name, value);
+                    logger.Log(LogLevel.Info, "{0} isSelected {1}", person.Name, value);
 
-                    _isSelected = value;
+                    isSelected = value;
                     this.OnPropertyChanged("IsSelected");
                 }
             }
@@ -125,84 +113,53 @@ namespace GameEngine.ViewModel
 
         #region Parent
 
-        public PersonViewModel Parent
+        public GameObjectViewModel Parent
         {
-            get { return _parent; }
+            get { return parent; }
         }
 
         #endregion // Parent
 
         #endregion // Presentation Members
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion // INotifyPropertyChanged Members
     }
 
     /// <summary>
-    /// This is the view-model of the UI.  It provides a data source
-    /// for the TreeView (the FirstGeneration property), a bindable
-    /// SearchText property, and the SearchCommand to perform a search.
+    /// This is the view-model of the UI. It provides a data source
+    /// for the TreeView (the FirstGeneration property).
     /// </summary>
-    public class FamilyTreeViewModel
+    public class GameObjectTreeViewModel
     {
-        #region Data
-
-        readonly ReadOnlyCollection<PersonViewModel> _firstGeneration;
-        readonly PersonViewModel _rootPerson;
-
-        string _searchText = String.Empty;
-
-        #endregion // Data
-
-        #region Constructor
-
-        public FamilyTreeViewModel(Person rootPerson)
-        {
-            _rootPerson = new PersonViewModel(rootPerson);
-
-            _firstGeneration = new ReadOnlyCollection<PersonViewModel>(
-                new PersonViewModel[] 
-                { 
-                    _rootPerson 
-                });
-        }
-
-        #endregion // Constructor
-
-        #region Properties
-
-        #region FirstGeneration
+        private readonly ReadOnlyCollection<GameObjectViewModel> firstGeneration;
+        private readonly GameObjectViewModel rootPersonViewModel;
 
         /// <summary>
         /// Returns a read-only collection containing the first person 
         /// in the family tree, to which the TreeView can bind.
         /// </summary>
-        public ReadOnlyCollection<PersonViewModel> FirstGeneration
+        public ReadOnlyCollection<GameObjectViewModel> FirstGeneration
         {
-            get { return _firstGeneration; }
+            get { return firstGeneration; }
         }
 
-        #endregion // FirstGeneration
+        public GameObjectTreeViewModel(Person rootPerson)
+        {
+            rootPersonViewModel = new GameObjectViewModel(rootPerson);
 
-        #endregion // Properties
+            firstGeneration = new ReadOnlyCollection<GameObjectViewModel>(
+                new GameObjectViewModel[] 
+                { 
+                    rootPersonViewModel
+                });
+        }
     }
 
     public class HierarchyViewModel : DockWindowViewModel
     {
-        public FamilyTreeViewModel FamilyTree { get; set; }
+        public GameObjectTreeViewModel FamilyTree { get; set; }
 
         public HierarchyViewModel()
         {
-            FamilyTree = new FamilyTreeViewModel(GetFamilyTree());
+            FamilyTree = new GameObjectTreeViewModel(GetFamilyTree());
         }
 
         public static Person GetFamilyTree()
