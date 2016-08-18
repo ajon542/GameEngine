@@ -10,15 +10,17 @@ using NLog;
 
 namespace GameEngine.ViewModel
 {
-    public class Person
+    public class GameObjectData
     {
-        readonly List<Person> _children = new List<Person>();
-        public IList<Person> Children
-        {
-            get { return _children; }
-        }
-
+        private readonly List<GameObjectData> children = new List<GameObjectData>();
+        
         public string Name { get; set; }
+        public Guid Guid { get; set; }
+
+        public IList<GameObjectData> Children
+        {
+            get { return children; }
+        }
     }
 
     /// <summary>
@@ -30,7 +32,7 @@ namespace GameEngine.ViewModel
 
         private readonly ReadOnlyCollection<GameObjectViewModel> children;
         private readonly GameObjectViewModel parent;
-        private readonly Person person;
+        private readonly GameObjectData person;
 
         private bool isExpanded;
         private bool isSelected;
@@ -45,12 +47,12 @@ namespace GameEngine.ViewModel
             get { return person.Name; }
         }
 
-        public GameObjectViewModel(Person person)
+        public GameObjectViewModel(GameObjectData person)
             : this(person, null)
         {
         }
 
-        private GameObjectViewModel(Person person, GameObjectViewModel parent)
+        private GameObjectViewModel(GameObjectData person, GameObjectViewModel parent)
         {
             this.person = person;
             this.parent = parent;
@@ -141,7 +143,7 @@ namespace GameEngine.ViewModel
             get { return firstGeneration; }
         }
 
-        public GameObjectTreeViewModel(Person rootPerson)
+        public GameObjectTreeViewModel(GameObjectData rootPerson)
         {
             rootPersonViewModel = new GameObjectViewModel(rootPerson);
 
@@ -155,51 +157,51 @@ namespace GameEngine.ViewModel
 
     public class HierarchyViewModel : DockWindowViewModel
     {
-        public GameObjectTreeViewModel FamilyTree { get; set; }
+        public GameObjectTreeViewModel GameObjectTree { get; set; }
 
         public HierarchyViewModel()
         {
-            FamilyTree = new GameObjectTreeViewModel(GetFamilyTree());
+            GameObjectTree = new GameObjectTreeViewModel(GetFamilyTree());
         }
 
-        public static Person GetFamilyTree()
+        public static GameObjectData GetGameObjectTree()
         {
             // In a real app this method would access a database.
-            return new Person
+            return new GameObjectData
             {
                 Name = "David Weatherbeam",
                 Children =
                 {
-                    new Person
+                    new GameObjectData
                     {
                         Name="Alberto Weatherbeam",
                         Children=
                         {
-                            new Person
+                            new GameObjectData
                             {
                                 Name="Zena Hairmonger",
                                 Children=
                                 {
-                                    new Person
+                                    new GameObjectData
                                     {
                                         Name="Sarah Applifunk",
                                     }
                                 }
                             },
-                            new Person
+                            new GameObjectData
                             {
                                 Name="Jenny van Machoqueen",
                                 Children=
                                 {
-                                    new Person
+                                    new GameObjectData
                                     {
                                         Name="Nick van Machoqueen",
                                     },
-                                    new Person
+                                    new GameObjectData
                                     {
                                         Name="Matilda Porcupinicus",
                                     },
-                                    new Person
+                                    new GameObjectData
                                     {
                                         Name="Bronco van Machoqueen",
                                     }
@@ -207,32 +209,32 @@ namespace GameEngine.ViewModel
                             }
                         }
                     },
-                    new Person
+                    new GameObjectData
                     {
                         Name="Komrade Winkleford",
                         Children=
                         {
-                            new Person
+                            new GameObjectData
                             {
                                 Name="Maurice Winkleford",
                                 Children=
                                 {
-                                    new Person
+                                    new GameObjectData
                                     {
                                         Name="Divinity W. Llamafoot",
                                     }
                                 }
                             },
-                            new Person
+                            new GameObjectData
                             {
                                 Name="Komrade Winkleford, Jr.",
                                 Children=
                                 {
-                                    new Person
+                                    new GameObjectData
                                     {
                                         Name="Saratoga Z. Crankentoe",
                                     },
-                                    new Person
+                                    new GameObjectData
                                     {
                                         Name="Excaliber Winkleford",
                                     }
