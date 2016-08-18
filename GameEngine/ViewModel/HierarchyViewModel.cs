@@ -161,7 +161,7 @@ namespace GameEngine.ViewModel
 
         public HierarchyViewModel()
         {
-            GameObjectTree = new GameObjectTreeViewModel(GetFamilyTree());
+            GameObjectTree = new GameObjectTreeViewModel(GetGameObjectTree());
         }
 
         public static GameObjectData GetGameObjectTree()
