@@ -76,7 +76,7 @@ namespace GameEngine.Core
 
             FieldOfView = (float)ConvertToRadians(45);
             NearPlane = 0.1f;
-            FarPlane = 1000.0f;
+            FarPlane = 10000.0f;
             AspectRatio = 4 / (float)3;
         }
 
@@ -140,6 +140,10 @@ namespace GameEngine.Core
             }
 
             var keyboard = Keyboard.GetState();
+            if (keyboard[Key.W])
+                Position += Front * MovementSpeed;
+            if (keyboard[Key.S])
+                Position -= Front * MovementSpeed;
             if (keyboard[Key.A])
                 Position -= Right * MovementSpeed;
             if (keyboard[Key.D])

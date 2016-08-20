@@ -97,6 +97,10 @@ namespace GameEngine.Core.GameSpecific
             {
                 renderer.mesh = new Sphere(10, 1);
             }
+            else if (type == "HeightMap")
+            {
+                renderer.mesh = new HeightMap();
+            }
 
             // Initialize the renderer.
             renderer.Initialize();
