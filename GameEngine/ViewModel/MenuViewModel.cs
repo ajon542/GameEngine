@@ -64,8 +64,8 @@ namespace GameEngine.ViewModel
             // 3D Object -> Torus.
             viewModel.Items.Add(new CreateGameObjectMenuItemViewModel("Torus") { Header = "Torus" });
 
-            // 3D Object -> HeightMap.
-            viewModel.Items.Add(new CreateGameObjectMenuItemViewModel("HeightMap") { Header = "HeightMap" });
+            // 3D Object -> BezierPatch.
+            viewModel.Items.Add(new CreateGameObjectMenuItemViewModel("BezierPatch") { Header = "BezierPatch" });
 
             // 2D Object.
             viewModel = new MenuItemViewModel { Header = "2D Object" };

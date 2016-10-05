@@ -5,9 +5,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace GameEngine.Core
 {
-    // Basic height map based on indexed drawing:
-    // http://www.mbsoftworks.sk/index.php?page=tutorials&series=1&tutorial=8
-    public class HeightMap : Mesh
+    public class BezierPatch : Mesh
     {
         private int width;
         private int height;
@@ -26,6 +24,18 @@ namespace GameEngine.Core
             return vertices;
         }
 
+        /// <summary>
+        /// Simple method of generating "n choose k".
+        /// </summary>
+        /// <remarks>
+        /// This is used in order to generate the N degree polynomial of:
+        ///     (a+b)^n
+        /// In the expanded form:
+        ///     (n choose 0)(a^n) + (n choose 1)(a^n-1)(b^1) + ... + (n choose k)(b^n)
+        /// </remarks>
+        /// <param name="n">The number of items to choose from.</param>
+        /// <param name="k">The number of items to choose.</param>
+        /// <returns>The number of possible way to choose the items.</returns>
         private float Choose(int n, int k)
         {
             if (k > n) return 0;
@@ -41,6 +51,19 @@ namespace GameEngine.Core
             return result;
         }
 
+        /// <summary>
+        /// Determines the interpolation point given all the control points.
+        /// </summary>
+        /// <example>
+        /// If the method is given 6 control points, the resulting polynomial will be of degree 5.
+        /// 
+        /// The following polynomial describes the x and y components, where "a=1-t" and "b=t".
+        ///     a^5 + 5(a^4)(b) + 10(a^3)(b^2) + 10(a^2)(b^3) + 5(a)(b^4) + b^5
+        /// 
+        /// </example>
+        /// <param name="controls">The control points including the end points.</param>
+        /// <param name="t">The percent of the interpolation.</param>
+        /// <returns>The resulting point.</returns>
         private Vector2 BezierDegreeN(List<Vector2> controls, float t, float s)
         {
             Vector2 result = new Vector2(0, 0);
@@ -59,7 +82,7 @@ namespace GameEngine.Core
             return result;
         }
 
-        public HeightMap()
+        public BezierPatch()
         {
             Random rnd = new Random();
 
@@ -70,9 +93,9 @@ namespace GameEngine.Core
 
             List<Vector2> yControls = new List<Vector2>
                 {
-                    new Vector2(0, 0),
-                    new Vector2(10, 140),
-                    new Vector2(30, 140),
+                    new Vector2(0, -1400),
+                    new Vector2(10, 500),
+                    new Vector2(30, 700),
                     new Vector2(40, 0)
                 };
 

@@ -97,9 +97,9 @@ namespace GameEngine.Core.GameSpecific
             {
                 renderer.mesh = new Sphere(10, 1);
             }
-            else if (type == "HeightMap")
+            else if (type == "BezierPatch")
             {
-                renderer.mesh = new HeightMap();
+                renderer.mesh = new BezierPatch();
             }
 
             // Initialize the renderer.
