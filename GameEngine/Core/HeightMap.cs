@@ -26,6 +26,39 @@ namespace GameEngine.Core
             return vertices;
         }
 
+        private float Choose(int n, int k)
+        {
+            if (k > n) return 0;
+            if (k * 2 > n) k = n - k;
+            if (k == 0) return 1;
+
+            float result = n;
+            for (int i = 2; i <= k; ++i)
+            {
+                result *= (n - i + 1);
+                result /= i;
+            }
+            return result;
+        }
+
+        private Vector2 BezierDegreeN(List<Vector2> controls, float t, float s)
+        {
+            Vector2 result = new Vector2(0, 0);
+            int n = controls.Count - 1;
+            for (int k = 0; k < controls.Count; ++k)
+            {
+                float mult = Choose(n, k);
+                float aExp = n - k;
+                float bExp = k;
+                float a = (float)Math.Pow(1 - t, aExp) * (float)Math.Pow(1 - s, aExp);
+                float b = (float)Math.Pow(t, bExp) * (float)Math.Pow(s, aExp);
+
+                result.X += mult * a * b * controls[k].X;
+                result.Y += mult * a * b * controls[k].Y;
+            }
+            return result;
+        }
+
         public HeightMap()
         {
             Random rnd = new Random();
@@ -35,16 +68,30 @@ namespace GameEngine.Core
 
             float[,] heights = new float[width, height];
 
+            List<Vector2> yControls = new List<Vector2>
+                {
+                    new Vector2(0, 0),
+                    new Vector2(10, 140),
+                    new Vector2(30, 140),
+                    new Vector2(40, 0)
+                };
+
+            float s = 0;
             for (int col = 0; col < height; ++col)
             {
+                float t = 0;
                 for (int row = 0; row < width; ++row)
                 {
-                    heights[row, col] = rnd.Next(3);
-                    //heights[row, col] = 0;
+                    Vector2 point = BezierDegreeN(yControls, t, s);
+
+                    //heights[row, col] = rnd.Next(3);
+                    heights[row, col] = point.Y - 100;
+                    t += 0.001f;
                 }
+                s += 0.001f;
             }
 
-            float scale = 10;
+            float scale = 0.1f;
             for (int col = 0; col < height - 1; ++col)
             {
                 for (int row = 0; row < width - 1; ++row)

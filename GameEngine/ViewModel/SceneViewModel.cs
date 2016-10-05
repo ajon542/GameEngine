@@ -54,7 +54,7 @@ namespace GameEngine.ViewModel
             logger.Log(LogLevel.Info, "Creating scene view model");
 
             // TODO: Need a way to change this at runtime.
-            SceneList = new List<Scene> { new Core.GameSpecific.TransformExample() };
+            SceneList = new List<Scene> { new Core.GameSpecific.GameObjectUIExample() };
 
             // TODO: This might need to be done when the scenes are initialized.
             RegisterMessageHandlers();
